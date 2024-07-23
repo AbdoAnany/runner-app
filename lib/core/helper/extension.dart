@@ -17,7 +17,6 @@ extension ContextExtension on BuildContext {
     return Navigator.of(this)
         .pushNamedAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
-
   void pop() => Navigator.canPop(this) ? Navigator.of(this).pop() : debugPrint('no pop');
 
 //-> Size
