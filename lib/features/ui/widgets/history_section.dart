@@ -89,11 +89,7 @@ class _RunnerDataScreenState extends State<HistorySection> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.transparent,
-      appBar: AppBar(
-        backgroundColor: AppColors.transparent,
-        elevation: 0,
-        title: Text('History',style: AppStyle.textStyle16GWhiteW800,),
-      ),
+
       body: SafeArea(
         child: BlocBuilder<RunnerDataBloc, RunnerDataState>(
           builder: (context, state) {
@@ -165,7 +161,7 @@ class _RunnerDataScreenState extends State<HistorySection> {
           ),
         ),
                   Expanded(
-                    child: historyData.isEmpty
+                    child:  state.historyData.isEmpty
                         ? Center(child: Text('No history available.'))
                         : ListView.builder(
                       shrinkWrap: true,

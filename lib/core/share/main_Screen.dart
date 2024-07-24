@@ -9,12 +9,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:runner_app/core/helper/extension.dart';
 import 'package:runner_app/core/style/app_style.dart';
-import 'package:runner_app/features/login/presentation/manager/auth/auth_event.dart';
-import 'package:runner_app/features/login/presentation/pages/login_screen.dart';
+import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_event.dart';
+import 'package:runner_app/features/2_auth/presentation/pages/login_screen.dart';
 import 'package:runner_app/features/ui/widgets/history_section.dart';
 
-import '../../features/login/presentation/manager/auth/auth_bloc.dart';
-import '../../features/ui/screens/home_screen.dart';
+import '../../features/2_auth/presentation/manager/auth/auth_bloc.dart';
+import '../../features/home/presentation/pages/home_screen.dart';
 import '../../features/ui/screens/runner_data_screen.dart';
 import '../../features/ui/widgets/popular_section.dart';
 import '../const/const.dart';
@@ -45,11 +45,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
-    HomeScreen(user: null),
-    const HistorySection(),
-    PopularSection(popularData: []),
-    ProfileScreen(),
+  final List<Map<String, Widget>> _pages = [
+    {"Home":HomeScreen(),},
+    {"History":HistorySection(),},
+    {"Store":StoreScreen(),},
+    {"Profile":ProfileScreen(),},
+
   ];
 
   void _onItemTapped(int index) {
@@ -62,7 +63,46 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      extendBodyBehindAppBar: true,
+      appBar:_currentIndex!=0? AppBar(
+        backgroundColor: AppColors.transparent,
+        elevation: 0,
+        leading: InkWell(
+            onTap: (){
+              setState(() {
+                _currentIndex = 0;
+              });
+            },
+            child: Icon(Iconsax.arrow_square_left, color: AppColors.iconHomeColor)),
 
+        title: Text(_pages[_currentIndex].keys.first,style: AppStyle.textStyle16GWhiteW800,),
+        actions: [
+          Badge(smallSize: 10,
+            backgroundColor: AppColors.dotColor,
+
+
+            child: const Icon(
+              Iconsax.direct_normal,
+              color: AppColors.iconHomeColor,
+            ),
+          ),
+          SizedBox(
+            width: 12.w,
+          ),
+          Badge(smallSize: 10,
+            backgroundColor: AppColors.dotColor,
+
+
+            child: const Icon(
+              Iconsax.sms_notification,
+              color: AppColors.iconHomeColor,
+            ),
+          ),
+          SizedBox(
+            width: 12.w,
+          ),
+        ],
+      ):null,
       body: Stack(
         children: [
           if(_currentIndex==0)
@@ -105,7 +145,19 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-          _pages[_currentIndex],
+         AnimatedSwitcher(
+             duration: Duration(milliseconds: 800),
+             transitionBuilder: (Widget child, Animation<double> animation) {
+             return SlideTransition(
+               position: Tween<Offset>(
+                 begin: const Offset(1.0, 0.0),
+                 end: const Offset(0.0, 0.0),
+               ).animate(animation),
+               child: child,
+             );
+             },
+
+             child: _pages[_currentIndex].values.first),
         ],
       ),
       bottomNavigationBar: Container(

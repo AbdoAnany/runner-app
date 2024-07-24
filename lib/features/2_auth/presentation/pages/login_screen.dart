@@ -2,12 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:runner_app/core/const/const.dart';
 import 'package:runner_app/core/helper/extension.dart';
 import 'package:runner_app/core/share/main_Screen.dart';
 import 'package:runner_app/core/style/color.dart';
-import 'package:runner_app/features/login/presentation/pages/sign_up_Screen.dart';
-import 'package:runner_app/features/ui/screens/home_screen.dart';
+import 'package:runner_app/features/2_auth/presentation/pages/sign_up_Screen.dart';
+import 'package:runner_app/features/home/presentation/pages/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toastification/toastification.dart';
 
@@ -28,11 +29,17 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _rememberMe = false;
+  bool obscureText = true;
 
   @override
   void initState() {
     super.initState();
     _loadSavedCredentials();
+  }
+  void changeObscureText(){
+    setState(() {
+      obscureText = !obscureText;
+    });
   }
 
   void _loadSavedCredentials() async {
@@ -112,32 +119,25 @@ leading: SizedBox(),
                     keyboardType: TextInputType.emailAddress,
             style: TextStyle(color: AppColors.white),
                     controller: _emailController,
-                    decoration: InputDecoration(
-                    filled: true,
-                    hintText: 'email',
+                    decoration:    AppStyle.inputDecoration(hintText: 'email'),),
 
-                    fillColor: AppColors.bgFiledColor,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.primary),
-
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.primary.withOpacity(.8)),
-
-                        borderRadius: BorderRadius.circular(10),
-                      )
-                  )),
                   SizedBox(height: 12.h,),
                   TextField(
                     controller: _passwordController,
                     style: TextStyle(color: AppColors.white),
-                    decoration: InputDecoration(
-                      filled: true,
-                      hintText: 'password',
+                    decoration:
+                    InputDecoration(
+                        filled: true,
+                        hintText:  'password',hintStyle:  TextStyle(color: AppColors.textGray),
 
-                      fillColor: AppColors.bgFiledColor,
+                        fillColor: AppColors.bgFiledColor,
+                        suffix: InkWell(child: Icon(obscureText ?
+                        Iconsax.eye  : Iconsax.eye_slash, color: AppColors.white,),
+                          onTap: (){
+                            changeObscureText();
+                          },),
                         border: OutlineInputBorder(
+
                           borderSide: BorderSide(color: AppColors.primary),
 
                           borderRadius: BorderRadius.circular(10),
@@ -148,7 +148,10 @@ leading: SizedBox(),
                           borderRadius: BorderRadius.circular(10),
                         )
                     ),
-                    obscureText: true,
+
+
+
+                    obscureText: obscureText,
                   ),
                   SizedBox(height: 12.h),
                   Row(

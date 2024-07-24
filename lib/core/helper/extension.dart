@@ -10,8 +10,8 @@ extension ContextExtension on BuildContext {
     return Navigator.of(this).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => child,
-        transitionDuration: Duration(seconds: 1),
-        reverseTransitionDuration: Duration(seconds: 1),
+        transitionDuration: Duration(milliseconds: 700),
+        reverseTransitionDuration: Duration(milliseconds: 700),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(1.0, 0.0); // Start position
           const end = Offset.zero; // End position

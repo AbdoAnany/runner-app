@@ -8,16 +8,17 @@ import 'package:runner_app/core/style/app_style.dart';
 import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/features/ui/screens/runner_data_screen.dart';
 
-import '../../../core/const/const.dart';
-import '../../../core/share/main_Screen.dart';
-import '../../blocs/runner_data/runner_data_bloc.dart';
-import '../../blocs/runner_data/runner_data_state.dart';
-import '../../services/role_service.dart';
+import '../../../../core/const/const.dart';
+import '../../../../core/share/main_Screen.dart';
+import '../../../blocs/runner_data/runner_data_bloc.dart';
+import '../../../blocs/runner_data/runner_data_state.dart';
+import '../../../services/role_service.dart';
+import '../widgets/home_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
-  final dynamic user;
+  // final dynamic user;
 
-  HomeScreen({required this.user});
+  HomeScreen();
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -46,57 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return  Column(
       children: [
-        AppBar(
-          backgroundColor: AppColors.transparent,
-          elevation: 0,
-          leading: const Icon(
-            Iconsax.menu_1,
-            color: AppColors.iconHomeColor,
-          ),
-          title: Row(
-            children: [
-              Image.asset(
-                AppImage.logoImage,
-                width: 40.w,
-              ),
-              SizedBox(
-                width: 12.w,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'HELLO!',
-                    style: AppStyle.textStyle12WhiteW400,
-                  ),
-                  Text(
-                    'Daniela',
-                    style: AppStyle.textStyle16GWhiteW800,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          actions: [
-            const Icon(
-              Iconsax.direct_normal,
-              color: AppColors.iconHomeColor,
-            ),
-            SizedBox(
-              width: 12.w,
-            ),
-            const Icon(
-              Iconsax.sms_notification,
-              color: AppColors.iconHomeColor,
-            ),
-            SizedBox(
-              width: 12.w,
-            ),
-          ],
-        ),
+        const HomeAppBar(),
         Container(
           height:
-          48.0, // Use static height if you're not using screen sizes
+          48.0.h, // Use static height if you're not using screen sizes
           margin: EdgeInsets.symmetric(
               horizontal: 6.0, vertical: 6.0),
           child: Row(

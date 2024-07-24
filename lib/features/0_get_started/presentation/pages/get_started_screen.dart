@@ -7,7 +7,7 @@ import 'package:runner_app/core/style/color.dart';
 
 import '../../../../core/const/const.dart';
 import '../../../../core/style/app_style.dart';
-import '../../../onboarding/presentation/pages/onboarding_screen.dart';
+import '../../../1_onboarding/presentation/pages/onboarding_screen.dart';
 
 class GetStarted extends StatelessWidget {
   const GetStarted({super.key});

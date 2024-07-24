@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/style/color.dart';
-import 'package:runner_app/features/get_started/presentation/pages/get_started_screen.dart';
+import 'package:runner_app/features/0_get_started/presentation/pages/get_started_screen.dart';
 import 'package:toastification/toastification.dart';
 
 import 'core/share/main_Screen.dart';
 import 'features/blocs/runner_data/runner_data_bloc.dart';
-import 'features/login/data/repositories/firebase_auth.dart';
-import 'features/login/presentation/manager/auth/auth_bloc.dart';
-import 'features/login/presentation/manager/auth/auth_state.dart';
+import 'features/2_auth/data/repositories/firebase_auth.dart';
+import 'features/2_auth/presentation/manager/auth/auth_bloc.dart';
+import 'features/2_auth/presentation/manager/auth/auth_state.dart';
 import 'features/services/runner_data_service.dart';
-import 'features/ui/screens/home_screen.dart';
-import 'features/login/presentation/pages/login_screen.dart';
+import 'features/home/presentation/pages/home_screen.dart';
+import 'features/2_auth/presentation/pages/login_screen.dart';
 class Get {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 

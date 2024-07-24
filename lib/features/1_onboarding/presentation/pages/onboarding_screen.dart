@@ -8,7 +8,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/const/const.dart';
 import '../../../../core/style/app_style.dart';
 import '../widgets/card_onboarding.dart';
-import '../../../login/presentation/pages/login_screen.dart';
+import '../../../2_auth/presentation/pages/login_screen.dart';
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
 

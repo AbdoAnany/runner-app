@@ -32,10 +32,10 @@ class _RunnerDataScreenState extends State<RunnerDataScreen> {
         } else if (state is RunnerDataLoaded) {
           return ListView(
             children: [
-              if (widget.viewHistory ?? false)
+           //   if (widget.viewHistory ?? false)
                // HistorySection(runnerData: state.historyData),
-              if (widget.viewPopular ?? false)
-                PopularSection(popularData: state.popularData),
+           //   if (widget.viewPopular ?? false)
+                // StoreSection(popularData: state.popularData),
             ],
           );
         } else {
