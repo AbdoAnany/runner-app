@@ -29,6 +29,7 @@ class GetStarted extends StatelessWidget {
         children: [
 
           Text('Running App',style: AppStyle.textStyle30WhiteW700,),
+          SizedBox(height: 20.h,),
           SizedBox(
             width: 247,
 

@@ -8,14 +8,15 @@ import 'package:runner_app/features/blocs/runner_data/runner_data_state.dart';
 import '../../services/runner_data_service.dart';
 
 class RunnerDataBloc extends Bloc<RunnerDataEvent, RunnerDataState> {
-  final RunnerDataService _runnerDataService;
+  // final RunnerDataService _runnerDataService;
+  final HistoryService _historyService;
 
-  RunnerDataBloc(this._runnerDataService) : super(RunnerDataLoading()) {
+  RunnerDataBloc(this._historyService) : super(RunnerDataLoading()) {
     on<LoadRunnerData>((event, emit) async {
       try {
-        final historyData = await _runnerDataService.getHistoryData();
-        final popularData = await _runnerDataService.getPopularData();
-        emit(RunnerDataLoaded(historyData, popularData));
+        final historyData = await _historyService.getHistoryData();
+      //  final popularData = await _runnerDataService.getPopularData();
+        emit(RunnerDataLoaded(historyData, []));
       } catch (_) {
         emit(RunnerDataError());
       }

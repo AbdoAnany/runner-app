@@ -90,6 +90,8 @@ class _RunnerDataScreenState extends State<HistorySection> {
     return Scaffold(
       backgroundColor: AppColors.transparent,
       appBar: AppBar(
+        backgroundColor: AppColors.transparent,
+        elevation: 0,
         title: Text('History',style: AppStyle.textStyle16GWhiteW800,),
       ),
       body: SafeArea(
@@ -100,7 +102,7 @@ class _RunnerDataScreenState extends State<HistorySection> {
             if (state is RunnerDataLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is RunnerDataLoaded) {
-              state.historyData.addAll(historyData.toList());
+              //state.historyData.addAll(historyData.toList());
               return     Column(
                 children: [
 

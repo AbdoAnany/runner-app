@@ -41,8 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _emailController.text = prefs.getString('email') ?? '';
       _passwordController.text = prefs.getString('password') ?? '';
       _rememberMe = prefs.getBool('rememberMe') ?? false;
-      if(_rememberMe){
-        context.pushScreen(HomeScreen(user: FirebaseAuth.instance.currentUser,));
+      if(_rememberMe&& FirebaseAuth.instance.currentUser!=null){
+        context.pushScreen(MainScreen(user: FirebaseAuth.instance.currentUser,));
       }
     });
   }
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
+leading: SizedBox(),
       ),
       body: SingleChildScrollView(
         child: BlocConsumer<AuthBloc  , AuthState>(
@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             if (state is Authenticated) {
               context.pushScreen(MainScreen(user: state.user,));
-            }else if (state is Unauthenticated) {
+            }else if (state is Unauthenticated||state is AuthError) {
               toastification.show(
                 alignment: Alignment.bottomCenter,
                 context: context, // optional if you use ToastificationWrapper
@@ -82,6 +82,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 autoCloseDuration: const Duration(seconds: 3),
               );
             }
+            // else if (state is AuthError) {
+            //   toastification.show(
+            //     alignment: Alignment.bottomCenter,
+            //     context: context, // optional if you use ToastificationWrapper
+            //     title: Text(state.message),
+            //     type: ToastificationType.error,
+            //     style: ToastificationStyle.flatColored,
+            //     autoCloseDuration: const Duration(seconds: 3),
+            //   );
+            // }
 
           },
             builder: (context, state) {

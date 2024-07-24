@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +15,13 @@ import 'features/login/presentation/manager/auth/auth_state.dart';
 import 'features/services/runner_data_service.dart';
 import 'features/ui/screens/home_screen.dart';
 import 'features/login/presentation/pages/login_screen.dart';
+class Get {
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+  static BuildContext get context => navigatorKey.currentContext!;
+  static NavigatorState get navigator => navigatorKey.currentState!;
+
+}
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -25,7 +33,7 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthBloc(AuthService()),
         ),
         BlocProvider<RunnerDataBloc>(
-          create: (context) => RunnerDataBloc(RunnerDataService()),
+          create: (context) => RunnerDataBloc(HistoryService( )),
         ),
       ],
       child:
@@ -38,6 +46,7 @@ class MyApp extends StatelessWidget {
           ScreenUtil.init(ctx);
           return  ToastificationWrapper(
             child: MaterialApp(
+              navigatorKey: Get.navigatorKey,
               title: 'Runner App',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(

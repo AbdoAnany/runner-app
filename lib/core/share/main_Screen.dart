@@ -4,10 +4,16 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:runner_app/core/helper/extension.dart';
+import 'package:runner_app/core/style/app_style.dart';
+import 'package:runner_app/features/login/presentation/manager/auth/auth_event.dart';
+import 'package:runner_app/features/login/presentation/pages/login_screen.dart';
 import 'package:runner_app/features/ui/widgets/history_section.dart';
 
+import '../../features/login/presentation/manager/auth/auth_bloc.dart';
 import '../../features/ui/screens/home_screen.dart';
 import '../../features/ui/screens/runner_data_screen.dart';
 import '../../features/ui/widgets/popular_section.dart';
@@ -200,6 +206,30 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text("ProfileScreen"),);
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(AppImage.bgPurpple),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("ProfileScreen",style: AppStyle.textStyle12GrayW400),
+          SizedBox(height: 20,),
+          MaterialButton(
+              child: Text("Logout",style: AppStyle.textStyle20GoldW800),
+              onPressed: (){
+                BlocProvider.of<AuthBloc>(context).add(
+                  SignOutRequested(),
+                );
+              })
+        ],
+      ),);
   }
 }
