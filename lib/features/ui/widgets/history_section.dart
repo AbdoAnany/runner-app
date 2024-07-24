@@ -7,13 +7,18 @@ class HistorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return
+
+
+      Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'History',
           style: Theme.of(context).textTheme.titleLarge,
         ),
+
+
         SizedBox(height: 10),
         runnerData.isEmpty
             ? Center(child: Text('No history available.'))
