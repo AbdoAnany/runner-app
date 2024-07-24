@@ -4,6 +4,7 @@ class AppImage{
 
   static const String bgImage="assets/image/background.png";
   static const String onboardingImage="assets/image/onboarding.png";
+  static const String logoImage="assets/image/Logo.png";
 
 }class AppConst{
 
