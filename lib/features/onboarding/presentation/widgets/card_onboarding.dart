@@ -8,7 +8,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
-import '../../../onboarding/presentation/pages/onboarding_screen.dart';
+import '../pages/onboarding_screen.dart';
 
 class CardOnboarding extends StatelessWidget {
   const CardOnboarding({super.key,required this.index});

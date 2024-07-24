@@ -33,7 +33,7 @@ class _RunnerDataScreenState extends State<RunnerDataScreen> {
           return ListView(
             children: [
               if (widget.viewHistory ?? false)
-                HistorySection(runnerData: state.historyData),
+               // HistorySection(runnerData: state.historyData),
               if (widget.viewPopular ?? false)
                 PopularSection(popularData: state.popularData),
             ],

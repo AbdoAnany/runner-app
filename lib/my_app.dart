@@ -5,6 +5,7 @@ import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/features/get_started/presentation/pages/get_started_screen.dart';
 import 'package:toastification/toastification.dart';
 
+import 'core/share/main_Screen.dart';
 import 'features/blocs/runner_data/runner_data_bloc.dart';
 import 'features/login/data/repositories/firebase_auth.dart';
 import 'features/login/presentation/manager/auth/auth_bloc.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
               home: BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
                   if (state is Authenticated) {
-                    return HomeScreen(user: state.user);
+                    return MainScreen(user: state.user);
                   } else {
                     return const GetStarted();
                   }

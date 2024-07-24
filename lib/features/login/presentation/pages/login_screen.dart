@@ -1,10 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/const/const.dart';
 import 'package:runner_app/core/helper/extension.dart';
+import 'package:runner_app/core/share/main_Screen.dart';
 import 'package:runner_app/core/style/color.dart';
+import 'package:runner_app/features/login/presentation/pages/sign_up_Screen.dart';
 import 'package:runner_app/features/ui/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../../core/style/app_style.dart';
@@ -13,9 +17,48 @@ import '../manager/auth/auth_bloc.dart';
 import '../manager/auth/auth_event.dart';
 import '../manager/auth/auth_state.dart';
 
-class LoginScreen extends StatelessWidget {
-  final TextEditingController _emailController = TextEditingController(text: 'abdo@a.com');
-  final TextEditingController _passwordController = TextEditingController(text: "123456");
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool _rememberMe = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedCredentials();
+  }
+
+  void _loadSavedCredentials() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _emailController.text = prefs.getString('email') ?? '';
+      _passwordController.text = prefs.getString('password') ?? '';
+      _rememberMe = prefs.getBool('rememberMe') ?? false;
+      if(_rememberMe){
+        context.pushScreen(HomeScreen(user: FirebaseAuth.instance.currentUser,));
+      }
+    });
+  }
+
+  void _saveCredentials() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (_rememberMe) {
+      prefs.setString('email', _emailController.text);
+      prefs.setString('password', _passwordController.text);
+      prefs.setBool('rememberMe', true);
+    } else {
+      prefs.remove('email');
+      prefs.remove('password');
+      prefs.setBool('rememberMe', false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +71,14 @@ class LoginScreen extends StatelessWidget {
           listener: (BuildContext context, AuthState state) {
 
             if (state is Authenticated) {
-              context.pushScreen(HomeScreen(user: state.user,));
+              context.pushScreen(MainScreen(user: state.user,));
             }else if (state is Unauthenticated) {
               toastification.show(
                 alignment: Alignment.bottomCenter,
                 context: context, // optional if you use ToastificationWrapper
                 title: Text('email or password is not correct'),
                 type: ToastificationType.error,
-                style: ToastificationStyle.fillColored,
+                style: ToastificationStyle.flatColored,
                 autoCloseDuration: const Duration(seconds: 3),
               );
             }
@@ -99,21 +142,21 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 12.h),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                     Row(
-                       children: [
-                         Checkbox(value: true,
-                             activeColor:AppColors.primary,
-                             onChanged: (r){}),
+                      Checkbox(
+                        value: _rememberMe,
+                        activeColor: AppColors.primary,
+                        onChanged: (value) {
+                          setState(() {
+                            _rememberMe = value!;
+                          });
+                        },
+                      ),
+                      Text('Remember me', style: AppStyle.textStyle14WhiteW400),
 
-                         Text('Remember me',style: AppStyle.textStyle14WhiteW400,)
-                       ],
-                     ),
                       Spacer(),
-                      TextButton(onPressed: (){
-
+                      TextButton(onPressed: () async {
+                        _forgotPassword(context);
                       }, child:   Text('Forgot Password ?',
                         textAlign: TextAlign.center,
                         style: AppStyle.textStyle14PrimaryW400,),)
@@ -132,7 +175,7 @@ class LoginScreen extends StatelessWidget {
                       onPressed: () {
                         final email = _emailController.text.trim();
                         final password = _passwordController.text.trim();
-
+                        _saveCredentials();
                         BlocProvider.of<AuthBloc>(context).add(
                           SignInRequested(email, password,),
                         );
@@ -212,7 +255,9 @@ class LoginScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: AppStyle.textStyle14WhiteW400,),
                         TextButton(onPressed: (){
-                        //  context.pushScreen( LoginScreen());
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SignUpScreen()));
                         }, child:   Text('Sign Up',
                           textAlign: TextAlign.center,
                           style: AppStyle.textStyle14PrimaryW400,),)
@@ -228,4 +273,21 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
+
+
+void _forgotPassword(BuildContext context) async {
+  String email = _emailController.text.trim();
+  if (email.isEmpty) {
+    // Show error that email is required
+    return;
+  }
+  try {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    // Show success message
+  } catch (e) {
+    // Show error message
+  }
 }
+}
+

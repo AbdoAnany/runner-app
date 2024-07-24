@@ -18,6 +18,8 @@ class AppImage{
   static const String runnerMan="assets/image/runnerman.png";
   static const String steps="assets/image/steps.png";
   static const String shareGift="assets/image/shareGift.png";
+  static const String bgPink="assets/image/bgPink.png";
+  static const String bgPurpple="assets/image/bgPurpple.png";
 
 }
 class AppConst{
