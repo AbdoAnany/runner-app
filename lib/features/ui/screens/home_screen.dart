@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/features/ui/screens/runner_data_screen.dart';
 
 
@@ -23,17 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    //  _rolePermissions = RoleService().getRolePermissions('roles');
     _rolePermissions = RoleService().getRolePermissions('admin');
 
-    //widget.user['role']
 
-    // _rolePermissions.then((e){
-    //   print("_rolePermissions");
-    //   print(e);
-    //   return e;
-    // });
-    //     _rolePermissions = RoleService().getRolePermissions(widget.user['role']??'guest');
   }
 
   @override
@@ -42,24 +36,41 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Runner App'),
       ),
-      body: FutureBuilder<Map<String, dynamic>>(
-        future: _rolePermissions,
-        builder: (context, snapshot) {
+      body: Stack(
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return const Center(child: Text('Error loading permissions'));
-          } else {
-            final permissions = snapshot.data ?? {};
-print("permissions");
-print(permissions);
-            return RunnerDataScreen(
-              viewHistory: permissions['canViewHistory'],
-              viewPopular: permissions['canViewPopular'],
-            );
-          }
-        },
+        children: [
+          Positioned(top: 0,right: 0,
+            child: Container(width: 375.w,height: 375.h,
+              decoration: BoxDecoration(
+
+             
+                gradient: RadialGradient(
+                  colors: [AppColors.primary,AppColors.primary.withOpacity(0) ],
+               
+                ),
+              ),
+            ),
+          ),
+
+          FutureBuilder<Map<String, dynamic>>(
+            future: _rolePermissions,
+            builder: (context, snapshot) {
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return const Center(child: Text('Error loading permissions'));
+              } else {
+                final permissions = snapshot.data ?? {};
+
+                return RunnerDataScreen(
+                  viewHistory: permissions['canViewHistory'],
+                  viewPopular: permissions['canViewPopular'],
+                );
+              }
+            },
+          ),
+        ],
       ),
     );
   }

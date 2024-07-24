@@ -31,6 +31,11 @@ class AppStyle{
       fontWeight: FontWeight.w400,
    
       fontSize: 14.w);
+  static TextStyle textStyle14GrayerW400 =TextStyle(
+      color: AppColors.textGray2,
+      fontWeight: FontWeight.w400,
+
+      fontSize: 14.w);
   static TextStyle textStyle14WhiteW400 =TextStyle(
       color: AppColors.white,
       fontWeight: FontWeight.w400,

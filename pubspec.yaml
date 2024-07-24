@@ -39,6 +39,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   provider: ^6.1.2
   smooth_page_indicator: ^1.2.0+3
+  toastification: ^2.1.0
 
 
 dev_dependencies:

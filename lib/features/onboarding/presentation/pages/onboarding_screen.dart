@@ -8,12 +8,14 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../core/const/const.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../get_started/presentation/widget/card_onboarding.dart';
+import '../../../login/presentation/pages/login_screen.dart';
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: SizedBox(
           height: double.infinity,
@@ -22,7 +24,7 @@ class OnBoardingScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 104),
+                padding: EdgeInsets.only(top: 90),
                 child: Image.asset(AppImage.onboardingImage),
               ),
               Expanded(
@@ -52,9 +54,11 @@ class OnBoardingScreen extends StatelessWidget {
                     Text('Already have an account?',
                       textAlign: TextAlign.center,
                       style: AppStyle.textStyle14WhiteW400,),
-                    Text('Sign In',
-                      textAlign: TextAlign.center,
-                      style: AppStyle.textStyle14PrimaryW400,),
+                  TextButton(onPressed: (){
+                    context.pushScreen( LoginScreen());
+                  }, child:   Text('Sign In',
+                    textAlign: TextAlign.center,
+                    style: AppStyle.textStyle14PrimaryW400,),)
                   ],
                 ),
               ),

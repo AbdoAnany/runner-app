@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/helper/extension.dart';
-import 'package:runner_app/features/ui/screens/login_screen.dart';
+import 'package:runner_app/features/login/presentation/pages/login_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../core/style/app_style.dart';
