@@ -5,13 +5,10 @@ import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/features/get_started/presentation/pages/get_started_screen.dart';
 import 'package:toastification/toastification.dart';
 
-
-
-
-import 'features/blocs/auth/auth_bloc.dart';
-import 'features/blocs/auth/auth_state.dart';
 import 'features/blocs/runner_data/runner_data_bloc.dart';
 import 'features/login/data/repositories/firebase_auth.dart';
+import 'features/login/presentation/manager/auth/auth_bloc.dart';
+import 'features/login/presentation/manager/auth/auth_state.dart';
 import 'features/services/runner_data_service.dart';
 import 'features/ui/screens/home_screen.dart';
 import 'features/login/presentation/pages/login_screen.dart';
@@ -33,8 +30,8 @@ class MyApp extends StatelessWidget {
       child:
       ScreenUtilInit(
         designSize: const Size(375, 768),
-        minTextAdapt: true,
-        splitScreenMode: true,
+        // minTextAdapt: true,
+        // splitScreenMode: true,
         // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (ctx , child) {
           ScreenUtil.init(ctx);
@@ -45,7 +42,9 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 primarySwatch: Colors.deepPurple,
                 scaffoldBackgroundColor:AppColors.bgColor,
-                appBarTheme: AppBarTheme(backgroundColor: AppColors.bgColor,
+                appBarTheme:  AppBarTheme(
+                  color: AppColors.bgColor,
+              //    backgroundColor: AppColors.bgColor,
                   iconTheme: IconThemeData(color: AppColors.white),),
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),

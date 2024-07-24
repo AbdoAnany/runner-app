@@ -1,10 +1,6 @@
 
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:runner_app/core/helper/extension.dart';
-import 'package:runner_app/features/ui/screens/home_screen.dart';
-
-import '../../login/data/repositories/firebase_auth.dart';
+import '../../../data/repositories/firebase_auth.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 

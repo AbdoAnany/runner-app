@@ -4,13 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/const/const.dart';
 import 'package:runner_app/core/helper/extension.dart';
 import 'package:runner_app/core/style/color.dart';
-import 'package:runner_app/features/blocs/auth/auth_state.dart';
 import 'package:runner_app/features/ui/screens/home_screen.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../../core/style/app_style.dart';
-import '../../../blocs/auth/auth_bloc.dart';
-import '../../../blocs/auth/auth_event.dart';
+
+import '../manager/auth/auth_bloc.dart';
+import '../manager/auth/auth_event.dart';
+import '../manager/auth/auth_state.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController(text: 'abdo@a.com');

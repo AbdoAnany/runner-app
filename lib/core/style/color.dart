@@ -9,6 +9,7 @@ class AppColors{
   static const Color bgColor =   Color(0xff28333F);
   static const Color bgFiledColor =   Color(0xff2F3C50);
   static const Color white =   Color(0xffFFFFFF);
+  static const Color transparent =   Color(0xffffff);
   static const Color textGray =   Color(0xffAEA8B2);
   static const Color textGray2 =   Color(0xff4B576B);
   static const Color black =   Color(0xff000000);
@@ -17,6 +18,11 @@ class AppColors{
   static const Color border2ContainerColor =   Color(0xff2B3744);
   static const Color shadowContainerColor =   Color(0xff1C252C0D);
   static const Color dotColor =   Color(0xffF14985);
+  static const Color iconHomeColor =   Color(0xffCDCDCD);
+  static const Color bar1HomeColor =   Color(0xffB96FFF);
+  static const Color bar2HomeColor =   Color(0xff55CB74);
+  static const Color green =   Color(0xff43C465);
+  static const Color levelHomeColor =   Color(0xffFFC932);
 
 
 
