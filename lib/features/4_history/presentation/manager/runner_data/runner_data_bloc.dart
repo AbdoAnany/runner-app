@@ -12,14 +12,9 @@ class RunnerHistoryDataBloc extends Bloc<RunnerHistoryDataEvent, RunnerHistoryDa
 
     on<LoadRunnerData>((event, emit) async {
       try {
-        print("LoadRunnerData...");
         final historyData = await getHistoryData();
-        print("historyData.length") ;
-        print(historyData.length) ;
         emit(RunnerDataLoaded(historyData));
       } catch (e) {
-        print("RunnerDataError...");
-        print(e.toString());
         emit(RunnerDataError(e.toString()));
       }
     });
