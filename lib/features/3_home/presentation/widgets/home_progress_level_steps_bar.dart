@@ -33,8 +33,7 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> {
     return   Container(
       height:
       48.0.h, // Use static height if you're not using screen sizes
-      margin: EdgeInsets.only(
-          left: 6.0.w,right: 6.0.w, bottom: 6.0.h,top: 80.h),
+      margin: EdgeInsets.only(left: 10.0.w,right: 10.0.w, bottom: 0.0.h,),
       child: Row(
         children: [
           Expanded(

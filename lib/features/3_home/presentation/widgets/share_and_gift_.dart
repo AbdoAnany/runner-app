@@ -15,7 +15,9 @@ class ShareAndGiftWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 125.h,
-      margin: const EdgeInsets.all(16.0),
+      clipBehavior: Clip.antiAlias,
+      margin:  EdgeInsets.symmetric(horizontal: 12.0.w,vertical: 30.h),
+
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -25,7 +27,7 @@ class ShareAndGiftWidget extends StatelessWidget {
             Color(0xFFF14985), // Light Pink
           ],
         ),
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(16.0.r),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,

@@ -101,12 +101,18 @@ static TextStyle textStyle20GWhiteW800 =TextStyle(
       fontWeight: FontWeight.w800,
 
       fontSize: 20.w);
+static TextStyle textStyle24GWhiteW800BebasNeue =TextStyle(
+      color: AppColors.white,
+      fontWeight: FontWeight.w800,
+      fontFamily: "BebasNeue",
+      fontSize: 24.w);
 
 static TextStyle textStyle20GoldW800 =TextStyle(
       color: AppColors.levelHomeColor,
       fontWeight: FontWeight.w700,
     fontFamily: "Quicksand",
       fontSize: 20.w);
+
 
 
   static  InputDecoration inputDecoration({hintText}) => InputDecoration(
@@ -117,12 +123,12 @@ static TextStyle textStyle20GoldW800 =TextStyle(
   border: OutlineInputBorder(
   borderSide: BorderSide(color: AppColors.primary),
 
-  borderRadius: BorderRadius.circular(10),
+  borderRadius: BorderRadius.circular(10.r),
   ),
   enabledBorder: OutlineInputBorder(
   borderSide: BorderSide(color: AppColors.primary.withOpacity(.8)),
 
-  borderRadius: BorderRadius.circular(10),
+  borderRadius: BorderRadius.circular(10.r),
   )
   );
 }

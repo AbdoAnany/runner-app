@@ -17,11 +17,12 @@ class StatisticsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(height: 96.h,
-      margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 0.h),
+      margin: EdgeInsets.symmetric(horizontal: 17.w, vertical: 17.h),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: AppColors.white.withOpacity(.17),
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(color: AppColors.white.withOpacity(.17)),
+        color: AppColors.white.withOpacity(.10),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,13 +35,21 @@ class StatisticsWidget extends StatelessWidget {
           ),
           _buildStatColumn(
             icon: Iconsax.routing,
-            value: '${AppFunction.getDistance(state.historyData.fold(0, (accumulator, element) => (accumulator + element.distance).toInt()) / 1000)} KM',
+            value: '${AppFunction.getDistance(state.historyData.fold(0, (accumulator, element) => (accumulator + element.distance).toInt())/100 )} KM',
             label: 'Distance',
           ),
           _buildStatColumn(
             icon: Iconsax.heart_circle,
             iconColor: AppColors.dotColor,
-            value: '${AppFunction.getHistoryCount(state.historyData.fold(0, (accumulator, element) => (accumulator + element.pt).toInt()))} BPM',
+            value: '${
+
+
+                AppFunction.getHistoryCount(
+                    state.historyData.fold(0, (accumulator, element) => (accumulator + element.distance).toInt())*10/
+                    state.historyData.fold(0, (accumulator, element) => (accumulator + element.pt).toInt())
+                )
+
+            } BPM',
             label: 'Heart Beat',
           ),
         ],
@@ -61,7 +70,7 @@ class StatisticsWidget extends StatelessWidget {
         Icon(icon, color: iconColor ?? AppColors.white),
         Text(
           value,
-          style: AppStyle.textStyle20GWhiteW800,
+          style: AppStyle.textStyle24GWhiteW800BebasNeue,
         ),
         Text(
           label,

@@ -11,6 +11,7 @@ import '../bloc/store_event.dart';
 import '../bloc/store_state.dart';
 import '../widgets/brand_list.dart';
 import '../widgets/category_list.dart';
+import '../widgets/offer_list.dart';
 import '../widgets/popular_product_list.dart';
 
 class StoreScreenBlocProvider extends StatelessWidget {
@@ -36,7 +37,7 @@ class StoreScreenBlocProvider extends StatelessWidget {
           ),
         ),
       ),
-      child: StoreScreen(),
+      child: const StoreScreen(),
     );
   }
 }
@@ -48,41 +49,39 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      body: BlocBuilder<StoreBloc, StoreState>(
-        builder: (context, state) {
-          if (state is StoreInitial) {
-            context.read<StoreBloc>().add(LoadStoreData());
-            return LoadingWidget();
-          } else if (state is StoreLoading) {
-            return LoadingWidget();
-          } else if (state is StoreLoaded) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                context.read<StoreBloc>().add(RefreshStoreData());
-              },
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CategoryList(categories: state.categories),
-                    BrandList(brands: state.brands),
-                    PopularProductList(
-                      products: state.popularProducts,
-                      onLoadMore: () {
-                        context.read<StoreBloc>().add(LoadMorePopularProducts());
-                      },
-                    ),
-                  ],
-                ),
+    return  BlocBuilder<StoreBloc, StoreState>(
+      builder: (context, state) {
+        if (state is StoreInitial) {
+          context.read<StoreBloc>().add(LoadStoreData());
+          return LoadingWidget();
+        } else if (state is StoreLoading) {
+          return LoadingWidget();
+        } else if (state is StoreLoaded) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<StoreBloc>().add(RefreshStoreData());
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CategoryList(categories: state.categories),
+                  const OfferList(),
+                  BrandList(brands: state.brands),
+                  PopularProductList(
+                    products: state.popularProducts,
+                    onLoadMore: () {
+                      context.read<StoreBloc>().add(LoadMorePopularProducts());
+                    },
+                  ),
+                ],
               ),
-            );
-          } else if (state is StoreError) {
-            return Center(child: Text(state.message));
-          }
-          return Container();
-        },
-      ),
+            ),
+          );
+        } else if (state is StoreError) {
+          return Center(child: Text(state.message));
+        }
+        return Container();
+      },
     );
   }
 }

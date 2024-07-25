@@ -3,10 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/features/0_get_started/presentation/pages/get_started_screen.dart';
+import 'package:runner_app/features/2_auth/data/datasources/auth_remote_data_source.dart';
+import 'package:runner_app/features/2_auth/presentation/pages/login_screen.dart';
 import 'package:toastification/toastification.dart';
 
 import 'core/share/main_Screen.dart';
+import 'features/2_auth/data/repositories/auth_repository_impl.dart';
 import 'features/2_auth/data/repositories/firebase_auth.dart';
+import 'features/2_auth/domain/repository/auth_repository.dart';
+import 'features/2_auth/domain/use_cases/login_use_case.dart';
+import 'features/2_auth/domain/use_cases/sign_up_use_case.dart';
 import 'features/2_auth/presentation/manager/auth/auth_bloc.dart';
 import 'features/2_auth/presentation/manager/auth/auth_state.dart';
 class Get {
@@ -17,18 +23,18 @@ class Get {
 
 }
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
-          create: (context) => AuthBloc(AuthService()),
+          create: (context) => AuthBloc(
+            loginUseCase: LoginUseCase(AuthRepositoryImpl(AuthRemoteDataSource())),
+            signUpUseCase: SignUpUseCase(AuthRepositoryImpl(AuthRemoteDataSource())),
+          ),
         ),
-        // BlocProvider<RunnerDataBloc>(
-        //   create: (context) => RunnerDataBloc(HistoryService( )),
-        // ),
 
       ],
       child:
@@ -56,9 +62,10 @@ class MyApp extends StatelessWidget {
               home: BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
                   if (state is Authenticated) {
-                    return MainScreen(user: state.user);
+                    return const MainScreen();
                   } else {
-                    return const GetStarted();
+                    return LoginScreen();
+             //       return const GetStarted();
                   }
                 },
               ),

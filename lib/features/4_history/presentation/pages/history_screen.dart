@@ -16,7 +16,7 @@ class HistoryScreenBlocProvider extends StatelessWidget {
   Widget build(BuildContext context) {
   return  BlocProvider<RunnerHistoryDataBloc>(
       create: (context) => locator<RunnerHistoryDataBloc>(),
-      child:  HistoryScreen(),
+      child:  const HistoryScreen(),
     );
   }
 }
@@ -47,7 +47,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 80.h,),
+
               StatisticsWidget(state: state,),
 
               Expanded(

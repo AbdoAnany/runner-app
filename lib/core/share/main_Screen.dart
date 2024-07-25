@@ -14,8 +14,10 @@ import '../../features/4_history/presentation/manager/runner_data/runner_data_bl
 import '../../features/4_history/presentation/pages/history_screen.dart';
 import '../../features/5_store/presentation/pages/popular_section.dart';
 import '../../features/5_store/presentation/pages/store_screen.dart';
+import '../../features/6_profile/presentation/pages/profile_screen.dart';
 import '../const/const.dart';
 import '../style/color.dart';
+import 'my_bottom_navigation_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({
@@ -62,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: ShareAppBar(onTap:()=> _onItemTapped,
+      appBar: ShareAppBar(onTap:()=> _onItemTapped(0),
       title: _pages[_currentIndex].keys.first,
         currentIndex: _currentIndex,
       ),
@@ -74,7 +76,7 @@ class _MainScreenState extends State<MainScreen> {
               left: 0,
               right: 0,
               child: Container(
-                height: 380.h,
+                height: 360.h,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(AppImage.homeGrenadianImage),
@@ -118,61 +120,15 @@ class _MainScreenState extends State<MainScreen> {
                   child: child,
                 );
               },
-              child: _pages[_currentIndex].values.first),
-          
-          Positioned(
-            bottom: 0,left: 0,right: 0,            child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color:    AppColors.bgFiledColor,
-              // gradient:  RadialGradient(colors: [
-              //   AppColors.bgFiledColor,
-              //   AppColors.primary.withOpacity(.24),
-              // ]),
-              border: Border.all(color: AppColors.white.withOpacity(.17)),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.shadowContainerColor.withOpacity(.05),
-                  spreadRadius: 0,
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-                BoxShadow(
-                  color: AppColors.primary.withOpacity(.24),
-                  spreadRadius: 0,
-                  blurRadius: 24,
-                  offset: const Offset(0, 0),
-                ),
-              ],
-            ),
-            margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 40),
-            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GradientIcon(
-                  icon: Iconsax.home_25,
-                  isSelected: _currentIndex == 0,
-                  onTap: () => _onItemTapped(0),
-                ),
-                GradientIcon(
-                  icon: Iconsax.cup5,
-                  isSelected: _currentIndex == 1,
-                  onTap: () => _onItemTapped(1),
-                ),
-                GradientIcon(
-                  icon: Iconsax.shopping_bag,
-                  isSelected: _currentIndex == 2,
-                  onTap: () => _onItemTapped(2),
-                ),
-                GradientIcon(
-                  icon: Iconsax.user,
-                  isSelected: _currentIndex == 3,
-                  onTap: () => _onItemTapped(3),
-                ),
-              ],
-            ),
-          ),)
+              child: SafeArea(
+
+                  child: _pages[_currentIndex].values.first)),
+          MyBottomNavigationBar(
+            onTap: (e)=> _onItemTapped(e),
+
+            currentIndex: _currentIndex,
+          )
+
         ],
       ),
     //  bottomNavigationBar: 
@@ -180,74 +136,4 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-class GradientIcon extends StatelessWidget {
-  const GradientIcon({
-    Key? key,
-    required this.icon,
-    this.isSelected = false,
-    required this.onTap,
-  }) : super(key: key);
 
-  final IconData icon;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: ShaderMask(
-        shaderCallback: (Rect bounds) {
-          return LinearGradient(
-            colors: isSelected
-                ? [AppColors.primary, AppColors.dotColor]
-                : [AppColors.iconHomeColor, AppColors.iconHomeColor],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ).createShader(bounds);
-        },
-        child: Icon(
-          icon,
-          color: AppColors.iconHomeColor,
-          size: 32.w,
-        ),
-      ),
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(AppImage.bgPurpple),
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("ProfileScreen", style: AppStyle.textStyle12GrayW400),
-          SizedBox(
-            height: 20,
-          ),
-          MaterialButton(
-              child: Text("Logout", style: AppStyle.textStyle20GoldW800),
-              onPressed: () {
-                BlocProvider.of<AuthBloc>(context).add(
-                  SignOutRequested(),
-                );
-              })
-        ],
-      ),
-    );
-  }
-}

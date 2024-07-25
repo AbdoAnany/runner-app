@@ -15,6 +15,7 @@ final  List<HistoryEntity> historyData;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+padding:     EdgeInsets.symmetric(horizontal: 8.w, vertical: 0.h),
 
       itemCount: historyData.length,
       itemBuilder: (context, index) {

@@ -3,20 +3,13 @@ import '../../domain/entities/product.dart';
 
 class ProductModel extends Product {
   const ProductModel({
-    required String id,
-    required String brand,
-    required String model,
-    required double price,
-    required String imageUrl,
-    required bool isPopular,
-  }) : super(
-    id: id,
-    brand: brand,
-    model: model,
-    price: price,
-    imageUrl: imageUrl,
-    isPopular: isPopular,
-  );
+    required super.id,
+    required super.brand,
+    required super.model,
+    required super.price,
+    required super.image,
+    required super.isPopular,
+  });
 
   factory ProductModel.fromSnapshot(DocumentSnapshot snap) {
     return ProductModel(
@@ -24,7 +17,7 @@ class ProductModel extends Product {
       brand: snap['brand'],
       model: snap['model'],
       price: snap['price'].toDouble(),
-      imageUrl: snap['imageUrl'],
+      image: snap['image'],
       isPopular: snap['isPopular'],
     );
   }
@@ -35,7 +28,7 @@ class ProductModel extends Product {
       'brand': brand,
       'model': model,
       'price': price,
-      'imageUrl': imageUrl,
+      'image': image,
       'isPopular': isPopular,
     };
   }

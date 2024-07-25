@@ -1,6 +1,3 @@
-
-
-
 abstract class AuthEvent {}
 
 class SignInRequested extends AuthEvent {
@@ -18,4 +15,5 @@ class SignUpRequested extends AuthEvent {
   SignUpRequested(this.email, this.password, this.role);
 }
 
+class LoadRolesRequested extends AuthEvent {}
 class SignOutRequested extends AuthEvent {}

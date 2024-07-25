@@ -1,5 +1,4 @@
-// auth_state.dart
-import 'package:firebase_auth/firebase_auth.dart';
+import '../../../domain/entities/user_entity.dart';
 
 abstract class AuthState {}
 
@@ -8,7 +7,7 @@ class AuthInitial extends AuthState {}
 class AuthLoading extends AuthState {}
 
 class Authenticated extends AuthState {
-  final User user;
+  final UserEntity user;
 
   Authenticated(this.user);
 }
@@ -20,4 +19,10 @@ class AuthError extends AuthState {
   final String message;
 
   AuthError(this.message);
+}
+
+class RolesLoaded extends AuthState {
+  final List<String> roles;
+
+  RolesLoaded(this.roles);
 }

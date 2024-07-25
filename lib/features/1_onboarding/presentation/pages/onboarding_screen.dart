@@ -13,7 +13,13 @@ class OnBoardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [Text('Skip',style: AppStyle.textStyle14WhiteW400,)],),
+      appBar: AppBar(actions: [InkWell(
+          onTap: (){
+            context.pushScreen( LoginScreen());
+          },
+          child: Text('Skip',style: AppStyle.textStyle14WhiteW400,)),
+        SizedBox(width: 12.w,)
+      ],),
       body: SafeArea(
         child: SizedBox(
           height: double.infinity,

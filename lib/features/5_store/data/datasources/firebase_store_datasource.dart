@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../../core/const/const.dart';
 import '../local_datasources/local_datesource.dart';
 import '../models/brand_model.dart';
 import '../models/category_model.dart';
@@ -21,9 +22,41 @@ class FirebaseStoreDatasource {
   }
 
   Future<List<ProductModel>> getPopularProducts() async {
+   // await setPopularProducts();
     final snapshot = await _firestore.collection('products')
         .where('isPopular', isEqualTo: true)
         .get();
     return snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
+  }
+
+  Future<void> setPopularProducts() async {
+    final List<ProductModel> products = [
+      ProductModel(
+        id: '1',
+        brand: 'Nike',
+        model: 'Air Zoom Pegasus 38',
+        price: 1200.0,
+        image:  AppImage.nike1,
+        isPopular: true,
+      ),
+      ProductModel(
+        id: '2',
+        brand: 'Adidas',
+        model: 'Ultraboost 21',
+        price: 1800.0,
+        image: AppImage.nike2,
+        isPopular: true,
+      ),
+
+    ];
+
+    final batch = _firestore.batch();
+
+    for (var product in products) {
+      final docRef = _firestore.collection('products').doc();
+      batch.set(docRef, product.toJson());
+    }
+
+    await batch.commit();
   }
 }

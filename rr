@@ -1,0 +1,25 @@
+
+      data/data_sources/auth_remote_data_source.dart
+       data/data_sources/repositories/auth_repository_impl.dart
+      domain/
+        entities/
+          user_entity.dart
+        repositories/auth_repository.dart
+        use_cases/
+          login_use_case.dart
+          sign_up_use_case.dart
+      presentation/
+        bloc/
+          auth_bloc.dart
+          auth_event.dart
+          auth_state.dart
+        pages/
+          login_screen.dart
+          sign_up_screen.dart
+      widgets/
+        social_auth_buttons.dart
+        email_field.dart
+        password_field.dart
+        role_dropdown.dart
+  main.dart
+  depindance.dart

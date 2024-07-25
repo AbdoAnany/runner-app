@@ -56,5 +56,5 @@ class ShareAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size(double.infinity, 60.h);
+  Size get preferredSize => Size(double.infinity, 40.h);
 }
