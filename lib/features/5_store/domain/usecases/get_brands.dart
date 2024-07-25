@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+
 import '../../../../core/errors/failures.dart';
 import '../entities/brand.dart';
 import '../repositories/store_repository.dart';

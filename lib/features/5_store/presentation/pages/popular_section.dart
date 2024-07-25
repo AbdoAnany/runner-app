@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:runner_app/core/const/const.dart';
 import 'package:runner_app/core/style/app_style.dart';
 import 'package:runner_app/core/style/color.dart';

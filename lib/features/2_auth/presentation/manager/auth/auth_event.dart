@@ -3,8 +3,9 @@ abstract class AuthEvent {}
 class SignInRequested extends AuthEvent {
   final String email;
   final String password;
+  final bool? rememberMe;
 
-  SignInRequested(this.email, this.password);
+  SignInRequested({required this.email, required this.password, this.rememberMe = false});
 }
 
 class SignUpRequested extends AuthEvent {

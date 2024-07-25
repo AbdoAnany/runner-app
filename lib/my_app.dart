@@ -1,16 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/features/0_get_started/presentation/pages/get_started_screen.dart';
 import 'package:runner_app/features/2_auth/data/datasources/auth_remote_data_source.dart';
-import 'package:runner_app/features/2_auth/presentation/pages/login_screen.dart';
+import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_event.dart';
 import 'package:toastification/toastification.dart';
 
 import 'core/share/main_Screen.dart';
 import 'features/2_auth/data/repositories/auth_repository_impl.dart';
-import 'features/2_auth/data/repositories/firebase_auth.dart';
-import 'features/2_auth/domain/repository/auth_repository.dart';
 import 'features/2_auth/domain/use_cases/login_use_case.dart';
 import 'features/2_auth/domain/use_cases/sign_up_use_case.dart';
 import 'features/2_auth/presentation/manager/auth/auth_bloc.dart';
@@ -27,13 +26,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(
             loginUseCase: LoginUseCase(AuthRepositoryImpl(AuthRemoteDataSource())),
             signUpUseCase: SignUpUseCase(AuthRepositoryImpl(AuthRemoteDataSource())),
-          ),
+          )..add(UserIsLogIn()),
         ),
 
       ],
@@ -59,15 +59,22 @@ class MyApp extends StatelessWidget {
                   iconTheme: IconThemeData(color: AppColors.white),),
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: BlocBuilder<AuthBloc, AuthState>(
-                builder: (context, state) {
-                  if (state is Authenticated) {
-                    return const MainScreen();
-                  } else {
-                    return LoginScreen();
-             //       return const GetStarted();
-                  }
-                },
+              home: StreamBuilder<User?>(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) {
+
+                  return BlocBuilder<AuthBloc, AuthState>(
+
+                    builder: (context, state) {
+                      if (state is Authenticated) {
+                        return const MainScreen();
+                      } else {
+                        return GetStarted();
+                               //       return const GetStarted();
+                      }
+                    },
+                  );
+                }
               ),
             ),
           );

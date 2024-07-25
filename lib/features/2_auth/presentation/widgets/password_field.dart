@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../core/style/color.dart';
-import '../../../../core/utils/Validators.dart';
 
 
 class PasswordField extends StatefulWidget {

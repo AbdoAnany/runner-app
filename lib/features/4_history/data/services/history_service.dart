@@ -1,11 +1,6 @@
 // data/services/history_service.dart
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../../domain/entities/history_entity.dart';
-import '../entities/history_entity.dart';
 
 class HistoryService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

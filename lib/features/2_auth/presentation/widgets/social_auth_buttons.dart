@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toastification/toastification.dart';
+
 import '../../../../core/const/const.dart';
 import '../../../../core/style/color.dart';
 import '../../../../my_app.dart';
@@ -22,18 +23,7 @@ class SocialAuthButtons extends StatelessWidget {
   }
 
   Widget _buildSocialButton(String imagePath) {
-    return InkWell(
-onTap: (){
-  toastification.show(
-    alignment: Alignment.bottomCenter,
-    context: Get.context, // optional if you use ToastificationWrapper
-    title: Text('This service is not working'),
-    type: ToastificationType.error,showProgressBar: false,
-    style: ToastificationStyle.flatColored,
-    autoCloseDuration: const Duration(seconds: 3),
-  );
-},
-      child: Container(
+    return  Container(
         height: 70.h,
         width: 98.w,
         padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
@@ -51,7 +41,18 @@ onTap: (){
           ],
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Image.asset(imagePath),
+        child:InkWell(
+          onTap: (){
+            toastification.show(
+              alignment: Alignment.bottomCenter,
+              context: Get.context, // optional if you use ToastificationWrapper
+              title: Text('This service is not working'),
+              type: ToastificationType.warning,showProgressBar: false,
+              style: ToastificationStyle.flatColored,
+              autoCloseDuration: const Duration(seconds: 3),
+            );
+          },
+          child: Image.asset(imagePath),
       ),
     );
   }

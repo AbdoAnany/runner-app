@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_bloc.dart';
+
 import '../../../../core/widgets/loading_widget.dart';
 import '../../data/datasources/firebase_store_datasource.dart';
 import '../../data/repositories/store_repository_impl.dart';
