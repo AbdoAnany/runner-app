@@ -27,3 +27,49 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
    ```bash
    git clone https://github.com/AbdoAnany/runner-app.git
    cd runner-app
+
+2. **Install dependencies::**
+
+   ```bash
+   flutter pub get
+lib
+│
+├── core
+│   ├── utils
+│   │   ├── app_style.dart
+│   │   └── color.dart
+│   └── constants
+│       └── app_constants.dart
+│
+├── data
+│   ├── repositories
+│   │   └── auth_repository_impl.dart
+│   └── sources
+│       ├── firebase_service.dart
+│       └── shared_preferences_service.dart
+│
+├── domain
+│   ├── entities
+│   │   └── user_entity.dart
+│   ├── repositories
+│   │   └── auth_repository.dart
+│   └── use_cases
+│       ├── login_use_case.dart
+│       └── sign_up_use_case.dart
+│
+├── presentation
+│   ├── bloc
+│   │   ├── auth_bloc.dart
+│   │   ├── auth_event.dart
+│   │   └── auth_state.dart
+│   ├── pages
+│   │   ├── login_screen.dart
+│   │   └── sign_up_screen.dart
+│   └── widgets
+│       ├── email_field.dart
+│       ├── password_field.dart
+│       ├── role_dropdown.dart
+│       └── social_auth_buttons.dart
+│
+└── main.dart
+
