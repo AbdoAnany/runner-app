@@ -34,7 +34,6 @@ class FirebaseStoreDatasource {
     ;
     return snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
   }
-
   Future<void> setPopularProducts() async {
     final List<ProductModel> products = [
       ProductModel(
