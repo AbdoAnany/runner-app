@@ -1,6 +1,11 @@
 // data/services/history_service.dart
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../domain/entities/history_entity.dart';
+import '../entities/history_entity.dart';
 
 class HistoryService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -10,22 +15,16 @@ class HistoryService {
 
   Future<List<Map<String, dynamic>>> getHistoryData() async {
     try {
-      QuerySnapshot querySnapshot = await _firestore
-          .collection('users')
-          .doc(userId)
-          .collection('history')
-          .orderBy('date', descending: true)
-          .get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
 
-      return querySnapshot.docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
-          .toList();
+      // Retrieve the history list from the user's document
+      List<Map<String, dynamic>> history = userDoc.get('history') ?? [];
+      return history;
     } catch (e) {
       print('Error getting history data: $e');
       return [];
     }
   }
-
   Future<void> setHistoryData(List<Map<String, dynamic>> historyData) async {
     try {
       WriteBatch batch = _firestore.batch();

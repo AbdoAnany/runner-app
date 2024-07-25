@@ -1,4 +1,5 @@
 
+import '../../../../../core/helper/function.dart';
 import '../../../data/entities/history_entity.dart';
 import '../../repositories/history_repository.dart';
 
@@ -8,6 +9,7 @@ class SetHistoryData {
   SetHistoryData(this.repository);
 
   Future<void> call(List<HistoryEntity> historyData) async {
+
     await repository.setHistoryData(historyData);
   }
 }
