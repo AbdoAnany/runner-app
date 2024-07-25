@@ -65,9 +65,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         currentUser = user;
         emit(Authenticated(user));
       } catch (e) {
-        print("ssssssssssssssssssssss");
-        print(e.toString());
-        emit(AuthError(e.toString()));
+        String errorMessage;
+
+        // Check if the error is a FirebaseAuthException
+        if (e is FirebaseAuthException) {
+          switch (e.code) {
+            case 'email-already-in-use':
+              errorMessage =
+              "The email address is already in use by another account.";
+              break;
+            case 'invalid-email':
+              errorMessage = "The email address is not valid.";
+              break;
+            case 'weak-password':
+              errorMessage = "The password is too weak.";
+              break;
+            case 'operation-not-allowed':
+              errorMessage = "Email/password accounts are not enabled.";
+              break;
+            default:
+              errorMessage = "An unknown error occurred. Please try again.";
+              break;
+          }
+        } else {
+          // Fallback for any other exception types
+          errorMessage = "An unexpected error occurred. Please try again.";
+        }
+
+        emit(AuthError(errorMessage));
       }
     });
 
@@ -106,8 +131,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           errorMessage = "An unexpected error occurred. Please try again.";
         }
 
-        // Print the actual error for debugging purposes
-        print(e.toString());
+
 
         // Emit an AuthError state with a user-friendly error message
         emit(AuthError(errorMessage));
