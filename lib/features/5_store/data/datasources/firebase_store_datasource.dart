@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_bloc.dart';
 import '../../../../core/const/const.dart';
 import '../local_datasources/local_datesource.dart';
 import '../models/brand_model.dart';
@@ -23,9 +24,14 @@ class FirebaseStoreDatasource {
 
   Future<List<ProductModel>> getPopularProducts() async {
    // await setPopularProducts();
-    final snapshot = await _firestore.collection('products')
-        .where('isPopular', isEqualTo: true)
-        .get();
+
+
+    final snapshot =  AuthBloc.currentUser?.role=="admin"?
+    await _firestore.collection('products')
+        //.where('isPopular', isEqualTo: true)
+        .get():
+    await _firestore.collection('products').where('isPopular', isEqualTo: true).get()
+    ;
     return snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
   }
 

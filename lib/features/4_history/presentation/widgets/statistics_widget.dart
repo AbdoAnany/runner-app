@@ -35,7 +35,7 @@ class StatisticsWidget extends StatelessWidget {
           ),
           _buildStatColumn(
             icon: Iconsax.routing,
-            value: '${AppFunction.getDistance(state.historyData.fold(0, (accumulator, element) => (accumulator + element.distance).toInt())/100 )} KM',
+            value: '${AppFunction.getDistance(state.historyData.fold(0, (accumulator, element) => (accumulator + element.distance).toInt())/1000 )} KM',
             label: 'Distance',
           ),
           _buildStatColumn(
@@ -43,11 +43,7 @@ class StatisticsWidget extends StatelessWidget {
             iconColor: AppColors.dotColor,
             value: '${
 
-
-                AppFunction.getHistoryCount(
-                  state.historyData.fold(0, (accumulator, element) => (accumulator + element.pt).toInt()
-                ))
-
+128
             } BPM',
             label: 'Heart Beat',
           ),
