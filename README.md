@@ -101,7 +101,7 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
         image_path: "assets/image/Logo.png"
         min_sdk_android: 21 # android min sdk min:16, default 21
 
-# Architecture
+# Architecture 2_auth 
 
 The `2_auth` feature is divided into three main layers: Presentation, Domain, and Data.
 
@@ -161,5 +161,145 @@ The authentication feature uses BLoC to manage state changes in the application.
 - **`RolesLoaded`**: Represents the successful loading of user roles.
 - **`LoggedOut`**: Indicates the user has successfully logged out.
 
+# History Screen Architecture
 
-      
+The **History Screen** feature is implemented using the BLoC architecture and is responsible for managing and displaying historical runner data.
+
+## Architecture Overview
+
+The History feature is structured into three main layers:
+
+1. **Presentation Layer**
+2. **Domain Layer**
+3. **Data Layer**
+
+### Presentation Layer
+
+The presentation layer handles the UI state and user interactions. It uses the BLoC (Business Logic Component) pattern to maintain a clear separation between the business logic and UI components.
+
+#### Key Components
+
+- **BLoC**: `RunnerHistoryDataBloc` manages events and states related to runner data.
+- **Events**: Define the actions or interactions that can be performed by the user.
+- **States**: Represent the various states of the UI as a result of these events.
+
+### Domain Layer
+
+The domain layer contains the core business logic of the application, encapsulating use cases and interacting with repositories to retrieve or modify data.
+
+#### Key Components
+
+- **Use Cases**: Encapsulate the business logic of the application.
+  - **`GetHistoryData`**: Retrieves historical runner data.
+  - **`SetHistoryData`**: Stores runner data.
+
+### Data Layer
+
+The data layer is responsible for managing data retrieval and storage, interfacing with remote and local data sources.
+
+#### Key Components
+
+- **Repositories**: Abstract interfaces that define data operations.
+  - **Remote Sources**: Handle data operations with Firebase Storge.
+  
+
+## BLoC Pattern
+
+The History Screen feature employs the BLoC pattern to manage state changes in the application efficiently. Below is a detailed overview of the events and states managed by the `RunnerHistoryDataBloc`.
+
+### Events
+
+- **`LoadRunnerData`**: Initiates the process of loading runner history data. If no data is available, it generates fake history data for demonstration purposes.
+
+### States
+
+- **`RunnerDataLoading`**: Represents the state when the data is being loaded.
+- **`RunnerDataLoaded`**: Indicates that the runner history data has been successfully loaded.
+- **`RunnerDataError`**: Represents an error state with an error message when data loading fails.
+
+### BLoC Implementation
+
+The `RunnerHistoryDataBloc` manages the state of runner history data through the following process:
+
+1. **`LoadRunnerData` Event**:
+   - Triggers the loading of runner history data.
+   - If data is empty, generates fake data and saves it using the `SetHistoryData` use case.
+   - Emits `RunnerDataLoaded` state with the loaded data.
+   - In case of an error, emits `RunnerDataError` state with the error message.
+# Store Feature Architecture
+
+The **Store** feature in this application is designed to manage and display product-related data such as brands, categories, and popular products. This feature utilizes Firebase for data retrieval and employs the BLoC (Business Logic Component) architecture to separate business logic from UI components.
+
+## Architecture Overview
+
+The Store feature is organized into three main layers:
+
+1. **Presentation Layer**
+2. **Domain Layer**
+3. **Data Layer**
+
+### Presentation Layer
+
+The presentation layer is responsible for managing UI states and user interactions. The BLoC pattern is used to handle state management, allowing for a clear separation between UI and business logic.
+
+#### Key Components
+
+- **BLoC**: `StoreBloc` handles events and states related to store data.
+- **Events**: Define the user actions or interactions within the store.
+- **States**: Represent the UI states that result from events.
+
+### Domain Layer
+
+The domain layer contains the core business logic of the Store feature. It defines use cases that interact with repositories to fetch or modify data.
+
+#### Key Components
+
+- **Use Cases**: Encapsulate the business logic for specific operations.
+  - **`GetBrands`**: Fetches the list of brands from the data source.
+  - **`GetCategories`**: Retrieves the list of categories.
+  - **`GetPopularProducts`**: Obtains the list of popular products.
+
+### Data Layer
+
+The data layer is responsible for handling data operations, including data retrieval and storage. It interacts with Firebase to fetch necessary information.
+
+#### Key Components
+
+- **Repositories**: Abstract interfaces that define data operations.
+- **Data Sources**: Manage data retrieval and storage.
+  - **Firebase**: Used to retrieve brands, categories, and popular products data.
+
+## BLoC Pattern
+
+The Store feature utilizes the BLoC pattern to efficiently manage state changes within the application. Below is an overview of the events and states managed by the `StoreBloc`.
+
+### Events
+
+- **`LoadStoreData`**: Initiates the loading of store data, including brands, categories, and popular products.
+- **`RefreshStoreData`**: Refreshes the store data to ensure it is up-to-date.
+- **`LoadMorePopularProducts`**: Loads additional popular products to be appended to the existing list.
+
+### States
+
+- **`StoreInitial`**: Represents the initial state before any data is loaded.
+- **`StoreLoading`**: Indicates that the store data is currently being loaded.
+- **`StoreLoaded`**: Represents the state where store data has been successfully loaded.
+- **`StoreError`**: Indicates that an error occurred during data retrieval, providing an error message.
+
+### BLoC Implementation
+
+The `StoreBloc` manages the state of the store feature through the following processes:
+
+1. **`LoadStoreData` Event**:
+   - Fetches brands, categories, and popular products data from Firebase.
+   - Emits `StoreLoaded` state with the retrieved data.
+   - Emits `StoreError` state in case of any errors during the data fetching process.
+
+2. **`RefreshStoreData` Event**:
+   - Refreshes the brands, categories, and popular products data.
+   - Similar to `LoadStoreData`, it emits either `StoreLoaded` or `StoreError` based on the outcome.
+
+3. **`LoadMorePopularProducts` Event**:
+   - Loads additional popular products and appends them to the existing list.
+   - Emits `StoreLoaded` with the updated list or `StoreError` if any error occurs.
+
