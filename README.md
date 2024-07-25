@@ -100,15 +100,11 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
         ios: true
         image_path: "assets/image/Logo.png"
         min_sdk_android: 21 # android min sdk min:16, default 21
-# Runner App
-
-This is a Flutter Runner App that uses Bloc for state management and Firebase Firestore for data storage. The app includes a history section and a store section with role-based permissions to access different parts of the app.
 
 ## Key Features
 
 ### History Feature
 
-- **Functionality**: The history feature is designed to generate and display historical data for each user.
   
 - **Test Data Generation**: For testing purposes, the app generates 10 random entries of historical data for every user. This allows you to test the application's history functionality without needing real data input.
   
