@@ -33,202 +33,133 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
    ```bash
    flutter pub get
       ```bash
-      lib
+   lib/
       │
-      ├── core
-      │   ├── utils
-      │   │   ├── app_style.dart
-      │   │   └── color.dart
-      │   └── constants
-      │       └── app_constants.dart
+      ├── core/
+      │   ├── constants/
+      │   ├── errors/
+      │   ├── helpers/
+      │   ├── share/
+      │   ├── style/
+      │   ├── utils/
+      │   └── widgets/
       │
-      ├── data
-      │   ├── repositories
-      │   │   └── auth_repository_impl.dart
-      │   └── sources
-      │       ├── firebase_service.dart
-      │       └── shared_preferences_service.dart
+      ├── features/
+      │   ├── 0_get_started/ │
+                  ├── presentation/pages/get_started_screen.dart
+      │   ├── 1_onboarding/
+                  ├── presentation/pages/onboarding_screen.dart
+                  ├── presentation/widgets/card_onboarding.dart
+      │   ├── 2_auth/
+      │   ├── 3_home/
+      │   ├── 4_history/
+      │   ├── 5_store/
+      │   └── 6_profile/
       │
-      ├── domain
-      │   ├── entities
-      │   │   └── user_entity.dart
-      │   ├── repositories
-      │   │   └── auth_repository.dart
-      │   └── use_cases
-      │       ├── login_use_case.dart
-      │       └── sign_up_use_case.dart
-      │
-      ├── presentation
-      │   ├── bloc
-      │   │   ├── auth_bloc.dart
-      │   │   ├── auth_event.dart
-      │   │   └── auth_state.dart
-      │   ├── pages
-      │   │   ├── login_screen.dart
-      │   │   └── sign_up_screen.dart
-      │   └── widgets
-      │       ├── email_field.dart
-      │       ├── password_field.dart
-      │       ├── role_dropdown.dart
-      │       └── social_auth_buttons.dart
-      │
-      └── main.dart
+      ├── main.dart
+      └── my_app.dart
+3. **pakages dependencies::**
+
+   ```bash
+      carousel_slider: ^4.2.1
+        cloud_firestore: ^5.1.0
+        dartz: ^0.10.1
+        equatable: ^2.0.5
+        firebase_auth: ^5.1.2
+        firebase_core: ^3.2.0
+        flutter:
+          sdk: flutter
+        flutter_bloc: ^8.1.6
+        flutter_launcher_icons: ^0.13.1
+        flutter_native_splash: ^2.4.1
+        flutter_screenutil: ^5.9.3
+        get_it: ^7.7.0
+        iconsax: ^0.0.8
+        intl: ^0.19.0
+        provider: ^6.1.2
+        shared_preferences: ^2.2.3
+        smooth_page_indicator: ^1.2.0+3
+        toastification: ^2.1.0
       
-R**Flutter Runner Application**
+      
+      dev_dependencies:
+        flutter_test:
+          sdk: flutter
+        bloc_test: ^9.0.6
+        flutter_lints: ^3.0.0
+      flutter_native_splash:
+        color: "#28333F" # Set the background color for the splash screen
+        image: "assets/image/Logo.png" # Set the image for the splash screen
+      
+        android_12:
+          image: "assets/image/Logo12.png" # Use the same image for Android 12+
+          color: "#28333F" # Set the background color for Android 12+
+      
+      flutter_launcher_icons:
+        android: "launcher_icon"
+        ios: true
+        image_path: "assets/image/Logo.png"
+        min_sdk_android: 21 # android min sdk min:16, default 21
 
-**Table of Contents**
+# Architecture
 
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Libraries & Packages](#libraries--packages)
-- [Getting Started](#getting-started)
-- [Contributing](#contributing)
-- [License](#license)
+The `2_auth` feature is divided into three main layers: Presentation, Domain, and Data.
 
-**Features**
+## Presentation Layer
 
-- User authentication (sign up, login, password reset) using Firebase.
-- Role-based user management.
-- Store management with brands, categories, and popular products.
-- View user activity history.
-- Onboarding screens for new users.
-- Dynamic home screen with personalized user data and progress tracking.
+This layer is responsible for managing the UI state and interactions. It utilizes the BLoC (Business Logic Component) pattern to separate business logic from UI components.
 
-**Project Structure**
+### Key Components
 
-The project follows a clean architecture approach with a focus on separation of concerns. The structure is divided into core, features, and shared components:
+- **BLoC**: `AuthBloc` manages authentication events and states.
+- **Events**: Define the actions that can be performed.
+- **States**: Define the UI states resulting from events.
 
-css
+## Domain Layer
 
-Copy code
+This layer contains the business logic and interacts with repositories to fulfill use cases.
 
-lib/
+### Key Components
 
-│
+- **Entities**: `UserEntity` represents the user data in the app.
+- **Use Cases**: Encapsulate the application's business logic.
+  - **`LoginUseCase`**: Handles user login.
+  - **`SignUpUseCase`**: Handles user registration.
 
-├── core/
+## Data Layer
 
-│   ├── constants/
+This layer handles data operations, including data retrieval and storage.
 
-│   ├── errors/
+### Key Components
 
-│   ├── helpers/
+- **Repositories**: Provide abstract interfaces for data operations.
+  - **Implementation**: `AuthRepositoryImpl` handles data operations using Firebase Authentication and SharedPreferences.
+- **Data Sources**: Manage actual data retrieval from network or local storage.
+  - **Remote**: Interacts with Firebase for authentication.
+  - **Local**: Utilizes SharedPreferences for storing session data.
 
-│   ├── share/
+## BLoC Pattern
 
-│   ├── style/
+The authentication feature uses BLoC to manage state changes in the application. Below is an overview of the events and states managed by the `AuthBloc`.
 
-│   ├── utils/
+### Events
 
-│   └── widgets/
+- **`UserIsLogIn`**: Checks if a user is logged in based on saved session data.
+- **`SignInRequested`**: Triggers a user login with email and password.
+- **`SignUpRequested`**: Initiates user registration with email, password, and role.
+- **`LoadRolesRequested`**: Fetches user roles from the repository.
+- **`SignOutRequested`**: Logs the user out and clears session data.
+- **`ReloadState`**: Reloads the current authentication state to reflect any changes.
 
-│
+### States
 
-├── features/
-
-│   ├── 0\_get\_started/
-
-│   ├── 1\_onboarding/
-
-│   ├── 2\_auth/
-
-│   ├── 3\_home/
-
-│   ├── 4\_history/
-
-│   ├── 5\_store/
-
-│   └── 6\_profile/
-
-│
-
-├── main.dart
-
-└── my\_app.dart
-
-**Key Components**
-
-- **core**: Contains shared utilities, styles, constants, error handling, and reusable widgets.
-- **features**: Each feature is organized by domain and contains its own data, domain, and presentation layers.
-  - **data**: Data sources, repositories, and models.
-  - **domain**: Use cases, entities, and repositories interfaces.
-  - **presentation**: UI screens, widgets, and BLoC for state management.
-
-**Libraries & Packages**
-
-The project makes use of several libraries and packages to enhance its functionality:
-
-- **Firebase**: Used for authentication and data storage.
-  - firebase\_core
-  - firebase\_auth
-  - cloud\_firestore
-- **State Management**:
-  - flutter\_bloc: For BLoC pattern implementation.
-- **Routing**:
-  - go\_router: For declarative routing.
-- **Storage**:
-  - shared\_preferences: For storing user credentials locally.
-- **UI and Styling**:
-  - flutter\_screenutil: For responsive UI design.
-  - iconsax: For a wide range of icons.
-  - toastification: For showing custom toast messages.
-- **Others**:
-  - equatable: For value equality.
-  - dio: For making HTTP requests (if needed for remote API calls).
-
-**Getting Started**
-
-Follow these steps to set up and run the project on your local machine:
-
-**Prerequisites**
-
-Ensure you have the following installed:
-
-- Flutter SDK: Install Flutter
-- Firebase CLI: Install Firebase CLI
-
-**Installation**
-
-1. **Clone the repository**:
-
-   bash
-
-   Copy code
-
-   git clone https://github.com/your-username/flutter-ecommerce-app.git
-
-   cd flutter-ecommerce-app
-
-1. **Install dependencies**:
-
-   bash
-
-   Copy code
-
-   flutter pub get
-
-1. **Set up Firebase**:
-   1. Create a Firebase project and add an Android/iOS app.
-   1. Download the google-services.json (Android) and GoogleService-Info.plist (iOS) from the Firebase console and place them in the respective platform directories (android/app and ios/Runner).
-1. **Run the application**:
-
-   bash
-
-   Copy code
-
-   flutter run
-
-**Contributing**
-
-Contributions are welcome! Please fork the repository and submit a pull request for any changes. Here are some ways you can contribute:
-
-- Report bugs and issues.
-- Suggest features and enhancements.
-- Write tests and improve coverage.
-- Refactor code for efficiency and readability.
-
-**License**
-
-This project is licensed under the MIT License. See the LICENSE file for details.
+- **`AuthInitial`**: The initial state when no authentication process is active.
+- **`AuthLoading`**: Indicates an ongoing authentication process.
+- **`Authenticated`**: Represents a successfully authenticated user.
+- **`AuthError`**: Indicates an error occurred during authentication, with an error message.
+- **`SignUpRequestedDone`**: Indicates a successful registration process.
+- **`RolesLoaded`**: Represents the successful loading of user roles.
+- **`LoggedOut`**: Indicates the user has successfully logged out.
 
 
+      
