@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.bottomCenter,
                 context: context, // optional if you use ToastificationWrapper
                 title: Text('Unauthenticated'),
-                type: ToastificationType.error,
+                type: ToastificationType.error,showProgressBar: false,
                 style: ToastificationStyle.flatColored,
                 autoCloseDuration: const Duration(seconds: 3),
               );
@@ -204,8 +204,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           textAlign: TextAlign.center,
                           style: AppStyle.textStyle14WhiteW400,
                         ),
-                        TextButton(
-                          onPressed: () {
+                        InkWell(
+                          onTap: () {
                           context.pushScreen(SignUpScreen());
                           },
                           child: Text(
