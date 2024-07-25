@@ -16,7 +16,7 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
 
 ### Prerequisites
 
-- [Flutter](https://flutter.dev/docs/get-started/install) (version X.X.X)
+- [Flutter](https://flutter.dev/docs/get-started/install) (version 3.4.2)
 - [Firebase CLI](https://firebase.google.com/docs/cli)
 - A Firebase project with Firestore and Authentication enabled.
 
@@ -25,5 +25,5 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/flutter_runner_app.git
-   cd flutter_runner_app
+   git clone https://github.com/AbdoAnany/runner-app.git
+   cd runner-app
