@@ -8,12 +8,10 @@ import 'package:runner_app/core/helper/extension.dart';
 import 'package:runner_app/core/share/main_Screen.dart';
 import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/features/2_auth/presentation/pages/sign_up_Screen.dart';
-import 'package:runner_app/features/home/presentation/pages/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../../core/style/app_style.dart';
-
 import '../manager/auth/auth_bloc.dart';
 import '../manager/auth/auth_event.dart';
 import '../manager/auth/auth_state.dart';

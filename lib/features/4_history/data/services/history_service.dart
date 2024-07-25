@@ -1,73 +1,13 @@
+// data/services/history_service.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-List historyData = [
-  {'date': '2024-01-01',
-    "kal":512,
-    "steps": 114141,
-    "pt": 0,
-    "distance": 1000.0,  },
-
-  {'date': '2024-01-02',
-    "kal":512,
-    "steps": 7447,
-    "pt": 0,
-    "distance": 101400.0,  },
-
-  {'date': '2024-01-03',
-    "kal":512,
-    "steps": 474,
-    "pt": 100,
-    "distance": 1414.0,  },
-
-];
-class RunnerDataService {
-  final CollectionReference _runnerDataCollection = FirebaseFirestore.instance.collection('runnerData');
-
-
-  List historyData = [
-    {'date': '2024-01-01',
-      "kal":512,
-      "steps": 114141,
-      "pt": 0,
-      "distance": 1000.0,  },
-
-    {'date': '2024-01-02',
-      "kal":512,
-      "steps": 7447,
-      "pt": 0,
-      "distance": 101400.0,  },
-
-    {'date': '2024-01-03',
-      "kal":512,
-      "steps": 474,
-      "pt": 100,
-      "distance": 1414.0,  },
-
-  ];
-
-  Future<List<Map<String, dynamic>>> getHistoryData() async {
-    QuerySnapshot querySnapshot = await _runnerDataCollection.where('type', isEqualTo: 'history').get();
-    return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-  }
-
-  Future<List<Map<String, dynamic>>> getPopularData() async {
-    QuerySnapshot querySnapshot = await _runnerDataCollection.where('type', isEqualTo: 'popular').get();
-    return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-  }
-}
-
-
 class HistoryService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  late  String? userId;
+  final String? userId;
 
-  HistoryService(){
-   userId=  FirebaseAuth.instance.currentUser?. uid;
-  }
+  HistoryService() : userId = FirebaseAuth.instance.currentUser?.uid;
 
-  // Get history data for a specific user
   Future<List<Map<String, dynamic>>> getHistoryData() async {
     try {
       QuerySnapshot querySnapshot = await _firestore
@@ -86,7 +26,6 @@ class HistoryService {
     }
   }
 
-  // Set history data for a specific user
   Future<void> setHistoryData(List<Map<String, dynamic>> historyData) async {
     try {
       WriteBatch batch = _firestore.batch();
@@ -108,7 +47,6 @@ class HistoryService {
     }
   }
 
-  // Add a single history entry for a specific user
   Future<void> addHistoryEntry(Map<String, dynamic> entry) async {
     try {
       await _firestore
@@ -124,7 +62,6 @@ class HistoryService {
     }
   }
 
-  // Update a specific history entry for a user
   Future<void> updateHistoryEntry(String date, Map<String, dynamic> updates) async {
     try {
       await _firestore
@@ -140,7 +77,6 @@ class HistoryService {
     }
   }
 
-  // Delete a specific history entry for a user
   Future<void> deleteHistoryEntry(String date) async {
     try {
       await _firestore

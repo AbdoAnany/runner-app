@@ -2,13 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/helper/extension.dart';
-import 'package:runner_app/core/style/color.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../core/const/const.dart';
 import '../../../../core/style/app_style.dart';
-import '../widgets/card_onboarding.dart';
 import '../../../2_auth/presentation/pages/login_screen.dart';
+import '../widgets/card_onboarding.dart';
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
 

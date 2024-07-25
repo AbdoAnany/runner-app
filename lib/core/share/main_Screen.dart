@@ -1,30 +1,20 @@
-
-
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:runner_app/core/helper/extension.dart';
+import 'package:runner_app/core/share/share_app_bar.dart';
 import 'package:runner_app/core/style/app_style.dart';
 import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_event.dart';
-import 'package:runner_app/features/2_auth/presentation/pages/login_screen.dart';
-import 'package:runner_app/features/ui/widgets/history_section.dart';
 
+import '../../dependency_injection.dart';
 import '../../features/2_auth/presentation/manager/auth/auth_bloc.dart';
-import '../../features/home/presentation/pages/home_screen.dart';
-import '../../features/ui/screens/runner_data_screen.dart';
-import '../../features/ui/widgets/popular_section.dart';
+import '../../features/3_home/presentation/pages/home_screen.dart';
+import '../../features/4_history/presentation/manager/runner_data/runner_data_bloc.dart';
+import '../../features/4_history/presentation/pages/history_screen.dart';
+import '../../features/5_store/presentation/pages/popular_section.dart';
 import '../const/const.dart';
 import '../style/color.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
-
-
 
 class MainScreen extends StatefulWidget {
   const MainScreen({
@@ -46,11 +36,21 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
   final List<Map<String, Widget>> _pages = [
-    {"Home":HomeScreen(),},
-    {"History":HistorySection(),},
-    {"Store":StoreScreen(),},
-    {"Profile":ProfileScreen(),},
-
+    {
+      "Home": const HomeScreen(),
+    },
+    {
+      "History":  BlocProvider<RunnerHistoryDataBloc>(
+        create: (context) => locator<RunnerHistoryDataBloc>(),
+        child: const HistoryScreen(),
+      ),
+    },
+    {
+      "Store": StoreScreen(),
+    },
+    {
+      "Profile": ProfileScreen(),
+    },
   ];
 
   void _onItemTapped(int index) {
@@ -64,67 +64,31 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar:_currentIndex!=0? AppBar(
-        backgroundColor: AppColors.transparent,
-        elevation: 0,
-        leading: InkWell(
-            onTap: (){
-              setState(() {
-                _currentIndex = 0;
-              });
-            },
-            child: Icon(Iconsax.arrow_square_left, color: AppColors.iconHomeColor)),
-
-        title: Text(_pages[_currentIndex].keys.first,style: AppStyle.textStyle16GWhiteW800,),
-        actions: [
-          Badge(smallSize: 10,
-            backgroundColor: AppColors.dotColor,
-
-
-            child: const Icon(
-              Iconsax.direct_normal,
-              color: AppColors.iconHomeColor,
-            ),
-          ),
-          SizedBox(
-            width: 12.w,
-          ),
-          Badge(smallSize: 10,
-            backgroundColor: AppColors.dotColor,
-
-
-            child: const Icon(
-              Iconsax.sms_notification,
-              color: AppColors.iconHomeColor,
-            ),
-          ),
-          SizedBox(
-            width: 12.w,
-          ),
-        ],
-      ):null,
+      appBar: ShareAppBar(onTap:()=> _onItemTapped,
+      title: _pages[_currentIndex].keys.first,
+        currentIndex: _currentIndex,
+      ),
       body: Stack(
         children: [
-          if(_currentIndex==0)
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 360.h,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppImage.homeGrenadianImage),
-                  fit: BoxFit.fill,
-                ),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(16),
-                  bottomLeft: Radius.circular(12),
+          if (_currentIndex == 0)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 380.h,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AppImage.homeGrenadianImage),
+                    fit: BoxFit.fill,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(24),
+                    bottomLeft: Radius.circular(24),
+                  ),
                 ),
               ),
             ),
-          ),
-
           Container(
             height: double.infinity,
             width: double.infinity,
@@ -145,26 +109,24 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-         AnimatedSwitcher(
-             duration: Duration(milliseconds: 800),
-             transitionBuilder: (Widget child, Animation<double> animation) {
-             return SlideTransition(
-               position: Tween<Offset>(
-                 begin: const Offset(1.0, 0.0),
-                 end: const Offset(0.0, 0.0),
-               ).animate(animation),
-               child: child,
-             );
-             },
-
-             child: _pages[_currentIndex].values.first),
+          AnimatedSwitcher(
+              duration: Duration(milliseconds: 800),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
+                    end: const Offset(0.0, 0.0),
+                  ).animate(animation),
+                  child: child,
+                );
+              },
+              child: _pages[_currentIndex].values.first),
         ],
       ),
       bottomNavigationBar: Container(
-
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          gradient: LinearGradient(colors: [
+          gradient: const LinearGradient(colors: [
             AppColors.bgFiledColor,
             AppColors.bgFiledColor,
           ]),
@@ -252,7 +214,6 @@ class GradientIcon extends StatelessWidget {
   }
 }
 
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -272,16 +233,19 @@ class ProfileScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("ProfileScreen",style: AppStyle.textStyle12GrayW400),
-          SizedBox(height: 20,),
+          Text("ProfileScreen", style: AppStyle.textStyle12GrayW400),
+          SizedBox(
+            height: 20,
+          ),
           MaterialButton(
-              child: Text("Logout",style: AppStyle.textStyle20GoldW800),
-              onPressed: (){
+              child: Text("Logout", style: AppStyle.textStyle20GoldW800),
+              onPressed: () {
                 BlocProvider.of<AuthBloc>(context).add(
                   SignOutRequested(),
                 );
               })
         ],
-      ),);
+      ),
+    );
   }
 }

@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,13 +6,9 @@ import 'package:runner_app/features/0_get_started/presentation/pages/get_started
 import 'package:toastification/toastification.dart';
 
 import 'core/share/main_Screen.dart';
-import 'features/blocs/runner_data/runner_data_bloc.dart';
 import 'features/2_auth/data/repositories/firebase_auth.dart';
 import 'features/2_auth/presentation/manager/auth/auth_bloc.dart';
 import 'features/2_auth/presentation/manager/auth/auth_state.dart';
-import 'features/services/runner_data_service.dart';
-import 'features/home/presentation/pages/home_screen.dart';
-import 'features/2_auth/presentation/pages/login_screen.dart';
 class Get {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -32,9 +26,10 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(AuthService()),
         ),
-        BlocProvider<RunnerDataBloc>(
-          create: (context) => RunnerDataBloc(HistoryService( )),
-        ),
+        // BlocProvider<RunnerDataBloc>(
+        //   create: (context) => RunnerDataBloc(HistoryService( )),
+        // ),
+
       ],
       child:
       ScreenUtilInit(
@@ -52,7 +47,7 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 primarySwatch: Colors.deepPurple,
                 scaffoldBackgroundColor:AppColors.bgColor,
-                appBarTheme:  AppBarTheme(
+                appBarTheme:  const AppBarTheme(
                   color: AppColors.bgColor,
               //    backgroundColor: AppColors.bgColor,
                   iconTheme: IconThemeData(color: AppColors.white),),

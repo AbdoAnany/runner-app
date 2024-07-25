@@ -1,87 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:intl/intl.dart';
 import 'package:runner_app/core/const/const.dart';
 import 'package:runner_app/core/style/app_style.dart';
 import 'package:runner_app/core/style/color.dart';
 
-import '../../blocs/runner_data/runner_data_bloc.dart';
-import '../../blocs/runner_data/runner_data_event.dart';
-import '../../blocs/runner_data/runner_data_state.dart';
+import '../../../4_history/presentation/manager/runner_data/runner_data_bloc.dart';
+import '../../../4_history/presentation/manager/runner_data/runner_data_state.dart';
 
-// class StoreSection extends StatelessWidget {
-//   final List<Map<String, dynamic>> runnerData;
-//
-//   StoreSection({required this.runnerData});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//
-//
-//       Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           'Store',
-//           style: Theme.of(context).textTheme.titleLarge,
-//         ),
-//
-//
-//         SizedBox(height: 10),
-//         runnerData.isEmpty
-//             ? Center(child: Text('No Store available.'))
-//             : ListView.builder(
-//                 shrinkWrap: true,
-//                 itemCount: runnerData.length,
-//                 itemBuilder: (context, index) {
-//                   return ListTile(
-//                     leading: Icon(Icons.Store),
-//                     title: Text(runnerData[index]['name']),
-//                     subtitle: Text('Time: ${runnerData[index]['time']}'),
-//                   );
-//                 },
-//               ),
-//       ],
-//     );
-//   }
-// }
-
-// class StoreSection extends StatelessWidget {
-//   final List<Map<String, dynamic>> popularData;
-//
-//   StoreSection({required this.popularData});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           'Popular',
-//           style: Theme.of(context).textTheme.titleLarge,
-//         ),
-//         SizedBox(height: 10),
-//         popularData.isEmpty
-//             ? Center(child: Text('No popular data available.'))
-//             : ListView.builder(
-//           shrinkWrap: true,
-//           itemCount: popularData.length,
-//           itemBuilder: (context, index) {
-//             return ListTile(
-//               leading: Icon(Icons.trending_up),
-//               title: Text(popularData[index]['name']),
-//               subtitle: Text('Time: ${popularData[index]['time']}'),
-//             );
-//           },
-//         ),
-//       ],
-//     );
-//   }
-// }
 
 
 class StoreScreen extends StatefulWidget {
@@ -90,7 +17,7 @@ class StoreScreen extends StatefulWidget {
   const StoreScreen( {super.key});
 
   @override
-  State<StoreScreen> createState() => _RunnerDataScreenState();
+  State<StoreScreen> createState() => _StoreScreenState();
 }
 List <Map<String, dynamic>> runnerData = [
   {"name":"new","image":AppImage.newCard},
@@ -112,11 +39,10 @@ List <Map<String, dynamic>> runnerData = [
 
 
 ];
-class _RunnerDataScreenState extends State<StoreScreen> {
+class _StoreScreenState extends State<StoreScreen> {
 
   @override
   void initState() {
-    BlocProvider.of<RunnerDataBloc>(context).add(LoadRunnerData(),);
 
     super.initState();
   }
@@ -127,7 +53,7 @@ class _RunnerDataScreenState extends State<StoreScreen> {
      extendBodyBehindAppBar: true,
 
       body: SafeArea(
-        child: BlocBuilder<RunnerDataBloc, RunnerDataState>(
+        child: BlocBuilder<RunnerHistoryDataBloc, RunnerHistoryDataState>(
           builder: (context, state) {
             print('ssssssssss');
             print(state);
@@ -307,7 +233,6 @@ class PopularSection extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16),
-        FloatingNavBar(),
       ],
     );
   }
@@ -398,25 +323,3 @@ class PopularItem extends StatelessWidget {
   }
 }
 
-class FloatingNavBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      padding: EdgeInsets.symmetric(vertical: 12),
-      decoration: BoxDecoration(
-        color: Color(0xFF3A3A3A),
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Icon(Icons.home, color: Colors.white),
-          Icon(Icons.emoji_events, color: Colors.white),
-          Icon(Icons.shopping_bag, color: Colors.white),
-          Icon(Icons.person, color: Colors.white),
-        ],
-      ),
-    );
-  }
-}

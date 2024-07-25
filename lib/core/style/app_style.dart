@@ -55,6 +55,10 @@ class AppStyle{
       color: AppColors.white,
       fontWeight: FontWeight.w400,
       fontSize: 14.w);
+  static TextStyle textStyle10WhiteW400 =TextStyle(
+      color: AppColors.white,
+      fontWeight: FontWeight.w400,
+      fontSize: 10.w);
   static TextStyle textStyle48WhiteW400 =TextStyle(
       color: AppColors.white,fontFamily: "BebasNeue",
       fontWeight: FontWeight.w400,

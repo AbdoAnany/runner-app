@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,8 +6,7 @@ import '../../../../core/const/const.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 
-
-class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
+class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
 
   @override
@@ -47,16 +43,24 @@ class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
         ],
       ),
       actions: [
-        const Icon(
-          Iconsax.direct_normal,
-          color: AppColors.iconHomeColor,
+        const Badge(
+          smallSize: 8,
+          backgroundColor: AppColors.dotColor,
+          child: Icon(
+            Iconsax.direct_normal,
+            color: AppColors.iconHomeColor,
+          ),
         ),
         SizedBox(
           width: 12.w,
         ),
-        const Icon(
-          Iconsax.sms_notification,
-          color: AppColors.iconHomeColor,
+        const Badge(
+          smallSize: 8,
+          backgroundColor: AppColors.dotColor,
+          child: Icon(
+            Iconsax.sms_notification,
+            color: AppColors.iconHomeColor,
+          ),
         ),
         SizedBox(
           width: 12.w,
@@ -67,5 +71,5 @@ class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize =>Size(double.infinity, 60.h);
+  Size get preferredSize => Size(double.infinity, 60.h);
 }

@@ -2,8 +2,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:runner_app/core/helper/extension.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../../../my_app.dart';
-import '../../../../services/runner_data_service.dart';
 import '../../../data/repositories/firebase_auth.dart';
 import '../../pages/login_screen.dart';
 import 'auth_event.dart';
