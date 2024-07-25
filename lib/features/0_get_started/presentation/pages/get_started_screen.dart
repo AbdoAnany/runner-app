@@ -28,22 +28,28 @@ class GetStarted extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
         children: [
 
-          Text('Running App',style: AppStyle.textStyle30WhiteW700,),
-          SizedBox(height: 20.h,),
+
+
           SizedBox(
             width: 247,
 
-            child: Text('Run and earn with our app. Some text Example will be her',
-              textAlign: TextAlign.center,
-              style: AppStyle.textStyle14GrayW400,),
+            child: Column(
+              children: [
+                Text('Running App',style: AppStyle.textStyle30WhiteW700,),
+                SizedBox(height: 4,),
+                Text('Run and earn with our app. Some text Example will be her',
+                  textAlign: TextAlign.center,
+                  style: AppStyle.textStyle14GrayW400,),
+              ],
+            ),
           ),
 
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 30.h),
+            padding: EdgeInsets.symmetric(vertical: 40.h),
             child: MaterialButton(
-              minWidth: 300.w,elevation: 0,
+              minWidth: 300,elevation: 0,
                 color: AppColors.primary,
-                height: 56.h,
+                height: 56,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
 
                 child: Text("Get Started",style:AppStyle.textStyle18WhiteW700,),

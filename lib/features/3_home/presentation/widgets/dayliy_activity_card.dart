@@ -32,7 +32,7 @@ class _DailyActivityCardState extends State<DailyActivityCard> {
   @override
   Widget build(BuildContext context) {
     return   Container(
-      margin: EdgeInsets.symmetric(horizontal: 12.w,vertical: 4.h),
+      margin: EdgeInsets.symmetric(horizontal: 17.w,vertical: 4.h),
       height: 87.h,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),

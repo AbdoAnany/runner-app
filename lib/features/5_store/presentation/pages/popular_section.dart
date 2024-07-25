@@ -27,7 +27,8 @@ List <Map<String, dynamic>> runnerData = [
   {"name":"Equip","image":AppImage.equipCard},
   {"name":"Nutrition","image":AppImage.equipCard},
 
-];List <Map<String, dynamic>> brandList = [
+];
+List <Map<String, dynamic>> brandList = [
   {"name":"Puma","image":AppImage.puma},
   {"name":"Reebok","image":AppImage.reebok},
   {"name":"Nike","image":AppImage.nike},

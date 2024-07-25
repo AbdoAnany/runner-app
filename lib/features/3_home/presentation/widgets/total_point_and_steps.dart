@@ -12,13 +12,14 @@ class TotalPointAndSteps extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+      padding: EdgeInsets.symmetric(horizontal: 17.w, vertical: 12.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+       //   SizedBox(width: 17.w,),
           Container(
             height: 125.h,
-            width: 163.w,
+            width: 154.w,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: AppColors.white.withOpacity(.17)),
@@ -48,9 +49,10 @@ class TotalPointAndSteps extends StatelessWidget {
               )
             ]),
           ),
+
           Container(
             height: 125.h,
-            width: 163.w,
+            width: 154.w,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: AppColors.white.withOpacity(.17)),
@@ -78,7 +80,8 @@ class TotalPointAndSteps extends StatelessWidget {
                 ],
               )
             ]),
-          )
+          ),
+      //    SizedBox(width: 17.w,),
         ],
       ),
     );

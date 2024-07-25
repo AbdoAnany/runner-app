@@ -15,9 +15,7 @@ final int index;
   @override
   Widget build(BuildContext context) {
     return   Container(
-   //   margin: EdgeInsets.only(top: 20.h),
-      height: 303,
-      width: 311,
+
       decoration: BoxDecoration(
 
         gradient: const LinearGradient(
@@ -40,9 +38,10 @@ final int index;
       child: Container(
 
         margin: EdgeInsets.all(1),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
 
-        height: 303,
-        width: 311,
+        // height: 303.h,
+        // width: 311.w,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(64),
             color: AppColors.bgContainerColor
@@ -61,7 +60,7 @@ final int index;
                 textAlign: TextAlign.center,
                 style: AppStyle.textStyle12GrayW400,),
             ),
-            SizedBox(height: 8.h,),
+            SizedBox(height: 20.h,),
             Center(
               child: SmoothPageIndicator(
                   controller: PageController(initialPage: index),  // PageController
@@ -75,6 +74,7 @@ final int index;
                     spacing: 5,
                   ),  // your preferred effect
                   onDotClicked: (index){
+
                   }
               ),
             ),

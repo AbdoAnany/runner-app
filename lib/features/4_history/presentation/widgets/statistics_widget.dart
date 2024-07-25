@@ -16,8 +16,8 @@ class StatisticsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+    return Container(height: 96.h,
+      margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 0.h),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -55,6 +55,8 @@ class StatisticsWidget extends StatelessWidget {
     Color? iconColor,
   }) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Icon(icon, color: iconColor ?? AppColors.white),
         Text(

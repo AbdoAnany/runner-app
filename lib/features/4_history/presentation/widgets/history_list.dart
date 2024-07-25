@@ -2,6 +2,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/helper/function.dart';
 import '../../../../core/style/app_style.dart';
@@ -14,7 +15,7 @@ final  List<HistoryEntity> historyData;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      shrinkWrap: true,
+
       itemCount: historyData.length,
       itemBuilder: (context, index) {
         final history = historyData[index];
@@ -29,18 +30,21 @@ class HistoryListItem extends StatelessWidget {
   final HistoryEntity history;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Container(height: 72.h,
       decoration: BoxDecoration(
         color: AppColors.bgContainerColor,
         border: Border.all(color: AppColors.border1ContainerColor),
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(12.0),
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
-      padding: const EdgeInsets.all(16.0),
+      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
+      padding:  EdgeInsets.symmetric(horizontal: 16.w,vertical: 8.h),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 AppFunction.getDateDayMonth(history.date),
