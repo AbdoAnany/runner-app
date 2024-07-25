@@ -30,15 +30,12 @@ class HistoryService {
     try {
       WriteBatch batch = _firestore.batch();
 
-      for (var data in historyData) {
-        DocumentReference docRef = _firestore
-            .collection('users')
-            .doc(userId)
-            .collection('history')
-            .doc(data['date']);
+      DocumentReference docRef = _firestore
+          .collection('users')
+          .doc(userId);
 
-        batch.set(docRef, data, SetOptions(merge: true));
-      }
+
+      batch.set(docRef, {"history":historyData}, SetOptions(merge: true));
 
       await batch.commit();
       print('History data set successfully');
@@ -52,8 +49,6 @@ class HistoryService {
       await _firestore
           .collection('users')
           .doc(userId)
-          .collection('history')
-          .doc(entry['date'])
           .set(entry, SetOptions(merge: true));
 
       print('History entry added successfully');

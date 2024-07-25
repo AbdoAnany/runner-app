@@ -23,7 +23,8 @@ class SocialAuthButtons extends StatelessWidget {
     return Container(
       height: 70.h,
       width: 98.w,
-      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+      padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
+      margin: EdgeInsets.symmetric(vertical: 28.h, horizontal: 0.w),
       decoration: BoxDecoration(
         color: AppColors.bgContainerColor,
         border: Border.all(color: AppColors.border1ContainerColor),

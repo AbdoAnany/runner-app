@@ -37,6 +37,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.1
   flutter_screenutil: ^5.9.3
   get_it: ^7.7.0
   iconsax: ^0.0.8
@@ -51,11 +53,20 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   bloc_test: ^9.0.6
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^3.0.0
+flutter_native_splash:
+  color: "#28333F" # Set the background color for the splash screen
+  image: "assets/image/Logo.png" # Set the image for the splash screen
+
+  android_12:
+    image: "assets/image/Logo12.png" # Use the same image for Android 12+
+    color: "#28333F" # Set the background color for Android 12+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/image/Logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -106,3 +117,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

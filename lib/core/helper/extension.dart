@@ -28,6 +28,28 @@ extension ContextExtension on BuildContext {
       ),
     );
   }
+  Future<dynamic> pushAndReplacementScreen(Widget child) {
+    return Navigator.of(this).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => child,
+        transitionDuration: Duration(milliseconds: 700),
+        reverseTransitionDuration: Duration(milliseconds: 700),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0); // Start position
+          const end = Offset.zero; // End position
+          const curve = Curves.easeInOut; // Animation curve
+
+          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          var offsetAnimation = animation.drive(tween);
+
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+      ),
+    );
+  }
 
   Future<dynamic> pushNamed(String routeName, {Object? arguments}) {
     return Navigator.of(this).pushNamed(routeName, arguments: arguments);

@@ -19,8 +19,8 @@ class Validators {
     return null;
   }
 
-  static String? confirmPassword(String value, String password) {
-    if (value.isEmpty) {
+  static String? confirmPassword(String? value, String password) {
+    if (value!.isEmpty) {
       return 'Please confirm your password';
     }
     if (value != password) {

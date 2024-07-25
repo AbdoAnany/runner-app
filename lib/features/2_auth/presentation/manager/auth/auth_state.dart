@@ -5,6 +5,7 @@ abstract class AuthState {}
 class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
+class SignUpRequestedDone extends AuthState {}
 
 class Authenticated extends AuthState {
   final UserEntity user;
@@ -12,7 +13,11 @@ class Authenticated extends AuthState {
   Authenticated(this.user);
 }
 
-class Unauthenticated extends AuthState {}
+class Unauthenticated extends AuthState {
+  final String? message;
+  Unauthenticated({this.message});
+
+}
 class LoggedOut extends AuthState {}
 
 class AuthError extends AuthState {

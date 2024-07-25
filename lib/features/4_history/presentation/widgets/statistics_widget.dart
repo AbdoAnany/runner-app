@@ -45,9 +45,8 @@ class StatisticsWidget extends StatelessWidget {
 
 
                 AppFunction.getHistoryCount(
-                    state.historyData.fold(0, (accumulator, element) => (accumulator + element.distance).toInt())*10/
-                    state.historyData.fold(0, (accumulator, element) => (accumulator + element.pt).toInt())
-                )
+                  state.historyData.fold(0, (accumulator, element) => (accumulator + element.pt).toInt()
+                ))
 
             } BPM',
             label: 'Heart Beat',
@@ -68,6 +67,7 @@ class StatisticsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Icon(icon, color: iconColor ?? AppColors.white),
+        SizedBox(height: 4.h,),
         Text(
           value,
           style: AppStyle.textStyle24GWhiteW800BebasNeue,

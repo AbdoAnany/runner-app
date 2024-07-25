@@ -1,7 +1,9 @@
+import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:runner_app/core/helper/extension.dart';
+import 'package:runner_app/features/2_auth/domain/entities/user_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../my_app.dart';
@@ -19,33 +21,103 @@ import 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final SignUpUseCase signUpUseCase;
+  static UserEntity? currentUser;
+  static List<String> roles = [];
+  static runEvent(event) => BlocProvider.of<AuthBloc>(Get.context).add(event);
 
-  AuthBloc({required this.loginUseCase, required this.signUpUseCase}) : super(AuthInitial()) {
+  AuthBloc({required this.loginUseCase, required this.signUpUseCase})
+      : super(AuthInitial()) {
+    on<UserIsLogIn>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        var user = prefs.get(
+          "user",
+        );
+        if (user != null) {
+          var userJson = jsonDecode(user.toString());
+          final userDate = UserEntity.fromJson(userJson);
+          currentUser = userDate;
+          emit(Authenticated(userDate));
+        } else {}
+      } catch (e) {
+        emit(AuthError(e.toString()));
+      }
+    });
+    on<ReloadState>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        emit(RolesLoaded(roles));
+      } catch (e) {
+        emit(AuthError(e.toString()));
+      }
+    });
+
     on<SignInRequested>((event, emit) async {
       emit(AuthLoading());
       try {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
         final user = await loginUseCase(event.email, event.password);
+        final userJson = jsonEncode(user.toJson());
+        prefs.setString("user", userJson);
+        currentUser = user;
         emit(Authenticated(user));
       } catch (e) {
-        emit(AuthError('Invalid email or password'));
+        print("ssssssssssssssssssssss");
+        print(e.toString());
+        emit(AuthError(e.toString()));
       }
     });
 
     on<SignUpRequested>((event, emit) async {
       emit(AuthLoading());
       try {
+        // Attempt to sign up using the provided use case
         await signUpUseCase(event.email, event.password, event.role);
-        emit(Unauthenticated());
+
+        emit(SignUpRequestedDone());
       } catch (e) {
-        emit(AuthError('Failed to sign up'));
+        String errorMessage;
+
+        // Check if the error is a FirebaseAuthException
+        if (e is FirebaseAuthException) {
+          switch (e.code) {
+            case 'email-already-in-use':
+              errorMessage =
+                  "The email address is already in use by another account.";
+              break;
+            case 'invalid-email':
+              errorMessage = "The email address is not valid.";
+              break;
+            case 'weak-password':
+              errorMessage = "The password is too weak.";
+              break;
+            case 'operation-not-allowed':
+              errorMessage = "Email/password accounts are not enabled.";
+              break;
+            default:
+              errorMessage = "An unknown error occurred. Please try again.";
+              break;
+          }
+        } else {
+          // Fallback for any other exception types
+          errorMessage = "An unexpected error occurred. Please try again.";
+        }
+
+        // Print the actual error for debugging purposes
+        print(e.toString());
+
+        // Emit an AuthError state with a user-friendly error message
+        emit(AuthError(errorMessage));
       }
     });
-
     on<LoadRolesRequested>((event, emit) async {
       emit(AuthLoading());
       print("??????????????  LoadRolesRequested");
       try {
-        final roles = await signUpUseCase.repository.fetchRoles();
+        roles = await signUpUseCase.repository.fetchRoles();
         print("signUpUseCase  RolesLoaded   ${roles.toString()}");
         emit(RolesLoaded(roles));
       } catch (e) {
@@ -61,8 +133,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         prefs.remove('email');
         prefs.remove('password');
         prefs.setBool('rememberMe', false);
-        await FirebaseAuth.instance .signOut();
-      //  Get. context.pushScreen(LoginScreen());
+        await FirebaseAuth.instance.signOut();
+        //  Get. context.pushScreen(LoginScreen());
 
         emit(LoggedOut());
       } catch (e) {
@@ -70,7 +142,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
   }
-
 }
 
 // class AuthBloc extends Bloc<AuthEvent, AuthState> {

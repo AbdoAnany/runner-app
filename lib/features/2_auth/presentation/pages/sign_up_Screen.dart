@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/const/const.dart';
+import 'package:runner_app/core/helper/extension.dart';
+import 'package:runner_app/core/widgets/loading_widget.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
+import '../../../../core/utils/Validators.dart';
+import '../../../../core/widgets/main_buttom.dart';
 import '../manager/auth/auth_bloc.dart';
 import '../manager/auth/auth_event.dart';
 
@@ -41,83 +46,101 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SingleChildScrollView(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
-            if (state is AuthError) {
-              // Show error message
+            // if (state is AuthError) {
+            //   toastification.show(
+            //     alignment: Alignment.bottomCenter,
+            //     context: context, // optional if you use ToastificationWrapper
+            //     title: Text(state.message),
+            //     type: ToastificationType.error,
+            //     style: ToastificationStyle.flatColored,showProgressBar: false,
+            //     autoCloseDuration: const Duration(seconds: 3),
+            //   );
+            //
+            // }
+             if (state is SignUpRequestedDone) {
+              toastification.show(
+                alignment: Alignment.bottomCenter,
+                context: context, // optional if you use ToastificationWrapper
+                title: const Text('sign up successfully'),
+                type: ToastificationType.success,
+                style: ToastificationStyle.flatColored,showProgressBar: false,
+                autoCloseDuration: const Duration(seconds: 3),
+              );
+              context.pop();
             }
           },
           builder: (context, state) {
             if (state is AuthLoading) {
-              return Center(child: CircularProgressIndicator());
+              return LoadingWidget();
             }
 
-            if (state is RolesLoaded) {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 12.h),
-                      Image.asset(
-                       AppImage.logoImage,
+            return Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 16.h),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding:  EdgeInsets.only(top: 12.h,bottom: 32.h),
+                      child: Image.asset(
+                        AppImage.logoImage,
                         height: 100.h,
                         width: 100.w,
                       ),
-                      SizedBox(height: 32.h),
-                      Text(
-                        AppConst.signUp,
+                    ),
+                    Text(
+                      AppConst.signUp,
 
-                        style: AppStyle.textStyle21WhiteW700,
-                      ),
-                      SizedBox(height: 12.h),
-                      EmailField(controller: _emailController),
-                      SizedBox(height: 16),
-                      PasswordField(controller: _passwordController),
-                      SizedBox(height: 16),
-                      PasswordField(
-                        controller: _confirmPasswordController,
-                        hintText:  AppConst.confirmPassword,
-                      ),
-                      SizedBox(height: 16),
-                      RoleDropdown(
-                        roles: state.roles,
-                        selectedRole: _selectedRole,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            _selectedRole = newValue!;
-                          });
+                      style: AppStyle.textStyle21WhiteW700,
+                    ),
+
+
+                    EmailField(controller: _emailController),
+
+                    PasswordField(controller: _passwordController,
+                      validator: (value) => Validators.validatePassword(value??""),
+                    ),
+
+                    PasswordField(
+
+                      controller: _confirmPasswordController,
+                      hintText:  AppConst.confirmPassword,
+                      validator: (value) => Validators.confirmPassword(value, _passwordController.text),
+
+                    ),
+
+                    RoleDropdown(
+                      roles: AuthBloc.roles,
+                      selectedRole: _selectedRole,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedRole = newValue!;
+                        });
+                      },
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12.h),
+                      child: MyMaterialButton(
+                        width: 326.w,
+
+                        title: AppConst.signUp,
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            final email = _emailController.text.trim();
+                            final password = _passwordController.text.trim();
+                            AuthBloc.runEvent(
+                              SignUpRequested(email, password, _selectedRole),
+                            );
+                          }
                         },
                       ),
-                      SizedBox(height: 24),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.h),
-                        child: MaterialButton(
-                          minWidth: 326.w,
-                          elevation: 0,
-                          color: AppColors.primary,
-                          height: 56.h,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(AppConst.signUp, style: AppStyle.textStyle18WhiteW700),
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              final email = _emailController.text.trim();
-                              final password = _passwordController.text.trim();
-                              BlocProvider.of<AuthBloc>(context).add(
-                                SignUpRequested(email, password, _selectedRole),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              );
-            }
-
+              ),
+            );
             return Container(); // Return an empty container for other states
           },
         ),

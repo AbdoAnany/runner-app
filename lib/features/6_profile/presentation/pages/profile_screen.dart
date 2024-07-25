@@ -33,6 +33,10 @@ class ProfileScreen extends StatelessWidget {
                 style: AppStyle.textStyle12WhiteW400
             ),
             Text(
+                'Role: ${AuthBloc.currentUser?.role}',
+                style: AppStyle.textStyle12WhiteW400
+            ),
+            Text(
               'Email:  ${FirebaseAuth.instance.currentUser?.email}',
                 style: AppStyle.textStyle12WhiteW400
             ),       Text(
@@ -40,25 +44,18 @@ class ProfileScreen extends StatelessWidget {
                 style: AppStyle.textStyle12WhiteW400
             ),
 
-            Text(
-                'displayName: ${FirebaseAuth.instance.currentUser?.displayName}',
-                style: AppStyle.textStyle12WhiteW400
-            ),
+
             SizedBox(height: 20),
             MaterialButton(
+              color: AppColors.primary,
               onPressed: () {
                 BlocProvider.of<AuthBloc>(context).add(
                   SignOutRequested(),
                 );
               },
-              child: Text('Logout'),
+              child: Text('LogOut' ,style: AppStyle.textStyle14WhiteW400,),
             ),
-            MaterialButton(
-              onPressed: () {
-                // Add change account role functionality here
-              },
-              child: Text('Change Account Role'),
-            ),
+
           ],
         ),
       ),

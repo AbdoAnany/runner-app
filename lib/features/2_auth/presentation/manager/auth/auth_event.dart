@@ -15,5 +15,7 @@ class SignUpRequested extends AuthEvent {
   SignUpRequested(this.email, this.password, this.role);
 }
 
+class UserIsLogIn extends AuthEvent {}
+class ReloadState extends AuthEvent {}
 class LoadRolesRequested extends AuthEvent {}
 class SignOutRequested extends AuthEvent {}

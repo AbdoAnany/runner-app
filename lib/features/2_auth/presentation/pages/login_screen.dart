@@ -5,11 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/const/const.dart';
 import 'package:runner_app/core/helper/extension.dart';
+import 'package:runner_app/core/widgets/main_buttom.dart';
 import 'package:runner_app/features/2_auth/presentation/pages/sign_up_Screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toastification/toastification.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 
+import '../../../../core/utils/Validators.dart';
 import '../../../../core/widgets/loading_widget.dart';
 import '../../domain/entities/user_entity.dart';
 
@@ -44,7 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _passwordController.text = prefs.getString('password') ?? '';
       _rememberMe = prefs.getBool('rememberMe') ?? false;
       if (_rememberMe && FirebaseAuth.instance.currentUser != null) {
-        // Navigate to MainScreen
+        AuthBloc.runEvent(UserIsLogIn());
+
       }
     });
   }
@@ -69,37 +73,60 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (BuildContext context, AuthState state) {
-            if (state is Authenticated) {
-              // Navigate to MainScreen
-            } else if (state is AuthError) {
-              // Show error message
+            if (state is AuthError) {
+              toastification.show(
+                alignment: Alignment.bottomCenter,
+                context: context, // optional if you use ToastificationWrapper
+                title: Text(state.message),showProgressBar: false,
+                type: ToastificationType.error,
+                style: ToastificationStyle.flatColored,
+                autoCloseDuration: const Duration(seconds: 3),
+              );
+            }else if (state is Unauthenticated) {
+              toastification.show(
+                alignment: Alignment.bottomCenter,
+                context: context, // optional if you use ToastificationWrapper
+                title: Text('Unauthenticated'),
+                type: ToastificationType.error,
+                style: ToastificationStyle.flatColored,
+                autoCloseDuration: const Duration(seconds: 3),
+              );
             }
+
           },
           builder: (context, state) {
             if (state is AuthLoading) {
-              return Center(child: LoadingWidget());
+              return LoadingWidget();
             }
 
             return Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding:  EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 16.h),
               child: Column(
                 children: [
-                  SizedBox(height: 12.h),
-                  Image.asset(
-                    AppImage.logoImage,
-                    height: 100.h,
-                    width: 100.w,
+
+                  Padding(
+                    padding:  EdgeInsets.only(top: 12.h,bottom: 32.h),
+                    child: Image.asset(
+                      AppImage.logoImage,
+                      height: 100.h,
+                      width: 100.w,
+                    ),
                   ),
-                  SizedBox(height: 32.h),
+
                   Text(
                     AppConst.login,
                     style: AppStyle.textStyle21WhiteW700,
                   ),
+
                   SizedBox(height: 12.h),
+
+
                   EmailField(controller: _emailController),
-                  SizedBox(height: 12.h),
-                  PasswordField(controller: _passwordController),
-                  SizedBox(height: 12.h),
+                  PasswordField(controller: _passwordController,
+                  validator: (value) => Validators.validatePassword(value??""),
+
+            ),
+
                   Row(
                     children: [
                       Checkbox(
@@ -125,28 +152,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
+
+
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.h),
-                    child: MaterialButton(
-                      minWidth: 326.w,
-                      elevation: 0,
-                      color: AppColors.primary,
-                      height: 56.h,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(AppConst.login, style: AppStyle.textStyle18WhiteW700),
-                      onPressed: () {
-                        final email = _emailController.text.trim();
-                        final password = _passwordController.text.trim();
-                        _saveCredentials();
-                        BlocProvider.of<AuthBloc>(context).add(
-                          SignInRequested(email, password),
-                        );
-                      },
-                    ),
+                    padding: EdgeInsets.symmetric(vertical: 12.h,),
+                    child:     MyMaterialButton(
+                        title: AppConst.login,
+                        onPressed: () {
+                  final email = _emailController.text.trim();
+                  final password = _passwordController.text.trim();
+                  _saveCredentials();
+                  AuthBloc.runEvent(SignInRequested(email, password));
+
+                  },
+                    width: 326.w,
+                  )
                   ),
-                  SizedBox(height: 20.h),
+
                   Row(
                     children: [
                       Expanded(
@@ -169,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 12.h),
+
                   SocialAuthButtons(),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 6.0.h),

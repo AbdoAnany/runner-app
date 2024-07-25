@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
+import '../../../../core/utils/Validators.dart';
 
 
 class EmailField extends StatelessWidget {
@@ -11,20 +13,16 @@ class EmailField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      style: TextStyle(color: AppColors.white),
-      controller: controller,
-      decoration: AppStyle.inputDecoration(hintText: 'email'),
-      keyboardType: TextInputType.emailAddress,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter your email';
-        }
-        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-          return 'Please enter a valid email';
-        }
-        return null;
-      },
+    return Padding(
+      padding:  EdgeInsets.only( top : 12.h),
+      child: TextFormField(
+
+        style: TextStyle(color: AppColors.white),
+        controller: controller,
+        decoration: AppStyle.inputDecoration(hintText: 'email'),
+        keyboardType: TextInputType.emailAddress,
+        validator: (value)=>Validators.validateEmail(value!),
+      ),
     );
   }
 }

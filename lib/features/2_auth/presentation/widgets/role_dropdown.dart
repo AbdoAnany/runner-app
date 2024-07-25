@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 
@@ -12,18 +13,21 @@ class RoleDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      value: selectedRole,
-      style: TextStyle(color: AppColors.white),
-      decoration: AppStyle.inputDecoration(hintText: 'role'),
-      dropdownColor: AppColors.bgContainerColor,
-      items: roles.map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      onChanged: onChanged,
+    return Padding(
+      padding:  EdgeInsets.only( top : 12.h,bottom: 20.h),
+      child: DropdownButtonFormField<String>(
+        value: selectedRole,
+        style: TextStyle(color: AppColors.white),
+        decoration: AppStyle.inputDecoration(hintText: 'role'),
+        dropdownColor: AppColors.bgContainerColor,
+        items: roles.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: onChanged,
+      ),
     );
   }
 }
