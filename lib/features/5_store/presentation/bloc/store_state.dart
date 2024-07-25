@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import '../../domain/entities/brand.dart';
 import '../../domain/entities/category.dart';
 import '../../domain/entities/product.dart';

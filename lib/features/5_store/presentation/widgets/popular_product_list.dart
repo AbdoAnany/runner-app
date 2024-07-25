@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:runner_app/core/helper/extension.dart';
+
 import '../../../../core/style/app_style.dart';
-import '../../../2_auth/presentation/pages/login_screen.dart';
 import '../../domain/entities/product.dart';
 import 'popular_product_item.dart';
 

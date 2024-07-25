@@ -2,19 +2,12 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:runner_app/core/helper/extension.dart';
 import 'package:runner_app/features/2_auth/domain/entities/user_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../my_app.dart';
-import '../../../data/repositories/firebase_auth.dart';
 import '../../../domain/use_cases/login_use_case.dart';
 import '../../../domain/use_cases/sign_up_use_case.dart';
-import '../../pages/login_screen.dart';
-import 'auth_event.dart';
-import 'auth_state.dart';
-import 'package:bloc/bloc.dart';
-
 import 'auth_event.dart';
 import 'auth_state.dart';
 
@@ -32,15 +25,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
-        var user = prefs.get(
-          "user",
-        );
-        if (user != null) {
+
+        var user = prefs.get("user",);
+        bool rememberMe = prefs.get("rememberMe",) as bool;
+        if (user != null && rememberMe) {
           var userJson = jsonDecode(user.toString());
           final userDate = UserEntity.fromJson(userJson);
           currentUser = userDate;
           emit(Authenticated(userDate));
-        } else {}
+        } else {
+          emit(AuthInitial());
+
+
+        }
       } catch (e) {
         emit(AuthError(e.toString()));
       }
@@ -58,16 +55,48 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       try {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-
+        prefs.setBool('rememberMe',event.rememberMe??false) ;
         final user = await loginUseCase(event.email, event.password);
         final userJson = jsonEncode(user.toJson());
         prefs.setString("user", userJson);
         currentUser = user;
+        print('cccccccccccc');
+        print(user.email);
+        print(user.role);
+
         emit(Authenticated(user));
       } catch (e) {
-        print("ssssssssssssssssssssss");
-        print(e.toString());
-        emit(AuthError(e.toString()));
+
+        print('sssssssssssssssss');
+        print(e);
+        String errorMessage;
+
+        // Check if the error is a FirebaseAuthException
+        if (e is FirebaseAuthException) {
+          switch (e.code) {
+            case 'email-already-in-use':
+              errorMessage =
+              "The email address is already in use by another account.";
+              break;
+            case 'invalid-email':
+              errorMessage = "The email address is not valid.";
+              break;
+            case 'weak-password':
+              errorMessage = "The password is too weak.";
+              break;
+            case 'operation-not-allowed':
+              errorMessage = "Email/password accounts are not enabled.";
+              break;
+            default:
+              errorMessage = "An unknown error occurred. Please try again.";
+              break;
+          }
+        } else {
+          // Fallback for any other exception types
+          errorMessage = "An unexpected error occurred. Please try again.";
+        }
+
+        emit(AuthError(errorMessage));
       }
     });
 
@@ -106,8 +135,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           errorMessage = "An unexpected error occurred. Please try again.";
         }
 
-        // Print the actual error for debugging purposes
-        print(e.toString());
+
 
         // Emit an AuthError state with a user-friendly error message
         emit(AuthError(errorMessage));

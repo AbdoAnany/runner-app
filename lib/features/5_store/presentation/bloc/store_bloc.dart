@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../domain/usecases/get_brands.dart';
 import '../../domain/usecases/get_categories.dart';
 import '../../domain/usecases/get_popular_products.dart';

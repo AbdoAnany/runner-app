@@ -50,7 +50,7 @@ class AppConst{
   static const String remember="Remember me";
   static const String forgot='Forgot Password ?';
   static const String continueWith="Or continue with";
-  static const String newUser= 'New User?';
+  static const String newUser= 'New User?  ';
   static const String signUp="Sign Up";
   static const String confirmPassword='Confirm Password';
 

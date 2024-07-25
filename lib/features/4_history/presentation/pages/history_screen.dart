@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../core/style/app_style.dart';
-import '../../../../core/style/color.dart';
 import '../../../../dependency_injection.dart';
 import '../manager/runner_data/runner_data_bloc.dart';
 import '../manager/runner_data/runner_data_event.dart';
