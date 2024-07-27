@@ -82,6 +82,10 @@ class AppStyle{
       color: AppColors.textGray,
       fontWeight: FontWeight.w400,
 
+      fontSize: 12.w);  static TextStyle textStyle12GrayLightW400 =TextStyle(
+      color: AppColors.iconHomeColor,
+      fontWeight: FontWeight.w400,
+
       fontSize: 12.w);
   static TextStyle textStyle12PinkW400 =TextStyle(
       color: AppColors.dotColor,
