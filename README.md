@@ -6,10 +6,6 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
 
 - [Setup Instructions](#setup-instructions)
 - [Architecture Overview](#architecture-overview)
-- [Implementation Details](#implementation-details)
-- [Role-Based Access Control Setup](#role-based-access-control-setup)
-- [Bloc Implementation and Interactions](#bloc-implementation-and-interactions)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Setup Instructions
