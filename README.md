@@ -80,14 +80,14 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
                  │       ├── login_use_case.dart
                  │       └── sign_up_use_case.dart
                  ├── presentation/
-                 │   ├── bloc/
-                 │   │     ├── auth_bloc.dart
-                 │   │     ├── auth_event.dart
-                 │   │     └── auth_state.dart
-                 │   └── pages/
-                 │    |    ├── login_screen.dart
-                 │    |    └── sign_up_screen.dart
-                 └──  └── widgets/
+                 │      ├── bloc/
+                 │      │     ├── auth_bloc.dart
+                 │      │     ├── auth_event.dart
+                 │      │     └── auth_state.dart
+                 │      └── pages/
+                 │      |    ├── login_screen.dart
+                 │      |    └── sign_up_screen.dart
+                 └──    └── widgets/
                            ├── social_auth_buttons.dart
                            ├── email_field.dart
                            ├── password_field.dart
@@ -123,15 +123,15 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
                     │       ├── get_history_data.dart
                     │       └── set_history_data.dart
                     ├── presentation/
-                    │   ├── bloc/
-                    │   │     ├── runner_data_bloc.dart
-                    │   │     ├── runner_data_event.dart
-                    │   │     └── runner_data_state.dart
-                    │   └── pages/
-                    │    |    └── history_screen.dart
-                    └──  └── widgets/
-                              ├── history_list.dart
-                              └── statistics_widget.dart
+                    │      ├── bloc/
+                    │      │     ├── runner_data_bloc.dart
+                    │      │     ├── runner_data_event.dart
+                    │      │     └── runner_data_state.dart
+                    │      └── pages/
+                    │      |    └── history_screen.dart
+                    └──    └── widgets/
+                                 ├── history_list.dart
+                                 └── statistics_widget.dart
       │   ├── 5_store/
                  ├── data/
                  │   ├── datasources/
@@ -156,13 +156,13 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
                  │             ├── get_categories.dart
                  │             └── get_popular_products.dart
                  ├── presentation/
-                 │   ├── bloc/
-                 │   │     ├── store_bloc.dart
-                 │   │     ├── store_event.dart
-                 │   │     └── store_state.dart
-                 │   └── pages/
-                 │    |    └── store_screen.dart
-                 └──  └── widgets/
+                 │      ├── bloc/
+                 │      │     ├── store_bloc.dart
+                 │      │     ├── store_event.dart
+                 │      │     └── store_state.dart
+                 │      └── pages/
+                 │      |    └── store_screen.dart
+                 └──    └── widgets/
                               ├── brand_list.dart
                               ├── category_list.dart
                               ├── offer_list.dart
