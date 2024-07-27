@@ -19,11 +19,7 @@ class StatisticsWidget extends StatelessWidget {
     return Container(height: 96.h,
       margin: EdgeInsets.symmetric(horizontal: 17.w, vertical: 17.h),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: AppColors.white.withOpacity(.17)),
-        color: AppColors.white.withOpacity(.10),
-      ),
+      decoration:  AppStyle.decorationHome,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -20,9 +20,7 @@ class TotalPointAndSteps extends StatelessWidget {
           Container(
             height: 125.h,
             width: 154.w,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.white.withOpacity(.17)),
+            decoration: AppStyle.decorationHome,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
@@ -53,9 +51,7 @@ class TotalPointAndSteps extends StatelessWidget {
           Container(
             height: 125.h,
             width: 154.w,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.white.withOpacity(.17)),
+            decoration:  AppStyle.decorationHome,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
