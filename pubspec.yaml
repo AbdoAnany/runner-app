@@ -46,6 +46,8 @@ dependencies:
   provider: ^6.1.2
   shared_preferences: ^2.2.3
   smooth_page_indicator: ^1.2.0+3
+  syncfusion_flutter_core:
+  syncfusion_flutter_gauges:
   toastification: ^2.1.0
 
 

@@ -20,9 +20,7 @@ class TotalPointAndSteps extends StatelessWidget {
           Container(
             height: 125.h,
             width: 154.w,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.white.withOpacity(.17)),
+            decoration: AppStyle.decorationHome,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
@@ -34,7 +32,7 @@ class TotalPointAndSteps extends StatelessWidget {
                 children: [
                   Image.asset(
                     AppImage.steps,
-                    color: AppColors.iconHomeColor,
+                    color: AppColors.white,
                     width: 20.w,
                     height: 20.h,
                   ),
@@ -43,7 +41,7 @@ class TotalPointAndSteps extends StatelessWidget {
                   ),
                   Text(
                     'Steps',
-                    style: AppStyle.textStyle12GrayW400,
+                    style: AppStyle.textStyle12GrayLightW400,
                   ),
                 ],
               )
@@ -53,9 +51,7 @@ class TotalPointAndSteps extends StatelessWidget {
           Container(
             height: 125.h,
             width: 154.w,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.white.withOpacity(.17)),
+            decoration:  AppStyle.decorationHome,
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
@@ -67,7 +63,7 @@ class TotalPointAndSteps extends StatelessWidget {
                 children: [
                   Icon(
                     Iconsax.coin_1,
-                    color: AppColors.iconHomeColor,
+                    color: AppColors.white,
                     size: 20.w,
                   ),
                   SizedBox(
@@ -75,7 +71,7 @@ class TotalPointAndSteps extends StatelessWidget {
                   ),
                   Text(
                     'Earned Points',
-                    style: AppStyle.textStyle12GrayW400,
+                    style: AppStyle.textStyle12GrayLightW400,
                   ),
                 ],
               )

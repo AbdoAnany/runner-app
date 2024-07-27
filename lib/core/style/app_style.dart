@@ -45,7 +45,10 @@ class AppStyle{
   static TextStyle textStyle15GreenW500 =TextStyle(
       color: AppColors.green,
       fontWeight: FontWeight.w500,
-      fontSize: 14.w);
+      fontSize: 14.w);  static TextStyle textStyle14GreenW400 =TextStyle(
+      color: AppColors.green,
+      fontWeight: FontWeight.w400,
+      fontSize: 16.w);
   static TextStyle textStyle14GrayerW400 =TextStyle(
       color: AppColors.textGray2,
       fontWeight: FontWeight.w400,
@@ -79,6 +82,10 @@ class AppStyle{
       color: AppColors.textGray,
       fontWeight: FontWeight.w400,
 
+      fontSize: 12.w);  static TextStyle textStyle12GrayLightW400 =TextStyle(
+      color: AppColors.iconHomeColor,
+      fontWeight: FontWeight.w400,
+
       fontSize: 12.w);
   static TextStyle textStyle12PinkW400 =TextStyle(
       color: AppColors.dotColor,
@@ -88,6 +95,10 @@ class AppStyle{
 
   static TextStyle textStyle12WhiteW400 =TextStyle(
       color: AppColors.white,
+      fontWeight: FontWeight.w400,
+
+      fontSize: 12.w);  static TextStyle textStyle12GreenW400 =TextStyle(
+      color: AppColors.green,
       fontWeight: FontWeight.w400,
 
       fontSize: 12.w);
@@ -113,7 +124,10 @@ static TextStyle textStyle20GoldW800 =TextStyle(
     fontFamily: "Quicksand",
       fontSize: 20.w);
 
-
+  static  BoxDecoration  decorationHome= BoxDecoration(
+  borderRadius: BorderRadius.circular(20),
+  border: Border.all(  color: AppColors.white.withOpacity(.17)),
+  color: AppColors.white.withOpacity(.10));
 
   static  InputDecoration inputDecoration({hintText}) => InputDecoration(
   filled: true,
