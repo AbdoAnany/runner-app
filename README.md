@@ -28,36 +28,155 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
    git clone https://github.com/AbdoAnany/runner-app.git
    cd runner-app
 
-2. **Install dependencies::**
+2. **file architecture:**
 
    ```bash
    flutter pub get
       ```bash
    lib/
       │
-      ├── core/
+      ├── core/      
+      │   ├── const/
+      │   │      └── const.dart
       │   ├── constants/
-      │   ├── errors/
+      │   │         └── app_constants.dart
+      │   └── errors/
+      │           └── failures.dart
       │   ├── helpers/
+      │   │       ├── extension.dart
+      │   │       └── function.dart
       │   ├── share/
+      │   │       ├── main_Screen.dart
+      │   │        ├── my_bottom_navigation_bar.dart
+      │   │       ├── role_service.dart
+      │   │       └── share_app_bar.dart
       │   ├── style/
+      │   │         ├── app_style.dart
+      │   │        └── color.dart
       │   ├── utils/
+      │   │        └── Validators.dart
       │   └── widgets/
-      │
+      │           ├── loading_widget.dart
+      │           └── main_buttom.dart
       ├── features/
       │   ├── 0_get_started/ │
-                  ├── presentation/pages/get_started_screen.dart
+      │            ├── presentation/pages/get_started_screen.dart
       │   ├── 1_onboarding/
-                  ├── presentation/pages/onboarding_screen.dart
-                  ├── presentation/widgets/card_onboarding.dart
+      │            ├── presentation/pages/onboarding_screen.dart
+      │            └── presentation/widgets/card_onboarding.dart
       │   ├── 2_auth/
+                 ├── data/
+                 │   ├── datasources/
+                 │   │   └── auth_remote_data_source.dart
+                 │   ├── repositories/
+                 │   │   ├── auth_repository_impl.dart
+                 │   │   └── firebase_auth.dart
+                 ├── domain/
+                 │   ├── entities/
+                 │   │   └── user_entity.dart
+                 │   ├── repositories/
+                 │   │   └── auth_repository.dart
+                 │   └── use_cases/
+                 │       ├── login_use_case.dart
+                 │       └── sign_up_use_case.dart
+                 ├── presentation/
+                 │   ├── bloc/
+                 │   │     ├── auth_bloc.dart
+                 │   │     ├── auth_event.dart
+                 │   │     └── auth_state.dart
+                 │   └── pages/
+                 │    |    ├── login_screen.dart
+                 │    |    └── sign_up_screen.dart
+                 └──  └── widgets/
+                           ├── social_auth_buttons.dart
+                           ├── email_field.dart
+                           ├── password_field.dart
+                           └── role_dropdown.dart
+
       │   ├── 3_home/
+                 ├── presentation/
+                           └── pages/
+                                └── home_screen.dart
+                           └── widgets/
+                                 ├── dayliy_activity_card.dart
+                                 ├── gradient_Progress_painter.dart
+                                 ├── home_app_bar.dart
+                                 ├── home_progress_level_steps_bar.dart
+                                 ├── share_and_gift_.dart
+                                 ├── step_counter_chart.dart
+                                 └── total_point_and_steps.dart
       │   ├── 4_history/
+                    ├── data/
+                    │   ├── entities/
+                    │   │      └── history_entity.dart
+                    │   ├── repositories/
+                    │   │      └── history_repository.dart
+                    │   ├── service/
+                    │          └── history_service.dart
+                    │
+                    ├── domain/
+                    │   ├── entities/
+                    │   │   └── history_model.dart
+                    │   ├── repositories/
+                    │   │   └── history_repository.dart
+                    │   └── use_cases/
+                    │       ├── get_history_data.dart
+                    │       └── set_history_data.dart
+                    ├── presentation/
+                    │   ├── bloc/
+                    │   │     ├── runner_data_bloc.dart
+                    │   │     ├── runner_data_event.dart
+                    │   │     └── runner_data_state.dart
+                    │   └── pages/
+                    │    |    └── history_screen.dart
+                    └──  └── widgets/
+                              ├── history_list.dart
+                              └── statistics_widget.dart
       │   ├── 5_store/
+                 ├── data/
+                 │   ├── datasources/
+                 │   │   └── firebase_store_datasource.dart
+                 │   ├── local_datasources/
+                 │   │      └── local_datasources.dart
+                 │   ├── models/
+                 │   │     ├── brand_model.dart
+                 │   │     ├── category_model.dart
+                 │   │     └── product_model.dart
+                 │   ├── repositories/
+                 │   │   └── store_repository_impl.dart
+                 ├── domain/
+                 │   ├── entities/
+                 │   │        ├── brand.dart
+                 │   │        ├── category.dart
+                 │   │        └── product.dart
+                 │   ├── repositories/
+                 │   │         └── store_repository.dart
+                 │   └── use_cases/
+                 │             ├── get_brands.dart
+                 │             ├── get_categories.dart
+                 │             └── get_popular_products.dart
+                 ├── presentation/
+                 │   ├── bloc/
+                 │   │     ├── store_bloc.dart
+                 │   │     ├── store_event.dart
+                 │   │     └── store_state.dart
+                 │   └── pages/
+                 │    |    └── store_screen.dart
+                 └──  └── widgets/
+                              ├── brand_list.dart
+                              ├── category_list.dart
+                              ├── offer_list.dart
+                              ├── popular_product_item.dart
+                              └── role_dropdown.dart      
       │   └── 6_profile/
+                  ├── presentation/
+                          └── pages/
+                                └── profile_screen.dart
       │
       ├── main.dart
+      ├── firebase_options.dart
       └── my_app.dart
+   
 3. **pakages dependencies::**
 
    ```bash
