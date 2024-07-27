@@ -67,8 +67,6 @@ This is a Flutter Runner App that uses Bloc for state management and Firebase Fi
         equatable: ^2.0.5
         firebase_auth: ^5.1.2
         firebase_core: ^3.2.0
-        flutter:
-          sdk: flutter
         flutter_bloc: ^8.1.6
         flutter_launcher_icons: ^0.13.1
         flutter_native_splash: ^2.4.1
