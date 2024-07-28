@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:intl/intl.dart';
 
-import '../../features/4_history/domain/entities/history_entity.dart';
+import '../../features/4_history/data/models/history_data_model.dart';
 
 class AppFunction {
   static String convertToTitleCase(String text) {

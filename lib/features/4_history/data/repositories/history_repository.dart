@@ -1,6 +1,6 @@
 import '../../domain/entities/history_entity.dart';
 import '../../domain/repositories/history_repository.dart';
-import '../entities/history_entity.dart';
+import '../models/history_data_model.dart';
 import '../services/history_service.dart';
 
 class HistoryRepositoryImpl implements HistoryRepository {
