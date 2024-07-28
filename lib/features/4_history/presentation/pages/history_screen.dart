@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/style/app_style.dart';
 import '../../../../dependency_injection.dart';
-import '../manager/runner_data/runner_data_bloc.dart';
-import '../manager/runner_data/runner_data_event.dart';
-import '../manager/runner_data/runner_data_state.dart';
+import '../manager/bloc/runner_data_bloc.dart';
+import '../manager/bloc/runner_data_event.dart';
+import '../manager/bloc/runner_data_state.dart';
 import '../widgets/history_list.dart';
 import '../widgets/statistics_widget.dart';
 class HistoryScreenBlocProvider extends StatelessWidget {

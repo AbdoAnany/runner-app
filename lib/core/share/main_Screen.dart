@@ -10,7 +10,7 @@ import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_event.
 import '../../dependency_injection.dart';
 import '../../features/2_auth/presentation/manager/auth/auth_bloc.dart';
 import '../../features/3_home/presentation/pages/home_screen.dart';
-import '../../features/4_history/presentation/manager/runner_data/runner_data_bloc.dart';
+import '../../features/4_history/presentation/manager/bloc/runner_data_bloc.dart';
 import '../../features/4_history/presentation/pages/history_screen.dart';
 import '../../features/5_store/presentation/pages/popular_section.dart';
 import '../../features/5_store/presentation/pages/store_screen.dart';

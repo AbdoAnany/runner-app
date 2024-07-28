@@ -7,7 +7,7 @@ import 'features/4_history/data/services/history_service.dart';
 import 'features/4_history/domain/repositories/history_repository.dart';
 import 'features/4_history/domain/use_cases/usecases/get_history_data.dart';
 import 'features/4_history/domain/use_cases/usecases/set_history_data.dart';
-import 'features/4_history/presentation/manager/runner_data/runner_data_bloc.dart';
+import 'features/4_history/presentation/manager/bloc/runner_data_bloc.dart';
 
 
 final locator = GetIt.instance;

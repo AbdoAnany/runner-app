@@ -1,5 +1,5 @@
 // blocs/runner_data/runner_data_state.dart
-import '../../../data/entities/history_entity.dart';
+import '../../../domain/entities/history_entity.dart';
 
 abstract class RunnerHistoryDataState {}
 

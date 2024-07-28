@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/helper/function.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
-import '../../data/entities/history_entity.dart';
+import '../../domain/entities/history_entity.dart';
 
 class HistoryList extends StatelessWidget {
   const HistoryList({super.key,this.historyData=const []});

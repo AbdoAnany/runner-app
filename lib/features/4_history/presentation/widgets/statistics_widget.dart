@@ -7,7 +7,7 @@ import 'package:runner_app/core/helper/function.dart';
 import 'package:runner_app/core/style/app_style.dart';
 import 'package:runner_app/core/style/color.dart';
 
-import '../manager/runner_data/runner_data_state.dart';
+import '../manager/bloc/runner_data_state.dart';
 
 class StatisticsWidget extends StatelessWidget {
   final RunnerDataLoaded state;

@@ -1,4 +1,4 @@
-import '../../data/entities/history_entity.dart';
+import '../entities/history_entity.dart';
 
 abstract class HistoryRepository {
   Future<List<HistoryEntity>> getHistoryData();

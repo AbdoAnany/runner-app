@@ -1,6 +1,6 @@
 // domain/usecases/get_history_data.dart
 
-import '../../../data/entities/history_entity.dart';
+import '../../entities/history_entity.dart';
 import '../../repositories/history_repository.dart';
 
 class GetHistoryData {
