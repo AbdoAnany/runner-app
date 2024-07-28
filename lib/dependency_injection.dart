@@ -24,6 +24,6 @@ void setupLocator() {
   locator.registerLazySingleton<SetHistoryData>(() => SetHistoryData(locator()));
 
   // Register blocs
-  locator.registerFactory(() => RunnerHistoryDataBloc(locator()),
+  locator.registerFactory<RunnerHistoryDataBloc>(() => RunnerHistoryDataBloc(locator()),
   );
 }
