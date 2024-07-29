@@ -49,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
       "Store":const StoreScreenBlocProvider(),
     },
     {
-      "Profile": const ProfileScreen(),
+      "Profile":  ProfileScreen(),
     },
   ];
 

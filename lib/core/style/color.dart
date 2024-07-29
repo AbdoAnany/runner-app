@@ -29,9 +29,7 @@ class AppColors{
   static const Color storeCard3 =   Color(0xff614385);
   static const Color storeCard4 =   Color(0xff516395);
   static const Color chartColors =   Color(0xffF9FA78);
-  static const Map storeCard =  {
-    1: [storeCard1,storeCard2],
-    2: [storeCard3,storeCard4],};
+  static const Map storeCard =  {1: [storeCard1,storeCard2], 2: [storeCard3,storeCard4],};
 
 
 
