@@ -23,7 +23,7 @@ class _DailyActivityCardState extends State<DailyActivityCard> {
     super.initState();
     DateTime now = DateTime.now();
 
-    _formattedDate = DateFormat('dd MMM').format(now);
+    _formattedDate = DateFormat('dd MMM ').format(now);
     _formattedTime = DateFormat('HH : mm : ss').format(now);
   }
 

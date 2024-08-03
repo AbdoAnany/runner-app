@@ -1,161 +1,146 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 import 'package:runner_app/core/const/const.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 import '../../../2_auth/presentation/manager/auth/auth_bloc.dart';
-import '../../../2_auth/presentation/manager/auth/auth_event.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'dart:async';
-import 'package:flutter/material.dart';
+
+
+
+final List<ProfileListItemModel> profileItems = [
+  ProfileListItemModel(icon: Iconsax.user, text: 'Personal Information'),
+  ProfileListItemModel(icon: Iconsax.wallet, text: 'My Wallet'),
+  ProfileListItemModel(icon: Iconsax.notification, text: 'Notifications'),
+  ProfileListItemModel(icon: Iconsax.language_circle, text: 'Language'),
+  ProfileListItemModel(icon: Iconsax.support, text: 'Support'),
+  ProfileListItemModel(icon: Iconsax.like_dislike, text: 'Rate App'),
+  ProfileListItemModel(icon: Iconsax.message_question, text: 'FAQs'),
+  ProfileListItemModel(icon: Iconsax.share, text: 'Share App'),
+  ProfileListItemModel(icon: Iconsax.logout_1, text: 'Log Out'),
+];
 
 
 
 
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
 
+class _ProfileScreenState extends State<ProfileScreen> {
+  String _formattedDate = '';
+  String _formattedTime = '';
+  @override
+  void initState() {
 
+    DateTime now = DateTime.now();
 
-class ProfileScreen extends StatelessWidget {
+    _formattedDate = DateFormat('dd MMM ').format(now);
+    _formattedTime = DateFormat('HH : mm').format(now);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Column(
-        children: [
-          Container(
-            //      color: AppColors.primary,
-            padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 20.w),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+    return    Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16.w),
+          decoration: AppStyle.decorationHome,
+          //      color: AppColors.primary,
+          padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.w),
+          width: double.infinity,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
 
-                const CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage(AppImage.person), // Replace with your asset image
-                ),
-                SizedBox(height: 12.w),
-                Column(
+
+              Container(
+                  width: 60.w,
+                  height: 60.h,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.primary.withOpacity(.3), width: 3),
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image:  AssetImage(AppImage.person),
+                      ))),
+              SizedBox(width: 12.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+SizedBox(height: 20,),
                     Text(
-                      'عبدالله عزالدين',
-                      style: AppStyle.textStyle16GWhiteW800,
-                    ),   Text(
-                      '+20 10 153 2346',
+                      AuthBloc.currentUser!.email,
+
                       style: AppStyle.textStyle16GWhiteW800,
                     ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            _formattedDate,
+                            style: AppStyle.textStyle12GrayW400,
+                          ),SizedBox(width: 8.w,),
+
+                          Text(
+                            _formattedTime,
+                            style: AppStyle.textStyle12GrayW400,
+                          ),
+                        ],
+                      ),
+
+
+
+
                   ],
                 ),
+              ),
 
+              Text(
+                AuthBloc.currentUser!.role.toUpperCase(),
+                style: AppStyle.textStyle20GoldW800,
+              ),
 
-              ],
-            ),
+            ],
           ),
-          CustomTextFormField(
-            hintText: 'Enter some text',
-            cacheKey: 'unique_key_for_this_field',
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 0, horizontal: 16.w),
+          decoration: AppStyle.decorationHome,
+          child: Column(
+            children: profileItems.sublist(0, 4).map((item) {
+              return ProfileListItem(
+                icon: item.icon,
+                text: item.text,
+                trailing: item.text == 'Language' ? LanguageToggle() : null,
+              );
+            }).toList(),
           ),
-          // Text(
-          //     'Profile Information',
-          //     style: AppStyle.textStyle16GWhiteW800),
-          // SizedBox(height: 20.h),
-          //
-          // Text(
-          //     'Name: ${FirebaseAuth.instance.currentUser?.email?.split('@').first}',
-          //     style: AppStyle.textStyle12WhiteW400),
-          // Text(
-          //     'Role: ${AuthBloc.currentUser?.role}',
-          //     style: AppStyle.textStyle12WhiteW400),
-          // Text(
-          //     'Email:  ${FirebaseAuth.instance.currentUser?.email}',
-          //     style: AppStyle.textStyle12WhiteW400),
-          // Text(
-          //     'lastSignInTime: ${FirebaseAuth.instance.currentUser?.metadata.lastSignInTime}',
-          //     style: AppStyle.textStyle12WhiteW400),
-          //
-          //
-          // SizedBox(height: 20.h),
-          // MaterialButton(
-          //   color: AppColors.primary,
-          //   onPressed: () =>BlocProvider.of<AuthBloc>(context).add(SignOutRequested(),)
-          //   ,
-          //   child: Text('LogOut' ,style: AppStyle.textStyle14WhiteW400,),
-          // ),
-          Expanded(
-            child: ListView(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 0.h, horizontal: 16.w),
-                  decoration: AppStyle.decorationHome,
-                  child:
-                  Column(
-                    children: [
-                      ProfileListItem(
-                        icon: Iconsax.user,
-                        text: 'البيانات الشخصية',
-                      ),
-                      ProfileListItem(
-                        icon: Iconsax.wallet,
-                        text: 'محفظتي',
-                      ),
-                      ProfileListItem(
-                        icon: Iconsax.notification,
-                        text: 'الإشعارات',
-                      ),
-                      ProfileListItem(
-                        icon: Iconsax.language_circle,
-                        text: 'اللغة',
-                        trailing: LanguageToggle(),
-                      ),
-                    ],
-                  ),),
-
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
-                  decoration: AppStyle.decorationHome,
-                  child: Column(
-                    children: [
-                      ProfileListItem(
-                        icon: Iconsax.support,
-                        text: 'الدعم',
-                      ),
-                      ProfileListItem(
-                        icon: Iconsax.like_dislike,
-                        text: 'تقييم التطبيق',
-                      ),
-                      ProfileListItem(
-                        icon: Iconsax.message_question,
-                        text: 'الأسئلة المتكررة',
-                      ),
-                      ProfileListItem(
-                        icon: Iconsax.share,
-                        text: 'مشاركة التطبيق',
-                      ),
-                      ProfileListItem(
-                        icon: Iconsax.logout_1,
-                        text: 'تسجيل الخروج',
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 16.w, horizontal: 16.w),
+          decoration: AppStyle.decorationHome,
+          child: Column(
+            children: profileItems.sublist(4).map((item) {
+              return ProfileListItem(
+                icon: item.icon,
+                text: item.text,
+              );
+            }).toList(),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('V1.2.0  |  سياسة الخصوصية  |  الشروط والأحكام'),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -177,15 +162,18 @@ class ProfileListItem extends StatelessWidget {
       padding:  EdgeInsets.symmetric(horizontal: 16.w, vertical: 13.h),
       child: Row(
         children: [
-          trailing??  Icon(Icons.arrow_back_ios, size: 16.w, color: AppColors.iconHomeColor,),
-          Spacer(),
+          Icon(icon,color: AppColors.iconHomeColor,),
+
           Padding(
             padding:  EdgeInsets.symmetric(horizontal: 16.w, vertical: 0.h),
 
             child: Text(text, style:AppStyle.textStyle18WhiteW700),
           ),
+          Spacer(),
+          trailing??  Icon(Icons.arrow_forward_ios, size: 16.w, color: AppColors.iconHomeColor,),
 
-          Icon(icon,color: AppColors.iconHomeColor,),
+
+
         ],
 
       ),
@@ -248,7 +236,12 @@ class _LanguageToggleState extends State<LanguageToggle> {
     );
   }
 }
+class ProfileListItemModel {
+  final IconData icon;
+  final String text;
 
+  ProfileListItemModel({required this.icon, required this.text});
+}
 
 class CustomTextFormField extends StatefulWidget {
   final String hintText;
