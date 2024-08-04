@@ -6,6 +6,7 @@ import 'package:runner_app/features/2_auth/domain/entities/user_entity.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../my_app.dart';
+import '../../../data/models/User.dart';
 import '../../../domain/use_cases/login_use_case.dart';
 import '../../../domain/use_cases/sign_up_use_case.dart';
 import 'auth_event.dart';
@@ -30,7 +31,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         bool rememberMe = prefs.get("rememberMe",) as bool;
         if (user != null && rememberMe) {
           var userJson = jsonDecode(user.toString());
-          final userDate = UserEntity.fromJson(userJson);
+          final userDate = UserModel.fromJson(userJson);
           currentUser = userDate;
           emit(Authenticated(userDate));
         } else {
@@ -57,14 +58,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('rememberMe',event.rememberMe??false) ;
         final user = await loginUseCase(event.email, event.password);
-        final userJson = jsonEncode(user.toJson());
+        final userJson = jsonEncode(user?.toJson());
         prefs.setString("user", userJson);
         currentUser = user;
         print('cccccccccccc');
-        print(user.email);
-        print(user.role);
+        print(user?.email);
+        print(user?.role);
 
-        emit(Authenticated(user));
+        emit(Authenticated(user!));
       } catch (e) {
 
         print('sssssssssssssssss');

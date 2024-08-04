@@ -1,4 +1,4 @@
-import '../../../domain/entities/user_entity.dart';
+import '../../../data/models/User.dart';
 
 abstract class AuthState {}
 
@@ -8,7 +8,7 @@ class AuthLoading extends AuthState {}
 class SignUpRequestedDone extends AuthState {}
 
 class Authenticated extends AuthState {
-  final UserEntity user;
+  final UserModel user;
 
   Authenticated(this.user);
 }
