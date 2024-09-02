@@ -43,10 +43,8 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
-
                     children: [
                       Text(
                         '${NumberFormat("#,000").format(currentSteps)} /',
@@ -54,12 +52,10 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> {
                       ),
                       Text(
                         NumberFormat("#,000").format(goalSteps),
-
                         style: AppStyle.textStyle20GWhiteW800,
                       ),
                       Text(
-                        ' steps',
-                        style: AppStyle.textStyle12GrayW400,
+                        ' steps', style: AppStyle.textStyle12GrayW400,
                       ),
                       const Spacer(),
                       Text(
@@ -68,8 +64,7 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> {
                       ),
                     ],
                   ),
-
-SizedBox(height: 2.h,),
+                  SizedBox(height: 2.h,),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50.0),
                     child: Container(

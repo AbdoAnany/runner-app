@@ -2,9 +2,12 @@
 
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../features/4_history/data/models/history_data_model.dart';
+import '../../my_app.dart';
 
 class AppFunction {
   static String convertToTitleCase(String text) {
@@ -46,6 +49,19 @@ class AppFunction {
     }
 
     return historyList;
+  }
+
+
+  static showToast(String msg,{ToastificationType type =  ToastificationType.info}) {
+   return toastification.show(
+      alignment: Alignment.bottomCenter,
+      context: Get.context,
+      title: Text(msg),
+     showProgressBar: false,
+      type: type,
+      style: ToastificationStyle.flatColored,
+      autoCloseDuration: const Duration(seconds: 3),
+    );
   }
 
 }

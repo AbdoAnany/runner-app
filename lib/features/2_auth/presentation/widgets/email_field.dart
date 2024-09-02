@@ -9,14 +9,13 @@ import '../../../../core/utils/Validators.dart';
 class EmailField extends StatelessWidget {
   final TextEditingController controller;
 
-  const EmailField({super.key, required this.controller});
+  const EmailField({super.key, required this.controller, });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding:  EdgeInsets.only( top : 12.h),
       child: TextFormField(
-
         style: TextStyle(color: AppColors.white),
         controller: controller,
         decoration: AppStyle.inputDecoration(hintText: 'email'),
