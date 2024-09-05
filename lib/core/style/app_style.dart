@@ -76,6 +76,10 @@ class AppStyle{
       color: AppColors.primary,
       fontWeight: FontWeight.w400,
       fontSize: 14.w);
+  static TextStyle textStyle16PrimaryW400 =TextStyle(
+      color: AppColors.primary,
+      fontWeight: FontWeight.w400,
+      fontSize: 16.w);
 
 
   static TextStyle textStyle12GrayW400 =TextStyle(
@@ -117,6 +121,26 @@ static TextStyle textStyle24GWhiteW800BebasNeue =TextStyle(
       fontWeight: FontWeight.w800,
       fontFamily: "BebasNeue",
       fontSize: 24.w);
+static TextStyle textStyle28GWhiteW800BebasNeue =TextStyle(
+      color: AppColors.white,
+      fontWeight: FontWeight.w800,
+    letterSpacing: 2,
+      fontFamily: "BebasNeue",
+      fontSize: 28.w);
+
+static TextStyle textStyle28GGoldW800BebasNeue =TextStyle(
+    color: AppColors.storeCard2,
+    fontWeight: FontWeight.w800,letterSpacing: 2,
+    fontFamily: "BebasNeue",
+    fontSize: 28.w);
+
+
+static TextStyle textStyle14GGoldW800BebasNeue =TextStyle(
+    color: AppColors.storeCard2,
+    fontWeight: FontWeight.w800,
+    letterSpacing: 2,
+    // fontFamily: "BebasNeue",
+    fontSize: 34.w);
 
 static TextStyle textStyle20GoldW800 =TextStyle(
       color: AppColors.levelHomeColor,

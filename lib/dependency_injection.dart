@@ -13,17 +13,28 @@ import 'features/4_history/presentation/manager/bloc/runner_data_bloc.dart';
 final locator = GetIt.instance;
 
 void setupLocator() {
-  // Register services
+
+
+  // History services locators
+  historyServiceLocator();
+
+
+
+}
+
+
+void historyServiceLocator() {
+  // History services
   locator.registerLazySingleton<HistoryService>(() => HistoryService());
 
-  // Register repositories
+  // History repositories
   locator.registerLazySingleton<HistoryRepository>(() => HistoryRepositoryImpl(locator()),);
 
-  // Register use cases
-  locator.registerLazySingleton(() => GetHistoryData(locator()));
+  // History use cases
+  locator.registerLazySingleton<GetHistoryData>(() => GetHistoryData(locator()));
   locator.registerLazySingleton<SetHistoryData>(() => SetHistoryData(locator()));
 
-  // Register blocs
-  locator.registerFactory<RunnerHistoryDataBloc>(() => RunnerHistoryDataBloc(locator()),
+  // History blocs
+  locator.registerFactory<RunnerHistoryDataBloc>(() => RunnerHistoryDataBloc(locator(),locator()),
   );
 }

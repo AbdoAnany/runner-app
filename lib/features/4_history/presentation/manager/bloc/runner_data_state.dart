@@ -11,6 +11,13 @@ class RunnerDataLoaded extends RunnerHistoryDataState {
   RunnerDataLoaded(this.historyData);
 }
 
+
+class SaveDataLoaded extends RunnerHistoryDataState {
+   final HistoryEntity? historyData;
+
+   SaveDataLoaded(this.historyData);
+}
+
 class RunnerDataError extends RunnerHistoryDataState {
   final String message;
 

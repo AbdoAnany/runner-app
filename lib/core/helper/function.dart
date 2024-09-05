@@ -8,7 +8,7 @@ import 'package:toastification/toastification.dart';
 
 import '../../features/4_history/data/models/history_data_model.dart';
 import '../../my_app.dart';
-
+import 'dart:math'  as math;
 class AppFunction {
   static String convertToTitleCase(String text) {
     if (text.isEmpty) return text;
@@ -21,7 +21,7 @@ class AppFunction {
   }
   static String getHistoryCount(state) => NumberFormat('###').format(state??0);
   static String getDistance(val) => NumberFormat('###,#').format(val);
-  static String getDateDayMonth(String date) => DateFormat('dd MMM').format(DateTime.parse(date));
+  static String getDateDayMonth(String date) => DateFormat('y   MMM-dd ').format(DateTime.parse(date));
   static String getDecimal(decimal,) =>  NumberFormat("#,###").format(decimal).toString();
   static List<HistoryDataModel> generateFakeHistoryData(int count) {
     Random random = Random();
@@ -40,7 +40,7 @@ class AppFunction {
 
       // Create a new HistoryEntity instance and add it to the list
       historyList.add(HistoryDataModel(
-        date: date,
+        date: date,id: i.toString(),
         distance: distance,
         pt: pt,
         kal: kal,
@@ -63,5 +63,7 @@ class AppFunction {
       autoCloseDuration: const Duration(seconds: 3),
     );
   }
+
+
 
 }

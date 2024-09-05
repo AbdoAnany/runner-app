@@ -56,5 +56,9 @@ class AppConst{
 
 
 
+  static const String addScore='Add Score';
+
+
+
 
 }

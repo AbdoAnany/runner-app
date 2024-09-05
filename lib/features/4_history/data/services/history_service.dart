@@ -13,7 +13,10 @@ class HistoryService {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
 
       // Retrieve the history list from the user's document
-      List<Map<String, dynamic>> history = userDoc.get('history') ?? [];
+      List<Map<String, dynamic>> history = List<Map<String, dynamic>>.from(userDoc.get('history') ?? []);
+      print("history ===============");
+      print(history);
+
       return history;
     } catch (e) {
       print('Error getting history data: $e');
@@ -24,9 +27,7 @@ class HistoryService {
     try {
       WriteBatch batch = _firestore.batch();
 
-      DocumentReference docRef = _firestore
-          .collection('users')
-          .doc(userId);
+      DocumentReference docRef = _firestore.collection('users').doc(userId);
 
 
       batch.set(docRef, {"history":historyData}, SetOptions(merge: true));
@@ -38,46 +39,63 @@ class HistoryService {
     }
   }
 
-  Future<void> addHistoryEntry(Map<String, dynamic> entry) async {
+  Future<bool> addHistoryEntry(Map<String, dynamic> entry) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(userId)
-          .set(entry, SetOptions(merge: true));
+      await _firestore.collection('users').doc(userId).update({
+        'history': FieldValue.arrayUnion([entry])
+      });
 
       print('History entry added successfully');
+
+      return true;
     } catch (e) {
       print('Error adding history entry: $e');
+      return false;
     }
   }
 
-  Future<void> updateHistoryEntry(String date, Map<String, dynamic> updates) async {
+  Future<bool> updateHistoryEntry(String date, Map<String, dynamic> updates) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(userId)
-          .collection('history')
-          .doc(date)
-          .update(updates);
+      var userDoc = await _firestore.collection('users').doc(userId).get();
+      List<dynamic> history = userDoc.get('history') ?? [];
 
-      print('History entry updated successfully');
+      // Find the entry to update
+      int index = history.indexWhere((entry) => entry['date'] == date);
+      if (index != -1) {
+        history[index] = {...history[index], ...updates}; // Merge updates into the found entry
+
+        await _firestore.collection('users').doc(userId).update({
+          'history': history,
+        });
+return true;
+        print('History entry updated successfully');
+      } else {
+        print('History entry not found');
+        return false;
+      }
     } catch (e) {
       print('Error updating history entry: $e');
+      return false;
     }
   }
 
-  Future<void> deleteHistoryEntry(String date) async {
+  Future<bool> deleteHistoryEntry(String date) async {
     try {
-      await _firestore
-          .collection('users')
-          .doc(userId)
-          .collection('history')
-          .doc(date)
-          .delete();
+      var userDoc = await _firestore.collection('users').doc(userId).get();
+      List<dynamic> history = userDoc.get('history') ?? [];
+
+      // Remove the entry matching the given date
+      history.removeWhere((entry) => entry['date'] == date);
+
+      await _firestore.collection('users').doc(userId).update({
+        'history': history,
+      });
 
       print('History entry deleted successfully');
+      return true;
     } catch (e) {
       print('Error deleting history entry: $e');
+      return false;
     }
   }
 }

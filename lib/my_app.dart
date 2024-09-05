@@ -8,12 +8,12 @@ import 'package:runner_app/features/2_auth/data/datasources/auth_remote_data_sou
 import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_event.dart';
 import 'package:toastification/toastification.dart';
 
-import 'core/share/main_Screen.dart';
 import 'features/2_auth/data/repositories/auth_repository_impl.dart';
 import 'features/2_auth/domain/use_cases/login_use_case.dart';
 import 'features/2_auth/domain/use_cases/sign_up_use_case.dart';
 import 'features/2_auth/presentation/manager/auth/auth_bloc.dart';
 import 'features/2_auth/presentation/manager/auth/auth_state.dart';
+import 'features/main_Screen.dart';
 class Get {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
                       if (state is Authenticated) {
                         return const MainScreen();
                       } else {
-                        return GetStarted();
+                        return const GetStarted();
                                //       return const GetStarted();
                       }
                     },

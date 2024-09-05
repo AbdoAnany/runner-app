@@ -50,6 +50,11 @@ class MyBottomNavigationBar extends StatelessWidget {
             isSelected: currentIndex == 0,
             onTap: ()=>onTap(0),
           ),
+          // GradientIcon(
+          //   icon: Iconsax.medal_star5,
+          //   isSelected: currentIndex == 0,
+          //   onTap: ()=>onTap(0),
+          // ),
           GradientIcon(
             icon: Iconsax.cup5,
             isSelected: currentIndex == 1,

@@ -6,6 +6,7 @@ import '../../domain/entities/history_entity.dart';
 
 class HistoryDataModel extends HistoryEntity {
   HistoryDataModel({
+    required super.id,
     required super.date,
     required super.distance,
     required super.pt,
@@ -14,15 +15,15 @@ class HistoryDataModel extends HistoryEntity {
   });
 
   factory HistoryDataModel.fromMap(Map<String, dynamic> map) {
-    print(map);
     return HistoryDataModel(
 
-      date: map['date'],
+      id: map['id']??'0',
+      date: map['date']??'',
 
-      distance: map['distance'],
-      pt: map['pt'],
-      kal: map['kal'],
-      steps: map['steps'],
+      distance: map['distance']??'',
+      pt: map['pt']??'',
+      kal: map['kal']??'',
+      steps: map['steps']??'',
     );
   }
 

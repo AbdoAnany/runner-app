@@ -11,6 +11,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
   @override
   Future<List<HistoryEntity>> getHistoryData() async {
     final data = await service.getHistoryData();
+
+
     return data.map((e) => HistoryDataModel.fromMap(e)).toList();
   }
 
@@ -22,8 +24,9 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Future<void> addHistoryEntry(HistoryEntity entry) async {
-    await service.addHistoryEntry((entry as HistoryDataModel).toMap());
+  Future<bool> addHistoryEntry(HistoryEntity entry) async {
+ final res =   await service.addHistoryEntry((entry as HistoryDataModel).toMap());
+return res;
   }
 
   @override
@@ -33,7 +36,7 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
-  Future<void> deleteHistoryEntry(String date) async {
-    await service.deleteHistoryEntry(date);
+  Future<bool> deleteHistoryEntry(String date) async {
+ return   await service.deleteHistoryEntry(date);
   }
 }
