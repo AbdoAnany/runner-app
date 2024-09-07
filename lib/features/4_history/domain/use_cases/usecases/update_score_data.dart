@@ -3,10 +3,10 @@
 import '../../entities/history_entity.dart';
 import '../../repositories/history_repository.dart';
 
-class GetHistoryData {
+class UpdateScoreData {
   final HistoryRepository repository;
 
-  GetHistoryData(this.repository);
+  UpdateScoreData(this.repository);
 
   Future<List<HistoryEntity>> call() async {
     return await repository.getHistoryData();

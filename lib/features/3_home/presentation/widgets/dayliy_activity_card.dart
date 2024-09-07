@@ -42,16 +42,13 @@ class _DailyActivityCardState extends State<DailyActivityCard> {
             largeSize: 20,
             backgroundColor: AppColors.transparent,
             label: Container(
-              decoration: BoxDecoration(shape: BoxShape.circle
-              ,color: AppColors.green,
-               // border: Border.all(color: AppColors.iconHomeColor.withOpacity(.),width: 3)
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.green,
                   boxShadow: [
                     BoxShadow(color:  AppColors.iconHomeColor.withOpacity(.4),
-                      spreadRadius: 20.w,
-                        offset: Offset(0,0,)),
-                   // BoxShadow(color:  AppColors.iconHomeColor.withOpacity(.7),offset: Offset(-3,-3,))
+                      spreadRadius: 20.w, offset: const Offset(0,0,)),
                   ]
-                  
               ),
               width: 10.w,height: 10.w,
             ),
@@ -85,19 +82,10 @@ class _DailyActivityCardState extends State<DailyActivityCard> {
         ),
        Spacer(),
        //  Image.asset(AppImage.radius),
-        Expanded(
-          child: StepCounterChart(
-            currentSteps: 2345,
-            goalSteps: 5000,
-          ),
+        const Expanded(
+          child: StepCounterChart(),
         )
       ]),
     );
   }
-}
-
-class ChartData {
-  ChartData(this.category, this.amount);
-  final String category;
-  final double amount;
 }

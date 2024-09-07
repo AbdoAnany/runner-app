@@ -1,25 +1,26 @@
 // blocs/runner_data/runner_data_state.dart
+import '../../../../../core/helper/game.dart';
 import '../../../domain/entities/history_entity.dart';
 
-abstract class RunnerHistoryDataState {}
+abstract class HistoryDataState {}
 
-class RunnerDataLoading extends RunnerHistoryDataState {}
+class HistoryDataLoading extends HistoryDataState {}
 
-class RunnerDataLoaded extends RunnerHistoryDataState {
+class HistoryDataLoaded extends HistoryDataState {
   final List<HistoryEntity> historyData;
-
-  RunnerDataLoaded(this.historyData);
+ final LevelSystem levelSystem;
+  HistoryDataLoaded(this.historyData,this.levelSystem);
 }
 
 
-class SaveDataLoaded extends RunnerHistoryDataState {
+class SaveDataLoaded extends HistoryDataState {
    final HistoryEntity? historyData;
 
    SaveDataLoaded(this.historyData);
 }
 
-class RunnerDataError extends RunnerHistoryDataState {
+class HistoryDataError extends HistoryDataState {
   final String message;
 
-  RunnerDataError(this.message);
+  HistoryDataError(this.message);
 }

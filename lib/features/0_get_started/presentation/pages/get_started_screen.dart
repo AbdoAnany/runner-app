@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/helper/extension.dart';
 
 import '../../../../core/const/const.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/widgets/main_buttom.dart';
 import '../../../1_onboarding/presentation/pages/onboarding_screen.dart';
