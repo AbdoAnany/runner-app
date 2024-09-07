@@ -1,58 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/style/app_style.dart';
 import 'package:runner_app/core/style/color.dart';
+import 'package:runner_app/features/3_home/presentation/bloc/home_bloc.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class StepCounterChart extends StatelessWidget {
-  final int currentSteps;
-  final int goalSteps;
+import '../../data/models/user_data_model.dart';
 
-  StepCounterChart({required this.currentSteps, required this.goalSteps});
+class StepCounterChart extends StatelessWidget {
+
+
+  const StepCounterChart({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-   //   margin: EdgeInsets.symmetric(vertical: 12.0.h, horizontal: 16.w),
-     width: 64.h, height: 64.h,
+    return BlocBuilder<HomeBloc,HomeState>(
+      builder: (context,s) {
+        if(s is HomeLoaded) {
+          return _build(s.userDataDataModel);
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      }
+
+
+    );
+  }
+
+  Widget _build(UserDataDataModel userDataDataModel) {
+
+    return SizedBox(
+      width: 64.h, height: 64.h,
       child: SfRadialGauge(
         axes: <RadialAxis>[
           RadialAxis(
             minimum: 0,
-            maximum: goalSteps.toDouble(),
+            maximum: userDataDataModel.xpForNextLevel.toDouble(),
             startAngle: 130,
             endAngle: 130,
             showTicks: false,
             showLabels: false,
             axisLineStyle: AxisLineStyle(
               thickness: 3.w,
-          color: Colors.grey.shade300,
+              color: Colors.grey.shade300,
               thicknessUnit: GaugeSizeUnit.logicalPixel,
               gradient:       SweepGradient(
-                colors: [
-                  AppColors.iconHomeColor.withOpacity(.47),
-                  AppColors.iconHomeColor.withOpacity(.47),
-                  AppColors.iconHomeColor.withOpacity(.10),
+                  colors: [
+                    AppColors.iconHomeColor.withOpacity(.47),
+                    AppColors.iconHomeColor.withOpacity(.47),
+                    AppColors.iconHomeColor.withOpacity(.10),
 
-                ]  , startAngle: 360,
-                endAngle: 52,
-                stops: [0,.5,.9]
+                  ]  , startAngle: 360,
+                  endAngle: 52,
+                  stops: [0,.5,.9]
               ),
             ),
             pointers: <GaugePointer>[
               RangePointer(
-                value: currentSteps.toDouble(),
+                value:  userDataDataModel.currentXP.toDouble(),
                 width: 0.15,cornerStyle: CornerStyle.bothCurve,
                 sizeUnit: GaugeSizeUnit.factor,
                 color: AppColors.dotColor,
-               // cornerStyle: CornerStyle.bothCurve,
-               //  gradient: const SweepGradient(
-               //    colors: [
-               //      Colors.pinkAccent,
-               //      Colors.pinkAccent,
-               //    ],
-               //
-               //  ),
+
               ),
             ],
             annotations: <GaugeAnnotation>[
@@ -62,27 +72,20 @@ class StepCounterChart extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(Icons.directions_walk,
-                        size: 16.w, color: AppColors.iconHomeColor,),
+                  //  Icon(Icons.directions_walk, size: 16.w, color: AppColors.iconHomeColor,),
 
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(currentSteps.toString(),
+                        Text(  userDataDataModel.currentXP.toString(),
                             style: AppStyle.textStyle14WhiteW400),
-
                         Container(
                           color: AppColors.textGray,
                           height: 1,
                           width: 26.w,
                         ),
-                        // Divider(
-                        //   thickness: 3,
-                        //   height: 5,
-                        //   color: AppColors.textGray,
-                        // ),
-                        Text(goalSteps.toString(),
+                        Text(  userDataDataModel.xpForNextLevel.toString(),
                             style: AppStyle.textStyle14GreenW400),
                       ],
                     )
@@ -95,16 +98,6 @@ class StepCounterChart extends StatelessWidget {
           ),
         ],
       ),
-    //   decoration: BoxDecoration(
-    //     shape: BoxShape.circle,
-    //     gradient:
-    // LinearGradient(
-    //       colors: [
-    //         AppColors.chartColors.withOpacity(.47),
-    //         AppColors.chartColors.withOpacity(.0)
-    //       ],
-    //     ),
-    //   ),
     );
   }
 }

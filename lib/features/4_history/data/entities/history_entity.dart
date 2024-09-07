@@ -1,19 +1,18 @@
-// data/models/user_data_model.dart
+// domain/entities/user_data_entity.dart
+
+
 class HistoryEntity {
-  final String id;
   final String date;
   final double distance;
   final int pt;
   final int kal;
-  final int xp;
+  final int steps;
 
   HistoryEntity({
-    required this.id,
     required this.date,
     required this.distance,
     required this.pt,
     required this.kal,
-    required this.xp,
+    required this.steps,
   });
 }
-

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/helper/game.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../dependency_injection.dart';
+import '../../../3_home/presentation/widgets/home_progress_level_steps_bar.dart';
 import '../manager/bloc/runner_data_bloc.dart';
 import '../manager/bloc/runner_data_event.dart';
 import '../manager/bloc/runner_data_state.dart';
@@ -14,8 +16,8 @@ class HistoryScreenBlocProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RunnerHistoryDataBloc>(
-      create: (context) => locator<RunnerHistoryDataBloc>(),
+    return BlocProvider<HistoryDataBloc>(
+      create: (context) => locator<HistoryDataBloc>(),
       child: const HistoryScreen(),
     );
   }
@@ -30,20 +32,24 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<RunnerHistoryDataBloc>() .add(LoadRunnerData());
+    context.read<HistoryDataBloc>() .add(LoadHistoryData());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RunnerHistoryDataBloc, RunnerHistoryDataState>(
+
+    return BlocBuilder<HistoryDataBloc, HistoryDataState>(
       builder: (context, state) {
-        if (state is RunnerDataLoading) {
+        if (state is HistoryDataLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is RunnerDataLoaded) {
+        } else if (state is HistoryDataLoaded) {
+
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              HomeProgressLevelStepsBar(levelSystem:state. levelSystem,),
+
               StatisticsWidget(state: state),
               Expanded(
                 child: state.historyData.isEmpty
@@ -56,7 +62,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             ],
           );
-        } else if (state is RunnerDataError) {
+        } else if (state is HistoryDataError) {
           return Center(
               child: Text(
                 state.message,textAlign: TextAlign.center,

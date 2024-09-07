@@ -23,14 +23,14 @@ import '../manager/bloc/runner_data_event.dart';
 import '../manager/bloc/runner_data_state.dart';
 
 class StatisticsWidget extends StatelessWidget {
-  final RunnerDataLoaded state;
+  final HistoryDataLoaded state;
 
   StatisticsWidget({super.key, required this.state});
   final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    double xp = state.historyData.fold(0, (accumulator, element) => (accumulator + element.steps));
+    int xp = state.historyData.fold(0, (accumulator, element) => (accumulator + element.xp));
     print(xp);
 
     // Initialize Player with current XP and check for level up
@@ -91,14 +91,14 @@ class StatisticsWidget extends StatelessWidget {
                           title: AppConst.addScore,
                           onPressed: () {
                             Navigator.of(context1).pop();
-                            context.read<RunnerHistoryDataBloc>().add(AddRunnerData(
+                            context.read<HistoryDataBloc>().add(AddHistoryData(
                               HistoryDataModel(
                                 id: Random().nextInt(1000000).toString(),
                                 date: DateTime.now().toIso8601String(),
-                                distance: 0,
-                                pt: 0,
+                                distance: 44,
+                                pt: 12,
                                 kal: 10,
-                                steps: int.tryParse(controller.text) ?? 0,
+                                xp: int.tryParse(controller.text) ?? 0,
                               ),
                             ));
                           },

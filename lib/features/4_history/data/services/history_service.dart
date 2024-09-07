@@ -1,4 +1,4 @@
-// data/services/history_service.dart
+// data/services/user_data_service.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -45,7 +45,7 @@ class HistoryService {
         'history': FieldValue.arrayUnion([entry])
       });
 
-      print('History entry added successfully');
+      print('History entry  ${entry} added successfully');
 
       return true;
     } catch (e) {
@@ -57,7 +57,7 @@ class HistoryService {
   Future<bool> updateHistoryEntry(String date, Map<String, dynamic> updates) async {
     try {
       var userDoc = await _firestore.collection('users').doc(userId).get();
-      List<dynamic> history = userDoc.get('history') ?? [];
+      List<Map<String, dynamic>> history = List<Map<String, dynamic>>.from(userDoc.get('history') ?? []);
 
       // Find the entry to update
       int index = history.indexWhere((entry) => entry['date'] == date);
@@ -82,11 +82,12 @@ return true;
   Future<bool> deleteHistoryEntry(String date) async {
     try {
       var userDoc = await _firestore.collection('users').doc(userId).get();
-      List<dynamic> history = userDoc.get('history') ?? [];
-
+      List<Map<String, dynamic>> history = List<Map<String, dynamic>>.from(userDoc.get('history') ?? []);
+print(history.first);
+print(history.length);
       // Remove the entry matching the given date
-      history.removeWhere((entry) => entry['date'] == date);
-
+      history.removeWhere((entry) => entry['id'] == date);
+      print(history.length);
       await _firestore.collection('users').doc(userId).update({
         'history': history,
       });

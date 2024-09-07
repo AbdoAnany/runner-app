@@ -40,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Map<String, Widget>> _pages = [
     {
-      "Home": const HomeScreen(),
+      "Home": const HomeScreenBlocProvider(),
     },
   // {
     //   "Home": const HomeScreen(),
@@ -82,7 +82,7 @@ class _MainScreenState extends State<MainScreen> {
                 left: 0,
                 right: 0,
                 child: Container(
-                  height: 360.h,
+                  height: 320.h,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(AppImage.homeGrenadianImage),

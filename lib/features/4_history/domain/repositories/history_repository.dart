@@ -7,3 +7,6 @@ abstract class HistoryRepository {
   Future<void> updateHistoryEntry(String date, Map<String, dynamic> updates);
   Future<bool> deleteHistoryEntry(String date);
 }
+
+
+

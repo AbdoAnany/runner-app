@@ -61,8 +61,8 @@ class HistoryListItem extends StatelessWidget {
 
         if (confirm) {
           // Delete the history entry and update XP
-          levelSystem.addXP(-history.steps);
-          context.read<RunnerHistoryDataBloc>().add(DeleteRunnerData(history));
+          levelSystem.addXP(-history.xp);
+          context.read<HistoryDataBloc>().add(DeleteHistoryData(history));
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("History entry deleted and XP updated")),
           );
@@ -128,7 +128,7 @@ class HistoryListItem extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              AppFunction.getDecimal(history.steps),
+              AppFunction.getDecimal(history.xp),
               style: AppStyle.textStyle28GWhiteW800BebasNeue,
             ),
             Text(

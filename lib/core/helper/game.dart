@@ -37,8 +37,8 @@ import 'dart:math';
 
 class LevelSystem {
  late int currentLevel;
- late double currentXP;
- late double xpForNextLevel;
+ late int currentXP;
+ late int xpForNextLevel;
   final double baseXP;
   final double growthFactor;
 
@@ -48,11 +48,11 @@ class LevelSystem {
     this.baseXP = 100,
     this.growthFactor = 1.5,
   }) {
-    xpForNextLevel = calculateXPForLevel(currentLevel + 1);
+    xpForNextLevel = getXPForLevel(currentLevel + 1);
   }
 
-  double calculateXPForLevel(int level) {
-    return baseXP * pow(level, growthFactor);
+  int getXPForLevel(int level) {
+    return (baseXP * pow(level, growthFactor)).toInt();
   }
 
   void addXP(int xp) {
@@ -65,7 +65,7 @@ class LevelSystem {
   void levelUp() {
     currentLevel++;
     currentXP -= xpForNextLevel;
-    xpForNextLevel = calculateXPForLevel(currentLevel + 1);
+    xpForNextLevel = getXPForLevel(currentLevel + 1);
   }
 
   double getXPProgress() {
@@ -81,6 +81,7 @@ class LevelSystem {
       'currentLevel': currentLevel,
       'currentXP': currentXP,
       'xpForNextLevel': xpForNextLevel,
+
     };
   }
 

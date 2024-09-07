@@ -44,7 +44,7 @@ class AppFunction {
         distance: distance,
         pt: pt,
         kal: kal,
-        steps: steps,
+        xp: steps,
       ));
     }
 
