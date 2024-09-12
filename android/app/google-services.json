@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "560411514854",
+    "project_id": "runner-app-df2e8",
+    "storage_bucket": "runner-app-df2e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560411514854:android:a33f8056069212af5fe827",
+        "android_client_info": {
+          "package_name": "com.anany.runner_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "560411514854-ijdc8v3dnelt9tdq5ehj0bchetir0n29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8KSwLQRi2rew5bbf4uOq27SqVdhe4_Fw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560411514854-ijdc8v3dnelt9tdq5ehj0bchetir0n29.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "560411514854-lvcmisscs98i4oar2vv4r547s1b39sq1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.anany.runnerApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560411514854:android:3c0c22304f22f8595fe827",
+        "android_client_info": {
+          "package_name": "com.anany.scoreus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "560411514854-ijdc8v3dnelt9tdq5ehj0bchetir0n29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8KSwLQRi2rew5bbf4uOq27SqVdhe4_Fw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560411514854-ijdc8v3dnelt9tdq5ehj0bchetir0n29.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "560411514854-lvcmisscs98i4oar2vv4r547s1b39sq1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.anany.runnerApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
