@@ -1,4 +1,4 @@
-package com.anany.runner_app
+package com.anany.scoreus
 
 import io.flutter.embedding.android.FlutterActivity
 

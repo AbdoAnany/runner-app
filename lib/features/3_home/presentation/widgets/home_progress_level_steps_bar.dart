@@ -101,6 +101,7 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
 
     for (int i = 0; i < absLevelDifference; i++) {
       final isLastIteration = i == absLevelDifference - 1;
+      final endProgress = isLastIteration ? widget.levelSystem.getXPProgress() : (isLevelUp ? 1.0 : 0.0);
       final nextLevel = isLevelUp ? startLevel + 1 : startLevel - 1;
 
       // Progress animation
@@ -110,12 +111,7 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
       ));
       if (!isLastIteration) {
         progressSequence.add(TweenSequenceItem(
-          tween: Tween<double>(begin: isLevelUp ? 0.0 : 1.0, end: isLevelUp ? 0.0 : 1.0),
-          weight: 1,
-        ));
-      } else {
-        progressSequence.add(TweenSequenceItem(
-          tween: Tween<double>(begin: isLevelUp ? 0.0 : 1.0, end: widget.levelSystem.getXPProgress()),
+          tween: Tween<double>(begin: isLevelUp ? 0.0 : 1.0, end: endProgress),
           weight: 1,
         ));
       }

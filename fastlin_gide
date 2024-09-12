@@ -1,0 +1,21 @@
+add ./Gemfile
+    source "https://rubygems.org"
+
+    gem "fastlane"
+
+
+bundle install
+
+
+
+
+
+
+
+
+
+
+
+1//038AyidR1L9rTCgYIARAAGAMSNwF-L9IrmN9r9r-gXHS2jkS7zi0EbQ8mBwSiqzEKTRHeX1Ez8GLAW_TmCq7mgqhgaYNmNg_pzBc
+
+Example: firebase deploy --token "$FIREBASE_TOKEN"
