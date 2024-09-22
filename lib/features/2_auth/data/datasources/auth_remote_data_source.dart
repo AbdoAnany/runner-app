@@ -31,7 +31,7 @@ class AuthRemoteDataSource {
             adminId: '',
             currentLevel: 1,
             currentXP: 1,
-            userState: 'active',
+            userState: 'not active',
             xpForNextLevel: 100,
             xpProgress: 0);
     await _fireStore.collection('users').doc(user.uid).set({

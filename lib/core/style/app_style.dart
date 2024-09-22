@@ -96,6 +96,11 @@ class AppStyle{
       fontWeight: FontWeight.w400,
 
       fontSize: 12.w);
+  static TextStyle textStyle14PinkW400 =TextStyle(
+      color: AppColors.dotColor,
+      fontWeight: FontWeight.w400,
+
+      fontSize: 14.w);
 
   static TextStyle textStyle12WhiteW400 =TextStyle(
       color: AppColors.white,
@@ -109,8 +114,12 @@ class AppStyle{
   static TextStyle textStyle16GWhiteW800 =TextStyle(
       color: AppColors.white,
       fontWeight: FontWeight.w800,
-
       fontSize: 16.w);
+  static TextStyle textStyle16GWhiteQuicksandW800 =TextStyle(
+      color: AppColors.white,
+      fontWeight: FontWeight.w800,
+      fontFamily: "Quicksand",
+      fontSize: 18.w);
 static TextStyle textStyle20GWhiteW800 =TextStyle(
       color: AppColors.white,
       fontWeight: FontWeight.w800,
@@ -147,6 +156,12 @@ static TextStyle textStyle20GoldW800 =TextStyle(
       fontWeight: FontWeight.w700,
     fontFamily: "Quicksand",
       fontSize: 20.w);
+
+static TextStyle textStyle16GoldW800 =TextStyle(
+      color: AppColors.levelHomeColor,
+      fontWeight: FontWeight.w700,
+    fontFamily: "Quicksand",
+      fontSize: 16.w);
 
   static  BoxDecoration  decorationHome= BoxDecoration(
   borderRadius: BorderRadius.circular(20),

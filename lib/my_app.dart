@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/style/color.dart';
+import 'package:runner_app/dependency_injection.dart';
 import 'package:runner_app/features/0_get_started/presentation/pages/get_started_screen.dart';
 import 'package:runner_app/features/2_auth/data/datasources/auth_remote_data_source.dart';
 import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_event.dart';
 import 'package:toastification/toastification.dart';
 
+import 'core/notification/notification_bloc.dart';
 import 'features/2_auth/data/repositories/auth_repository_impl.dart';
 import 'features/2_auth/domain/use_cases/login_use_case.dart';
 import 'features/2_auth/domain/use_cases/sign_up_use_case.dart';
@@ -30,11 +32,13 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
-          create: (context) => AuthBloc(
-            loginUseCase: LoginUseCase(AuthRepositoryImpl(AuthRemoteDataSource())),
-            signUpUseCase: SignUpUseCase(AuthRepositoryImpl(AuthRemoteDataSource())),
-          )..add(UserIsLogIn()),
-        ),
+          create: (context) =>locator<AuthBloc> (
+            // loginUseCase: LoginUseCase(AuthRepositoryImpl(AuthRemoteDataSource())),
+            // signUpUseCase: SignUpUseCase(AuthRepositoryImpl(AuthRemoteDataSource())),
+          )..add(UserIsLogIn())),
+    BlocProvider<NotificationBloc>(
+          create: (context) => locator<NotificationBloc>(),),
+
 
       ],
       child:

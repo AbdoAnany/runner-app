@@ -60,7 +60,7 @@ class StatisticsWidget extends StatelessWidget {
           _buildStatColumn(
             icon: Iconsax.routing,
             value:
-            '${AppFunction.getDistance(state.historyData.fold(0, (accumulator, element) => (accumulator + element.distance).toInt()) / 1000)} KM',
+            '${AppFunction.getDistance(state.historyData.fold(0, (accumulator, element) => (accumulator + element.xp).toInt()) / 1000)} KM',
             label: 'Distance',
           ),
           _buildStatColumn(
@@ -95,9 +95,7 @@ class StatisticsWidget extends StatelessWidget {
                               HistoryDataModel(
                                 id: Random().nextInt(1000000).toString(),
                                 date: DateTime.now().toIso8601String(),
-                                distance: 44,
-                                pt: 12,
-                                kal: 10,
+
                                 xp: int.tryParse(controller.text) ?? 0,
                               ),
                             ));

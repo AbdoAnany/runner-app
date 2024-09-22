@@ -29,19 +29,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _onLoadHomeData(LoadHomeData event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
     try {
-      // final setUserDataServer = await setUserData(
-      //     UserDataDataModel(userId: FirebaseAuth.instance.currentUser!.uid,
-      //         date: DateTime.now().toIso8601String(),
-      //         activeNumber: 0,
-      //         name: "Abdo Anany",
-      //         email:  FirebaseAuth.instance.currentUser!.email!,
-      //         roles: AuthBloc.currentUser!.role,
-      //         adminId: '',
-      //         currentLevel: 1,
-      //         currentXP: 1,
-      //         userState: 'active',
-      //         xpForNextLevel: 100,
-      //         xpProgress: 0));
+
       final userDataServer = await getUserData();
       userData=userDataServer;
      emit(HomeLoaded(userDataDataModel: userDataServer,));

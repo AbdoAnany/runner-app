@@ -8,6 +8,12 @@ import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 import 'gradient_Progress_painter.dart';
 
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 class HomeProgressLevelStepsBar extends StatefulWidget {
   const HomeProgressLevelStepsBar({super.key, required this.levelSystem});
   final LevelSystem levelSystem;
@@ -18,17 +24,30 @@ class HomeProgressLevelStepsBar extends StatefulWidget {
 
 class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> with TickerProviderStateMixin {
   late AnimationController _animationController;
+  late AnimationController _flashAnimationController;
+  late AnimationController _scaleAnimationController;
   late Animation<double> _progressAnimation;
   late Animation<int> _xpAnimation;
   late Animation<int> _levelAnimation;
   late Animation<int> _xpForNextLevelAnimation;
+  late Animation<double> _badgeScaleAnimation;
+  late Animation<double> _flashAnimation;
+  late Animation<double> _barScaleAnimation;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 2000),
+    );
+    _flashAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _scaleAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
     );
 
     _initializeAnimations();
@@ -65,6 +84,30 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
       end: widget.levelSystem.xpForNextLevel,
     ).animate(CurvedAnimation(
       parent: _animationController,
+      curve: Curves.easeInOut,
+    ));
+
+    _badgeScaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.2,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.elasticOut,
+    ));
+
+    _flashAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _flashAnimationController,
+      curve: Curves.easeInOut,
+    ));
+
+    _barScaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.05,
+    ).animate(CurvedAnimation(
+      parent: _scaleAnimationController,
       curve: Curves.easeInOut,
     ));
   }
@@ -109,31 +152,49 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
         tween: Tween<double>(begin: startProgress, end: isLevelUp ? 1.0 : 0.0),
         weight: 1,
       ));
+      // Add a pause
+      progressSequence.add(TweenSequenceItem(
+        tween: ConstantTween<double>(isLevelUp ? 1.0 : 0.0),
+        weight: 0.5,
+      ));
       if (!isLastIteration) {
         progressSequence.add(TweenSequenceItem(
-          tween: Tween<double>(begin: isLevelUp ? 0.0 : 1.0, end: endProgress),
-          weight: 1,
+          tween: Tween<double>(begin: isLevelUp ? 0.0 : 1.0, end: isLevelUp ? 0.0 : 1.0),
+          weight: 2,
+        ));
+      } else {
+        progressSequence.add(TweenSequenceItem(
+          tween: Tween<double>(begin: isLevelUp ? 0.0 : 1.0, end: widget.levelSystem.getXPProgress()),
+          weight: 2,
         ));
       }
 
       // Level animation
       levelSequence.add(TweenSequenceItem(
+        tween: IntTween(begin: startLevel, end: startLevel),
+        weight: 1,
+      ));
+      levelSequence.add(TweenSequenceItem(
         tween: IntTween(begin: startLevel, end: nextLevel),
-        weight: 2,
+        weight: 2.5,
       ));
 
       // XP animation
       final nextXP = isLastIteration ? widget.levelSystem.currentXP : (isLevelUp ? startXPForNextLevel : 0);
       xpSequence.add(TweenSequenceItem(
         tween: IntTween(begin: startXP, end: nextXP),
-        weight: 2,
+        weight: 3,
       ));
 
       // XP for next level animation
-      final nextXPForNextLevel = isLastIteration ? widget.levelSystem.xpForNextLevel : (isLevelUp ? widget.levelSystem.getXPForLevel(nextLevel + 1) : oldWidget.levelSystem.getXPForLevel(nextLevel));
+      final nextXPForNextLevel = isLastIteration
+          ? widget.levelSystem.xpForNextLevel
+          : (isLevelUp
+          ? widget.levelSystem.getXPForLevel(nextLevel + 1)
+          : oldWidget.levelSystem.getXPForLevel(nextLevel));
       xpForNextLevelSequence.add(TweenSequenceItem(
         tween: IntTween(begin: startXPForNextLevel, end: nextXPForNextLevel),
-        weight: 2,
+        weight: 3,
       ));
 
       startProgress = isLevelUp ? 0.0 : 1.0;
@@ -163,7 +224,20 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
     ));
 
     // Adjust animation duration based on the number of level changes
-    _animationController.duration = Duration(milliseconds: 1500 * absLevelDifference);
+    _animationController.duration = Duration(milliseconds: 2000 * absLevelDifference);
+
+    // Set up a listener to trigger flash effect and scale animation at level changes
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.forward) {
+        _flashAnimationController.repeat(reverse: true);
+        _scaleAnimationController.repeat(reverse: true);
+      } else if (status == AnimationStatus.completed) {
+        _flashAnimationController.stop();
+        _flashAnimationController.value = 0.0;
+        _scaleAnimationController.stop();
+        _scaleAnimationController.value = 1.0;
+      }
+    });
   }
 
   void _updateAnimations(double oldProgress, double newProgress) {
@@ -191,12 +265,14 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
       curve: Curves.easeInOut,
     ));
 
-    _animationController.duration = const Duration(milliseconds: 1500);
+    _animationController.duration = const Duration(milliseconds: 2000);
   }
 
   @override
   void dispose() {
     _animationController.dispose();
+    _flashAnimationController.dispose();
+    _scaleAnimationController.dispose();
     super.dispose();
   }
 
@@ -220,6 +296,27 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
                       AnimatedBuilder(
                         animation: _animationController,
                         builder: (context, child) {
+                          return AnimatedBuilder(
+                            animation: _flashAnimation,
+                            builder: (context, child) {
+                              return Text(
+                                'Level ${_levelAnimation.value}',
+                                style: AppStyle.textStyle20GoldW800.copyWith(
+                                  color: Color.lerp(
+                                    AppStyle.textStyle20GoldW800.color,
+                                    Colors.white,
+                                    _flashAnimation.value,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      const Spacer(),
+                      AnimatedBuilder(
+                        animation: _animationController,
+                        builder: (context, child) {
                           return Text(
                             '${NumberFormat("#,000").format(_xpAnimation.value)} /',
                             style: AppStyle.textStyle12GrayW400,
@@ -239,64 +336,70 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
                         ' xp',
                         style: AppStyle.textStyle12GrayW400,
                       ),
-                      const Spacer(),
-                      AnimatedBuilder(
-                        animation: _animationController,
-                        builder: (context, child) {
-                          return Text(
-                            'Level ${_levelAnimation.value}',
-                            style: AppStyle.textStyle20GoldW800,
-                          );
-                        },
-                      ),
                     ],
                   ),
                   SizedBox(height: 2.h),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(50.0),
-                    child: Container(
-                      height: 10.0.h,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: AppColors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            color: AppColors.shadowContainerColor,
-                            spreadRadius: 1,
-                            blurRadius: 12,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: AnimatedBuilder(
-                        animation: _progressAnimation,
-                        builder: (context, child) {
-                          return CustomPaint(
-                            painter: GradientProgressPainter(
-                              progress: _progressAnimation.value,
-                              gradient: const LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  AppColors.bar1HomeColor,
-                                  AppColors.bar2HomeColor,
-                                ],
-                              ),
+                  AnimatedBuilder(
+                    animation: _barScaleAnimation,
+                    builder: (context, child) {
+                      return Transform.scale(
+                        scale: _barScaleAnimation.value,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50.0),
+                          child: Container(
+                            height: 10.0.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: AppColors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: _progressAnimation.value > 0.9 ? Colors.yellowAccent : Colors.transparent,
+                                  spreadRadius: 2,
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                      ),
-                    ),
+                            child: AnimatedBuilder(
+                              animation: _progressAnimation,
+                              builder: (context, child) {
+                                return CustomPaint(
+                                  painter: GradientProgressPainter(
+                                    progress: _progressAnimation.value,
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        AppColors.bar1HomeColor,
+                                        AppColors.levelHomeColor,
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
             ),
           ),
-          Image.asset(
-            AppImage.levelBadge,
-            width: 48.0.w,
-            height: 48.h,
+          AnimatedBuilder(
+            animation: _badgeScaleAnimation,
+            builder: (context, child) {
+              return Transform.scale(
+                scale: _badgeScaleAnimation.value,
+                child: Image.asset(
+                  AppImage.levelBadge,
+                  width: 48.0.w,
+                  height: 48.h,
+                ),
+              );
+            },
           ),
         ],
       ),

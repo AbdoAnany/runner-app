@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../core/const/const.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
+import '../../../../core/widgets/loading_widget.dart';
+import '../bloc/home_bloc.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
@@ -18,7 +21,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         Iconsax.menu_1,
         color: AppColors.iconHomeColor,
       ),
-      title: Row(
+      title:Row(
         children: [
           Image.asset(
             AppImage.logoImage,
@@ -35,13 +38,17 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 style: AppStyle.textStyle12WhiteW400,
               ),
               Text(
-                'Daniela',
+                HomeBloc.userData?.name??'' ,
                 style: AppStyle.textStyle16GWhiteW800,
-              ),
+              )
+
             ],
           ),
         ],
-      ),
+      )
+
+
+      ,
       actions: [
         const Badge(
           smallSize: 8,

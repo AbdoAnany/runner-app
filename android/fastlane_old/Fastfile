@@ -9,7 +9,7 @@ platform :android do
 
     # Firebase App Distribution
     firebase_app_distribution(
-      app: "1:560411514854:android:3c0c22304f22f8595fe827",
+      app: "1:399879821078:android:9b5324dc6e9ee7491c6237",
       firebase_cli_token: "1//038AyidR1L9rTCgYIARAAGAMSNwF-L9IrmN9r9r-gXHS2jkS7zi0EbQ8mBwSiqzEKTRHeX1Ez8GLAW_TmCq7mgqhgaYNmNg_pzBc",
       android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk", # Specify the APK path
 #         android_artifact_path: "../build/app/outputs/apk/release/app-release.apk", # Updated path

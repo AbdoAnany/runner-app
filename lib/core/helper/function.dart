@@ -33,17 +33,15 @@ class AppFunction {
       String date = '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
 
       // Generate random values for each field
-      double distance = random.nextDouble() * 1000.0; // distance in km (0 to 10 km)
-      int pt = random.nextInt(100); // points (0 to 100)
-      int kal = random.nextInt(500); // calories (0 to 500)
+      // double distance = random.nextDouble() * 1000.0; // distance in km (0 to 10 km)
+      // int pt = random.nextInt(100); // points (0 to 100)
+      // int kal = random.nextInt(500); // calories (0 to 500)
       int steps = random.nextInt(20000); // steps (0 to 20,000)
 
       // Create a new HistoryEntity instance and add it to the list
       historyList.add(HistoryDataModel(
         date: date,id: i.toString(),
-        distance: distance,
-        pt: pt,
-        kal: kal,
+
         xp: steps,
       ));
     }

@@ -92,38 +92,38 @@ class HistoryListItem extends StatelessWidget {
                   style: AppStyle.textStyle16PrimaryW400,
                 ),
                 SizedBox(height: 8.h,),
-                Row(
-                  children: [
-                    if (history.pt > 0)
-                      Text(
-                        'PT ${history.pt}',
-                        style: AppStyle.textStyle12PinkW400,
-                      ),
-                    if (history.pt > 0)
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                        child: const CircleAvatar(
-                          radius: 2,
-                          backgroundColor: AppColors.textGray,
-                        ),
-                      ),
-                    Text(
-                      '${(history.distance / 1000).toStringAsFixed(2)} km',
-                      style: AppStyle.textStyle12GrayW400,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                      child: const CircleAvatar(
-                        radius: 2,
-                        backgroundColor: AppColors.textGray,
-                      ),
-                    ),
-                    Text(
-                      '${history.kal} kcal',
-                      style: AppStyle.textStyle12GrayW400,
-                    ),
-                  ],
-                )
+                // Row(
+                //   children: [
+                //     if (history.pt > 0)
+                //       Text(
+                //         'PT ${history.pt}',
+                //         style: AppStyle.textStyle12PinkW400,
+                //       ),
+                //     if (history.pt > 0)
+                //       Padding(
+                //         padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                //         child: const CircleAvatar(
+                //           radius: 2,
+                //           backgroundColor: AppColors.textGray,
+                //         ),
+                //       ),
+                //     Text(
+                //       '${(history.distance / 1000).toStringAsFixed(2)} km',
+                //       style: AppStyle.textStyle12GrayW400,
+                //     ),
+                //     Padding(
+                //       padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                //       child: const CircleAvatar(
+                //         radius: 2,
+                //         backgroundColor: AppColors.textGray,
+                //       ),
+                //     ),
+                //     Text(
+                //       '${history.kal} kcal',
+                //       style: AppStyle.textStyle12GrayW400,
+                //     ),
+                //   ],
+                // )
               ],
             ),
             const Spacer(),
