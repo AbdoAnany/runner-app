@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 
 
@@ -31,27 +32,10 @@ class _PasswordFieldState extends State<PasswordField> {
         controller: widget.controller,
         style: TextStyle(color: AppColors.white),
         validator: widget.validator,
-        decoration: InputDecoration(
-          filled: true,
-          hintText: widget.hintText,
-          hintStyle: TextStyle(color: AppColors.textGray),
-          fillColor: AppColors.bgFiledColor,
-          suffix: InkWell(
-            child: Icon(
-              obscureText ? Icons.visibility : Icons.visibility_off,
-              color: AppColors.white,
-            ),
-            onTap: changeObscureText,
-          ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primary),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primary.withOpacity(.8)),
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
+        decoration:
+
+        AppStyle.inputDecoration(hintText:  widget.hintText,changeObscureText: changeObscureText,obscureText: obscureText),
+
         obscureText: obscureText,
         // validator: (value) {
         //   if (value == null || value.isEmpty) {

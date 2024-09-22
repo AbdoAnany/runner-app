@@ -153,20 +153,29 @@ static TextStyle textStyle20GoldW800 =TextStyle(
   border: Border.all(  color: AppColors.white.withOpacity(.17)),
   color: AppColors.white.withOpacity(.10));
 
-  static  InputDecoration inputDecoration({hintText}) => InputDecoration(
-  filled: true,
-  hintText: hintText,hintStyle:  TextStyle(color: AppColors.textGray),
+  static  InputDecoration inputDecoration({String hintText='',void Function()? changeObscureText,obscureText=true}) =>
 
+      InputDecoration(
+  filled: true,
+  hintText:hintText,
+  hintStyle: const TextStyle(color: AppColors.textGray),
   fillColor: AppColors.bgFiledColor,
+  suffixIcon: hintText.contains("password")?InkWell(
+ // onTap: changeObscureText??(){},
+      child:  Icon(
+  obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+  color: AppColors.primary,
+  )
+  ):const SizedBox(height: 25,),
   border: OutlineInputBorder(
   borderSide: BorderSide(color: AppColors.primary),
-
-  borderRadius: BorderRadius.circular(10.r),
+  borderRadius: BorderRadius.circular(10),
   ),
   enabledBorder: OutlineInputBorder(
   borderSide: BorderSide(color: AppColors.primary.withOpacity(.8)),
-
-  borderRadius: BorderRadius.circular(10.r),
+  borderRadius: BorderRadius.circular(10),
+  ),
   )
-  );
+
+  ;
 }

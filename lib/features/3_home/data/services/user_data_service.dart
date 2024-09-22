@@ -16,7 +16,7 @@ class UserDataService {
           .get();
 
       // Retrieve the history list from the user's document
-      Map<String, dynamic> userData = userDoc.get('UserData');
+      Map<String, dynamic> userData = userDoc.get('userData');
       print("UserData ===============");
       print(userData);
 
@@ -33,7 +33,7 @@ class UserDataService {
 
       DocumentReference docRef = _firestore.collection('users').doc(userId);
 
-      batch.set(docRef, {"UserData": userData}, SetOptions(merge: true));
+      batch.set(docRef, {"userData": userData}, SetOptions(merge: true));
 
       await batch.commit();
       print('UserData data set successfully');
@@ -47,7 +47,7 @@ class UserDataService {
       await _firestore
           .collection('users')
           .doc(userId)
-          .update({'UserData': entry});
+          .update({'userData': entry});
 
       print('UserData entry  ${entry} added successfully');
 
@@ -63,7 +63,7 @@ class UserDataService {
       // var userDoc = await _firestore.collection('users').doc(userId).get();
       // Map<String, dynamic> userData = userDoc.get('UserData');
       await _firestore.collection('users').doc(userId).update({
-        'UserData': updates,
+        'userData': updates,
       });
       return true;
     } catch (e) {
@@ -76,12 +76,12 @@ class UserDataService {
     try {
       var userDoc = await _firestore.collection('users').doc(userId).get();
       List<Map<String, dynamic>> userData =
-          List<Map<String, dynamic>>.from(userDoc.get('UserData') ?? []);
+          List<Map<String, dynamic>>.from(userDoc.get('userData') ?? []);
 
       // Remove the entry matching the given date
       userData.removeWhere((entry) => entry['id'] == date);
       await _firestore.collection('users').doc(userId).update({
-        'UserData': userData,
+        'userData': userData,
       });
 
       print('UserData entry deleted successfully');
@@ -97,7 +97,7 @@ class UserDataService {
       // var userDoc = await _firestore.collection('users').doc(userId).get();
       // Map<String, dynamic> userData = userDoc.get('UserData');
       await _firestore.collection('users').doc(userId).update({
-        'UserData': updates,
+        'userData': updates,
       });
       return true;
     } catch (e) {

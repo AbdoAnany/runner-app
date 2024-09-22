@@ -41,50 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyC-CuL2RRbKJWVCyt0vlkrh406F6LwvHRQ',
-    appId: '1:560411514854:web:3aad7f624e4d98d65fe827',
-    messagingSenderId: '560411514854',
-    projectId: 'runner-app-df2e8',
-    authDomain: 'runner-app-df2e8.firebaseapp.com',
-    storageBucket: 'runner-app-df2e8.appspot.com',
-    measurementId: 'G-2YZTYCGW3L',
+    apiKey: 'AIzaSyBbP_4sR9e1FPl4XgQ6WD7IFim-U0zDBbY',
+    appId: '1:399879821078:web:a41f5772fbef6ec91c6237',
+    messagingSenderId: '399879821078',
+    projectId: 'scoreus-87b8a',
+    authDomain: 'scoreus-87b8a.firebaseapp.com',
+    storageBucket: 'scoreus-87b8a.appspot.com',
+    measurementId: 'G-PHJ1CVXNMJ',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD8KSwLQRi2rew5bbf4uOq27SqVdhe4_Fw',
-    appId: '1:560411514854:android:3c0c22304f22f8595fe827',
-    messagingSenderId: '560411514854',
-    projectId: 'runner-app-df2e8',
-    storageBucket: 'runner-app-df2e8.appspot.com',
+    apiKey: 'AIzaSyD0SVDQ_27Eev2AeHZFMyjlBJpHyE-oPQM',
+    appId: '1:399879821078:android:9b5324dc6e9ee7491c6237',
+    messagingSenderId: '399879821078',
+    projectId: 'scoreus-87b8a',
+    storageBucket: 'scoreus-87b8a.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA_Ro6Dv5VYIKO_hvrU3mlygEoOtjFiv80',
-    appId: '1:560411514854:ios:c3cd193a4b44f93f5fe827',
-    messagingSenderId: '560411514854',
-    projectId: 'runner-app-df2e8',
-    storageBucket: 'runner-app-df2e8.appspot.com',
-    iosClientId: '560411514854-lvcmisscs98i4oar2vv4r547s1b39sq1.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBcWDJ6HGOOShhdlsuGgOP3Ntl1ql00sX4',
+    appId: '1:399879821078:ios:4365aff5417f012a1c6237',
+    messagingSenderId: '399879821078',
+    projectId: 'scoreus-87b8a',
+    storageBucket: 'scoreus-87b8a.appspot.com',
     iosBundleId: 'com.anany.runnerApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyA_Ro6Dv5VYIKO_hvrU3mlygEoOtjFiv80',
-    appId: '1:560411514854:ios:c3cd193a4b44f93f5fe827',
-    messagingSenderId: '560411514854',
-    projectId: 'runner-app-df2e8',
-    storageBucket: 'runner-app-df2e8.appspot.com',
-    iosClientId: '560411514854-lvcmisscs98i4oar2vv4r547s1b39sq1.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBcWDJ6HGOOShhdlsuGgOP3Ntl1ql00sX4',
+    appId: '1:399879821078:ios:4365aff5417f012a1c6237',
+    messagingSenderId: '399879821078',
+    projectId: 'scoreus-87b8a',
+    storageBucket: 'scoreus-87b8a.appspot.com',
     iosBundleId: 'com.anany.runnerApp',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyC-CuL2RRbKJWVCyt0vlkrh406F6LwvHRQ',
-    appId: '1:560411514854:web:a9f7f7da7ae8c16f5fe827',
-    messagingSenderId: '560411514854',
-    projectId: 'runner-app-df2e8',
-    authDomain: 'runner-app-df2e8.firebaseapp.com',
-    storageBucket: 'runner-app-df2e8.appspot.com',
-    measurementId: 'G-XV6KZVS4KW',
+    apiKey: 'AIzaSyBbP_4sR9e1FPl4XgQ6WD7IFim-U0zDBbY',
+    appId: '1:399879821078:web:31892e83bcaf66d71c6237',
+    messagingSenderId: '399879821078',
+    projectId: 'scoreus-87b8a',
+    authDomain: 'scoreus-87b8a.firebaseapp.com',
+    storageBucket: 'scoreus-87b8a.appspot.com',
+    measurementId: 'G-LVDV7TD7MJ',
   );
+
 }

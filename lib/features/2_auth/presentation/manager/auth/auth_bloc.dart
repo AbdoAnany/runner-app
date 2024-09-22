@@ -146,7 +146,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       print("??????????????  LoadRolesRequested");
       try {
-        roles = await signUpUseCase.repository.fetchRoles();
+        roles = await signUpUseCase.repository.fetchRoleNames();
         print("signUpUseCase  RolesLoaded   ${roles.toString()}");
         emit(RolesLoaded(roles));
       } catch (e) {

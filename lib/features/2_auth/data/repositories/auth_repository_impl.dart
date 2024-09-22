@@ -26,7 +26,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<List<String>> fetchRoles() {
-    return remoteDataSource.fetchRoles();
+  Future<List<String>> fetchRoleNames() {
+    return remoteDataSource.fetchRoleNames();
   }
 }

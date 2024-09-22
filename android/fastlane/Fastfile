@@ -11,8 +11,8 @@ platform :android do
     firebase_app_distribution(
       app: "1:560411514854:android:3c0c22304f22f8595fe827",
       firebase_cli_token: "1//038AyidR1L9rTCgYIARAAGAMSNwF-L9IrmN9r9r-gXHS2jkS7zi0EbQ8mBwSiqzEKTRHeX1Ez8GLAW_TmCq7mgqhgaYNmNg_pzBc",
-#       android_artifact_path: "build/app/outputs/flutter-apk/app-release.apk", # Specify the APK path
-        android_artifact_path: "build/app/outputs/apk/release/app-release.apk", # Updated path
+      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk", # Specify the APK path
+#         android_artifact_path: "../build/app/outputs/apk/release/app-release.apk", # Updated path
 
       groups: "active_tester",
       release_notes: "First Abdo Fastlane release"

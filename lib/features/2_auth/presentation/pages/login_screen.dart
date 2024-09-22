@@ -79,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _passwordController,
                     validator: (value) =>
                         Validators.validatePassword(value ?? ""),
+
                   ),
                   Row(
                     children: [

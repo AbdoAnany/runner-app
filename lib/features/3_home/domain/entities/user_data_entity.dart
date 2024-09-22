@@ -5,6 +5,7 @@ class UserDataEntity {
   final String roles;
   final String email;
   final String name;
+  final String phone;
   final int currentLevel;
   final int currentXP;
   final int xpForNextLevel;
@@ -20,6 +21,7 @@ class UserDataEntity {
     required this.name,
     required this.roles,
     required this.email,
+    required this.phone,
     required this.date,
     required this.currentLevel,
     required this.currentXP,
