@@ -22,4 +22,5 @@ firebase login:ci
 Example: firebase deploy --token "$FIREBASE_TOKEN"
 
 to run
-   fastlane android <name >
+   fastlane android <name >//distribute
+   bundle exec fastlane android distribute
