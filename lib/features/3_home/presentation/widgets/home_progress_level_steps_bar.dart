@@ -406,3 +406,4 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
     );
   }
 }
+
