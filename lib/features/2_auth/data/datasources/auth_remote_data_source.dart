@@ -24,7 +24,7 @@ class AuthRemoteDataSource {
     UserDataDataModel userDataDataModel=     UserDataDataModel(userId: FirebaseAuth.instance.currentUser!.uid,
             date: DateTime.now().toIso8601String(),
             activeNumber: 0,
-            name: "",
+            name: "",rank: "D",
             email:  FirebaseAuth.instance.currentUser!.email??"",
             phone: FirebaseAuth.instance.currentUser!.phoneNumber??"",
             roles: "user",

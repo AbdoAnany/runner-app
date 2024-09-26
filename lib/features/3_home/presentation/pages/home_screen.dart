@@ -67,34 +67,34 @@ class HomeScreenBody extends StatelessWidget {
       child: Column(
         children: [
 
-            Container(
-              height: 260.h,
-              decoration:  const BoxDecoration(
-                // image: DecorationImage(
-                //   image: AssetImage(AppImage.homeGrenadianImage),
-                //   fit: BoxFit.fill,
-                // ),
-               // color: Colors.blue.withOpacity(0.5),
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(24),
-                  bottomLeft: Radius.circular(24),
-                ),
-              ),
-              child:     const Column(
-                children: [
-                  // header have name and avatar and message button
-                  // HomeAppBar(),
-                  // progress bar , total steps and Level
-
-                  // daily activity points
-                  DailyActivityCard(),
-                  // Total point and steps
-                  TotalPointAndSteps(),
-                  // Gift image
-
-                ],
-              ),
-            ),
+            // Container(
+            //   height: 260.h,
+            //   decoration:  const BoxDecoration(
+            //     // image: DecorationImage(
+            //     //   image: AssetImage(AppImage.homeGrenadianImage),
+            //     //   fit: BoxFit.fill,
+            //     // ),
+            //    // color: Colors.blue.withOpacity(0.5),
+            //     borderRadius: BorderRadius.only(
+            //       bottomRight: Radius.circular(24),
+            //       bottomLeft: Radius.circular(24),
+            //     ),
+            //   ),
+            //   child:     const Column(
+            //     children: [
+            //       // header have name and avatar and message button
+            //       // HomeAppBar(),
+            //       // progress bar , total steps and Level
+            //
+            //       // daily activity points
+            //       DailyActivityCard(),
+            //       // Total point and steps
+            //       TotalPointAndSteps(),
+            //       // Gift image
+            //
+            //     ],
+            //   ),
+            // ),
 
           HomePage(),
 
@@ -252,15 +252,15 @@ class HomePage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocBuilder<NotificationBloc, NotificationState>(
-            builder: (context, state) {
-              if (state is NotificationReceived) {
-                return Text('Latest XP Update: ${state.updatedEntry?.xp}');
-              }
-              return Text('Waiting for updates...');
-            },
-          ),
-          SizedBox(height: 20),
+          // BlocBuilder<NotificationBloc, NotificationState>(
+          //   builder: (context, state) {
+          //     if (state is NotificationReceived) {
+          //       return Text('Latest XP Update: ${state.updatedEntry?.xp}');
+          //     }
+          //     return Text('Waiting for updates...');
+          //   },
+          // ),
+       //   SizedBox(height: 20),
           EmployeePerformanceWidget(employeeName: 'Abdo',
             progress: 1000, rank: 'SS',
             avatarUrl: AppImage.avatarUrl,

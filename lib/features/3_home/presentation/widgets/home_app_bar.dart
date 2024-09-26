@@ -23,22 +23,27 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       title:Row(
         children: [
-          Image.asset(
-            AppImage.logoImage,
-            width: 40.w,
+          const CircleAvatar(
+            radius: 30,
+            backgroundImage: NetworkImage(AppImage.avatarUrl,),
           ),
+          // Image.asset(
+          //   AppImage.logoImage,
+          //   width: 40.w,
+          // ),
           SizedBox(
             width: 12.w,
           ),
+
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'HELLO!',
+                HomeBloc.userData?.name??'' ,
                 style: AppStyle.textStyle12WhiteW400,
               ),
               Text(
-                HomeBloc.userData?.name??'' ,
+                HomeBloc.userData?.rank??'' ,
                 style: AppStyle.textStyle16GWhiteW800,
               )
 

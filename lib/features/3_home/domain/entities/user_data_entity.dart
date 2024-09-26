@@ -5,6 +5,7 @@ class UserDataEntity {
   final String roles;
   final String email;
   final String name;
+  final String rank;
   final String phone;
   final int currentLevel;
   final int currentXP;
@@ -19,6 +20,7 @@ class UserDataEntity {
   UserDataEntity({
     required this.userId,
     required this.name,
+    required this.rank,
     required this.roles,
     required this.email,
     required this.phone,
