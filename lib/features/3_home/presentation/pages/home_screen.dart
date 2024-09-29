@@ -201,8 +201,7 @@ class EmployeePerformanceWidget extends StatelessWidget {
                     IndicatorModel("History",100),
                   ],
                   data: [
-                    //   MapDataModel([48,32.04,1.00,94.5,19,60,50,30,19,60,50]),
-                    //   MapDataModel([42.59,34.04,1.10,68,99,30,19,60,50,19,30]),
+
                     MapDataModel([100,90,90,90,10,20]),
                     MapDataModel([90,90,90,90,10,20]),
                   ],
