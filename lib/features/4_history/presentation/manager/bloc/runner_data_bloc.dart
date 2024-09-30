@@ -7,6 +7,7 @@ import '../../../../../core/helper/function.dart';
 import '../../../../../core/helper/game.dart';
 import '../../../../../dependency_injection.dart';
 import '../../../../3_home/presentation/bloc/home_bloc.dart';
+import '../../../../3_home/presentation/widgets/home_progress_level_steps_bar.dart';
 import '../../../domain/entities/history_entity.dart';
 import '../../../domain/use_cases/usecases/get_history_data.dart';
 import '../../../domain/use_cases/usecases/set_history_data.dart';
@@ -42,6 +43,7 @@ class HistoryDataBloc extends Bloc<HistoryDataEvent, HistoryDataState> {
       currentData.sort((a, b) => b.date.compareTo(a.date));
       int xp = currentData.fold(0, (accumulator, element) => (accumulator + element.xp));
       LevelSystem levelSystem = LevelSystem(currentXP: xp, currentLevel: 1);
+
       levelSystem.addXP(0); // Trigger level checking without additional XP
       homeBloc.add(UpdateLevelData(levelSystem: levelSystem));
       emit(HistoryDataLoaded(currentData, levelSystem));

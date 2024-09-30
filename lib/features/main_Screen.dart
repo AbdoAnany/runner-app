@@ -17,6 +17,7 @@ import '../../features/5_store/presentation/pages/store_screen.dart';
 import '../../features/6_profile/presentation/pages/profile_screen.dart';
 import '../core/const/const.dart';
 import '../core/share/my_bottom_navigation_bar.dart';
+import '7_level_gallary/presentation/pages/level_gallery.dart';
 
 
 class MainScreen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
       "History":  const HistoryScreenBlocProvider()
     },
     {
-      "Store":const StoreScreenBlocProvider(),
+      "Store":const LevelGallery(),
     },
     {
       "Profile":  ProfileScreen(),

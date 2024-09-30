@@ -1,5 +1,6 @@
 // blocs/runner_data/runner_data_state.dart
 import '../../../../../core/helper/game.dart';
+import '../../../../3_home/presentation/widgets/home_progress_level_steps_bar.dart';
 import '../../../domain/entities/history_entity.dart';
 
 abstract class HistoryDataState {}

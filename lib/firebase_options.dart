@@ -64,6 +64,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '399879821078',
     projectId: 'scoreus-87b8a',
     storageBucket: 'scoreus-87b8a.appspot.com',
+    androidClientId: '399879821078-9j4e89o3j6t1udajvncn9d18eaqoaj4r.apps.googleusercontent.com',
+    iosClientId: '399879821078-sa1kgf4jepd4artjdet4kaa1mu62nqno.apps.googleusercontent.com',
     iosBundleId: 'com.anany.runnerApp',
   );
 
@@ -73,6 +75,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '399879821078',
     projectId: 'scoreus-87b8a',
     storageBucket: 'scoreus-87b8a.appspot.com',
+    androidClientId: '399879821078-9j4e89o3j6t1udajvncn9d18eaqoaj4r.apps.googleusercontent.com',
+    iosClientId: '399879821078-sa1kgf4jepd4artjdet4kaa1mu62nqno.apps.googleusercontent.com',
     iosBundleId: 'com.anany.runnerApp',
   );
 

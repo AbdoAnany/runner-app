@@ -28,14 +28,14 @@ class GetStarted extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      AppConst.runnerApp,
+                      AppConst.scoreUs,
                       style: AppStyle.textStyle30WhiteW700,
                     ),
                     SizedBox(
                       height: 4,
                     ),
                     Text(
-                      AppConst.runnerAppText,
+                      AppConst.scoreUsText,
                       textAlign: TextAlign.center,
                       style: AppStyle.textStyle14GrayW400,
                     ),

@@ -8,6 +8,7 @@ import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_bloc.d
 import '../../data/models/user_data_model.dart';
 import '../../domain/use_cases/usecases/get_user_data.dart';
 import '../../domain/use_cases/usecases/set_user_data.dart';
+import '../widgets/home_progress_level_steps_bar.dart';
 part 'home_event.dart';
 part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {

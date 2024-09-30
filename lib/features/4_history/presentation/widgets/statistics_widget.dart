@@ -17,6 +17,7 @@ import '../../../../core/share/text_field.dart';
 import '../../../../core/widgets/main_buttom.dart';
 import '../../../../dependency_injection.dart';
 import '../../../../my_app.dart';
+import '../../../3_home/presentation/widgets/home_progress_level_steps_bar.dart';
 import '../../domain/entities/history_entity.dart';
 import '../manager/bloc/runner_data_bloc.dart';
 import '../manager/bloc/runner_data_event.dart';

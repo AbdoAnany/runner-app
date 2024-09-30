@@ -40,12 +40,13 @@ class AppImage{
   static const String nike2="assets/image/Nike2.png";
   static const String avatarUrl="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg";
 
-
+  static  String topRank(int rank)=>"assets/rank/top_$rank.png";
+  static  String topRankGen(int rank)=>"assets/rank/top_0.png";
 }
 class AppConst{
 
-  static const String runnerApp="Running App";
-  static const String runnerAppText='Run and earn with our app. Some text Example will be her';
+  static const String scoreUs="Score Us";
+  static const String scoreUsText='Run and earn with our app. Some text Example will be her';
   static const String getStarted="Get Started";
   static const String login="Login";
   static const String remember="Remember me";

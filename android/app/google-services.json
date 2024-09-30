@@ -12,7 +12,20 @@
           "package_name": "com.anany.scoreus"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "399879821078-9j4e89o3j6t1udajvncn9d18eaqoaj4r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anany.scoreus",
+            "certificate_hash": "2fa534058caa4beac0b39e4a4da3f75ec12d3749"
+          }
+        },
+        {
+          "client_id": "399879821078-p23c3obdh63r89t0vtrp9e7v5aedg6ci.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD0SVDQ_27Eev2AeHZFMyjlBJpHyE-oPQM"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399879821078-p23c3obdh63r89t0vtrp9e7v5aedg6ci.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "399879821078-sa1kgf4jepd4artjdet4kaa1mu62nqno.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.anany.runnerApp"
+              }
+            }
+          ]
         }
       }
     }

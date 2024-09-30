@@ -17,38 +17,35 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: AppColors.transparent,
       elevation: 0,
-      leading: const Icon(
-        Iconsax.menu_1,
-        color: AppColors.iconHomeColor,
-      ),
+      // leading: const Icon(
+      //   Iconsax.menu_1,
+      //   color: AppColors.iconHomeColor,
+      // ),
       title:Row(
         children: [
-          const CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(AppImage.avatarUrl,),
-          ),
-          // Image.asset(
-          //   AppImage.logoImage,
-          //   width: 40.w,
+          // const CircleAvatar(
+          //   radius: 30,
+          //   backgroundImage: NetworkImage(AppImage.avatarUrl,),
           // ),
+          //
           SizedBox(
             width: 12.w,
           ),
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                HomeBloc.userData?.name??'' ,
-                style: AppStyle.textStyle12WhiteW400,
-              ),
-              Text(
-                HomeBloc.userData?.rank??'' ,
-                style: AppStyle.textStyle16GWhiteW800,
-              )
-
-            ],
-          ),
+          // Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     Text(
+          //       HomeBloc.userData?.name??'' ,
+          //       style: AppStyle.textStyle12WhiteW400,
+          //     ),
+          //     Text(
+          //       HomeBloc.userData?.rank??'' ,
+          //       style: AppStyle.textStyle16GWhiteW800,
+          //     )
+          //
+          //   ],
+          // ),
         ],
       )
 

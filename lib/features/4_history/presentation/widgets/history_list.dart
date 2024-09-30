@@ -6,6 +6,7 @@ import '../../../../core/helper/function.dart';
 import '../../../../core/helper/game.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
+import '../../../3_home/presentation/widgets/home_progress_level_steps_bar.dart';
 import '../../domain/entities/history_entity.dart';
 import '../manager/bloc/runner_data_bloc.dart';
 
