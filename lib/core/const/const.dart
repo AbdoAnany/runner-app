@@ -41,7 +41,13 @@ class AppImage{
   static const String avatarUrl="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg";
 
   static  String topRank(int rank)=>"assets/rank/top_$rank.png";
-  static  String topRankGen(int rank)=>"assets/rank/top_0.png";
+  // static  String topRankGen(int rank)=>"assets/rank/top_0.png";
+  static  String topRankGen(int rank)=>"assets/rank/top.png";
+  static  String badgeGen(int rank)=>"assets/rank/day_badge_0.png";
+  static  String starNumGen({int num = 1})=>"assets/rank/star_$num.png";
+  static  String ribbonsNumGen({int num = 4})=>"assets/rank/Ribbons/Type_$num.png";
+  static  String levelSelverNumGen({int num = 1})=>"assets/level/selver_$num.png";
+  static  String levelGoldenNumGen({int num = 1})=>"assets/level/golden_max.png";
 }
 class AppConst{
 

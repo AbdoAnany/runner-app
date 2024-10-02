@@ -90,6 +90,8 @@ flutter:
   assets:
     - assets/image/
     - assets/rank/
+    - assets/rank/Ribbons/
+    - assets/level/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

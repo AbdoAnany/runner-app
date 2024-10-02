@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/const/const.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
+import '../../../7_level_gallary/presentation/widgets/LevelSeverGen.dart';
 import 'gradient_Progress_painter.dart';
 
 
@@ -390,11 +390,7 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
             builder: (context, child) {
               return Transform.scale(
                 scale: _badgeScaleAnimation.value,
-                child: Image.asset(
-                  AppImage.levelBadge,
-                  width: 48.0.w,
-                  height: 48.h,
-                ),
+                child:     LevelSeverGen(index:_levelAnimation.value ,),
               );
             },
           ),
