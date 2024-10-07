@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:runner_app/features/7_level_gallary/presentation/widgets/TopBadgeLevel.dart';
 
+import '../widgets/LevelSeverGen.dart';
+
 
 
 class LevelGallery extends StatefulWidget {
@@ -29,7 +31,7 @@ class _LevelGalleryState extends State<LevelGallery> {
           // if(index==50){ return TopBadgeLevel(index: index,);}
           // if(index==100){ return TopBadgeLevel(index: index,);}
 
-           return TopBadgeLevelGen(index: index,);
+           return    LevelSeverGen(index:index ,);
 
         }),
       ),
