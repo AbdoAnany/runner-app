@@ -6,15 +6,12 @@ import 'package:runner_app/core/helper/extension.dart';
 import 'package:runner_app/core/widgets/loading_widget.dart';
 import 'package:toastification/toastification.dart';
 
-import '../../../../core/constants/app_constants.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/style/app_style.dart';
-import '../../../../core/style/color.dart';
 import '../../../../core/utils/Validators.dart';
 import '../../../../core/widgets/main_buttom.dart';
 import '../manager/auth/auth_bloc.dart';
-import '../manager/auth/auth_event.dart';
 
-import '../manager/auth/auth_state.dart';
 import '../widgets/email_field.dart';
 import '../widgets/password_field.dart';
 import '../widgets/role_dropdown.dart';
@@ -91,7 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     Text(
-                      AppConst.signUp,
+                      AppStrings.signUp,
 
                       style: AppStyle.textStyle21WhiteW700,
                     ),
@@ -106,34 +103,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     PasswordField(
 
                       controller: _confirmPasswordController,
-                      hintText:  AppConst.confirmPassword,
+                      hintText:  AppStrings.confirmPassword,
                       validator: (value) => Validators.confirmPassword(value, _passwordController.text),
 
                     ),
 
-                    RoleDropdown(
-                      roles: AuthBloc.roles,
-                      selectedRole: _selectedRole,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedRole = newValue!;
-                        });
-                      },
-                    ),
+                    // RoleDropdown(
+                    //   roles: AuthBloc.roles,
+                    //   selectedRole: _selectedRole,
+                    //   onChanged: (String? newValue) {
+                    //     setState(() {
+                    //       _selectedRole = newValue!;
+                    //     });
+                    //   },
+                    // ),
 
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12.h),
                       child: MyMaterialButton(
                         width: 326.w,
 
-                        title: AppConst.signUp,
+                        title: AppStrings.signUp,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             final email = _emailController.text.trim();
                             final password = _passwordController.text.trim();
-                            AuthBloc.runEvent(
-                              SignUpRequested(email, password, _selectedRole),
-                            );
+                            // AuthBloc.runEvent(
+                            //   SignUpRequested(email, password, _selectedRole),
+                            // );
                           }
                         },
                       ),

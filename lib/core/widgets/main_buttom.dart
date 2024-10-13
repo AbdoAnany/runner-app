@@ -16,7 +16,7 @@ class MyMaterialButton extends StatelessWidget {
         minWidth: width,
         elevation: 0,
         color: AppColors.primary,
-        height: 56.h,
+        height: 48.h,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
         onPressed: onPressed,

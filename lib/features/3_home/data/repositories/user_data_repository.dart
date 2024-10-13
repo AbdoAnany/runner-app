@@ -1,4 +1,3 @@
-import '../../domain/entities/user_data_entity.dart';
 import '../../domain/repositories/user_data_repository.dart';
 import '../models/user_data_model.dart';
 import '../services/user_data_service.dart';

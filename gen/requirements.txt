@@ -1,0 +1,8 @@
+dio:^5.1.0
+retrofit:^4.0.1
+dartz:^0.10.0
+
+# dev_dependencies section starts here
+retrofit_generator:^4.0.1
+build_runner:^2.3.0
+json_serializable:^6.6.0

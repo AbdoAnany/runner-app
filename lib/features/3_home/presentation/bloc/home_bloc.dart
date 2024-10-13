@@ -1,10 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:equatable/equatable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:runner_app/core/helper/game.dart';
-import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_bloc.dart';
-
 
 import '../../../../core/service/NotificationService.dart';
 import '../../../../dependency_injection.dart';
@@ -12,6 +8,7 @@ import '../../data/models/user_data_model.dart';
 import '../../domain/use_cases/usecases/get_user_data.dart';
 import '../../domain/use_cases/usecases/set_user_data.dart';
 import '../widgets/home_progress_level_steps_bar.dart';
+
 part 'home_event.dart';
 part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {

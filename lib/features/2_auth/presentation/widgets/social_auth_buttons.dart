@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../../core/const/const.dart';
 import '../../../../core/style/color.dart';
 import '../../../../my_app.dart';
+import '../manager/auth/auth_bloc.dart';
 
 
 class SocialAuthButtons extends StatelessWidget {
@@ -15,14 +17,14 @@ class SocialAuthButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildSocialButton( AppImage.googleImage,),
-        _buildSocialButton(AppImage.facebookImage,),
-        _buildSocialButton(AppImage.twitterImage,),
+        _buildSocialButton( AppImage.googleImage,()=>BlocProvider.of<AuthBloc>(context).add(SignInWithGoogleEvent(),)),
+        _buildSocialButton(AppImage.facebookImage,()=>BlocProvider.of<AuthBloc>(context).add(SignInWithGoogleEvent(),)),
+        _buildSocialButton(AppImage.twitterImage,()=>BlocProvider.of<AuthBloc>(context).add(SignInWithGoogleEvent(),)),
       ],
     );
   }
 
-  Widget _buildSocialButton(String imagePath) {
+  Widget _buildSocialButton(String imagePath, Function() onTap) {
     return  Container(
         height: 70.h,
         width: 98.w,
@@ -42,7 +44,7 @@ class SocialAuthButtons extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child:InkWell(
-          onTap: (){
+          onTap: onTap??(){
             toastification.show(
               alignment: Alignment.bottomCenter,
               context: Get.context, // optional if you use ToastificationWrapper

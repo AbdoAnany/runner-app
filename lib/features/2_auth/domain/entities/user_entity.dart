@@ -1,27 +1,23 @@
-class UserEntity {
+import 'package:equatable/equatable.dart';
+
+class UserEntity extends Equatable {
   final String id;
   final String email;
   final String role;
-
+  bool isEmailVerified;
+  String? displayName;
+  String? photoUrl;
   UserEntity({
     required this.id,
     required this.email,
-    required this.role,
+    this.role = 'user',
+    this.displayName = "",
+    this.isEmailVerified = false,
+    this.photoUrl = "",
   });
-  // // Optionally, you can add methods to serialize/deserialize the object
-  // factory UserEntity.fromJson(Map<String, dynamic> json) {
-  //   return UserEntity(
-  //     id: json['id'],
-  //     email: json['email'],
-  //     role: json['role'],
-  //   );
-  // }
-  //
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     'id': id,
-  //     'email': email,
-  //     'role': role,
-  //   };
-  // }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props =>
+      [id, email, role, isEmailVerified, displayName, photoUrl];
 }

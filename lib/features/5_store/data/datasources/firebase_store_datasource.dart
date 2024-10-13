@@ -27,10 +27,11 @@ class FirebaseStoreDatasource {
    // await setPopularProducts();
 
 
-    final snapshot =  AuthBloc.currentUser?.role=="admin"?
-    await _firestore.collection('products')
-        //.where('isPopular', isEqualTo: true)
-        .get():
+    final snapshot =
+    // AuthBloc.currentUser?.role=="admin"?
+    // await _firestore.collection('products')
+    //     //.where('isPopular', isEqualTo: true)
+    //     .get():
     await _firestore.collection('products').where('isPopular', isEqualTo: true).get()
     ;
     return snapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();

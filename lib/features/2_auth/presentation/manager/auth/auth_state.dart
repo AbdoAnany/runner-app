@@ -1,17 +1,17 @@
-import '../../../data/models/User.dart';
+part of 'auth_bloc.dart';
 
-abstract class AuthState {}
+
+abstract class AuthState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
 class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 class SignUpRequestedDone extends AuthState {}
 
-class Authenticated extends AuthState {
-  final UserModel user;
 
-  Authenticated(this.user);
-}
 
 class Unauthenticated extends AuthState {
   final String? message;
@@ -20,14 +20,30 @@ class Unauthenticated extends AuthState {
 }
 class LoggedOut extends AuthState {}
 
-class AuthError extends AuthState {
-  final String message;
-
-  AuthError(this.message);
-}
 
 class RolesLoaded extends AuthState {
   final List<String> roles;
 
   RolesLoaded(this.roles);
+}
+
+
+
+class Authenticated extends AuthState {
+  final UserModel user;
+
+  Authenticated(this.user);
+
+  @override
+  List<Object> get props => [user];
+}
+
+
+class AuthError extends AuthState {
+  final String message;
+
+  AuthError(this.message);
+
+  @override
+  List<Object> get props => [message];
 }

@@ -1,13 +1,6 @@
 // blocs/runner_data/runner_data_bloc.dart
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:runner_app/my_app.dart';
 
-import '../../../../../core/helper/function.dart';
-import '../../../../../core/helper/game.dart';
-import '../../../../../core/service/NotificationService.dart';
-import '../../../../../dependency_injection.dart';
 import '../../../../3_home/presentation/bloc/home_bloc.dart';
 import '../../../../3_home/presentation/widgets/home_progress_level_steps_bar.dart';
 import '../../../domain/entities/history_entity.dart';

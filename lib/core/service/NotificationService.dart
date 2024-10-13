@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
 
 import '../notification/notification_bloc.dart';
@@ -25,15 +22,16 @@ class NotificationService {
     await _firebaseMessaging.requestPermission(
 
       alert: true,
+
       badge: true,
-      sound: true,
+      // sound: true,
     );
     // Configure FirebaseMessaging
     FirebaseMessaging.onMessage.listen(_handleMessage);
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
 
     // Initialize local notifications
-    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('splash');
     const initializationSettingsIOS = DarwinInitializationSettings();
     const initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,

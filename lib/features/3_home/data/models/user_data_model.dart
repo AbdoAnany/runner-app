@@ -4,23 +4,21 @@
 
 import '../../domain/entities/user_data_entity.dart';
 
-import '../../domain/entities/user_data_entity.dart';
-
 class UserDataDataModel extends UserDataEntity {
   UserDataDataModel({
     required super.userId,
     required super.date,
-    required super.rank,
-    required super.activeNumber,
+     super.rank="D",
+     super.activeNumber=0,
     required super.name,
     required super.email,
     required super.roles,
-    required super.adminId,
-    required super.phone,
+     super.adminId="",
+     super.phone="",
     required super.currentLevel,
     required super.currentXP,
-    required super.userState,
-    required super.xpForNextLevel,
+     super.userState="",
+     super.xpForNextLevel=0,
     required super.xpProgress,
   });
 

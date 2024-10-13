@@ -8,7 +8,6 @@ import 'package:toastification/toastification.dart';
 
 import '../../features/4_history/data/models/history_data_model.dart';
 import '../../my_app.dart';
-import 'dart:math'  as math;
 class AppFunction {
   static String convertToTitleCase(String text) {
     if (text.isEmpty) return text;

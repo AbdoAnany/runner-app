@@ -1,8 +1,6 @@
 
-import '../../../../../core/helper/game.dart';
 import '../../../data/models/user_data_model.dart';
 import '../../../presentation/widgets/home_progress_level_steps_bar.dart';
-import '../../entities/user_data_entity.dart';
 import '../../repositories/user_data_repository.dart';
 
 class SetUserData {

@@ -1,5 +1,4 @@
 import '../../data/models/user_data_model.dart';
-import '../entities/user_data_entity.dart';
 
 abstract class UserDataRepository {
   Future<UserDataDataModel> getUserDataData();

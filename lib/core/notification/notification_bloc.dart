@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:runner_app/features/3_home/data/entities/user_data_entity.dart';
 
-import '../../features/4_history/data/entities/history_entity.dart';
 import '../../features/4_history/domain/entities/history_entity.dart';
 
 part 'notification_event.dart';

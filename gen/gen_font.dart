@@ -1,5 +1,5 @@
 import 'dart:io';
-
+// dart run gen/gen_font.dart
 void main(List<String> args) {
   // Check if a folder name argument is provided
   if (args.isEmpty) {

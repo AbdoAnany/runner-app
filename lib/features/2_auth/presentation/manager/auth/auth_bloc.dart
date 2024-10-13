@@ -1,267 +1,273 @@
-import 'dart:convert';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:runner_app/features/2_auth/domain/entities/user_entity.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../../my_app.dart';
-import '../../../data/models/User.dart';
-import '../../../domain/use_cases/login_use_case.dart';
-import '../../../domain/use_cases/sign_up_use_case.dart';
-import 'auth_event.dart';
-import 'auth_state.dart';
+import 'package:equatable/equatable.dart';
+import 'package:runner_app/features/2_auth/data/repositories/firebase_auth.dart';
+
+import '../../../../../core/usecase/use_case.dart';
+
+import '../../../../../dependency_injection.dart';
+import '../../../data/datasources/firebase_auth_remote_data_source.dart';
+import '../../../data/models/user_model.dart';
+import '../../../domain/repositories/FirebaseAuthRemoteDataSource.dart';
+import '../../../domain/use_cases/get_cached_user.dart';
+import '../../../domain/use_cases/get_current_user.dart';
+import '../../../domain/use_cases/save_cached_user.dart';
+import '../../../domain/use_cases/sign_in_with_email.dart';
+import '../../../domain/use_cases/sign_in_with_google.dart';
+import '../../../domain/use_cases/sign_out.dart';
+import '../../../domain/use_cases/sign_up_with_email.dart';
+part 'auth_event.dart';
+part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final LoginUseCase loginUseCase;
-  final SignUpUseCase signUpUseCase;
-  static UserEntity? currentUser;
-  static List<String> roles = [];
-  static runEvent(event) => BlocProvider.of<AuthBloc>(Get.context).add(event);
+  final SignInWithEmail signInWithEmail;
+  final SignUpWithEmail signUpWithEmail;
+  final SignInWithGoogle signInWithGoogle;
+  final SignOut signOut;
+  final GetCurrentUser getCurrentUser;
+  final SaveCachedUser saveCachedUser;
+  final GetCachedUser getCachedUser;
+  AuthBloc({
+    required this.signInWithEmail,
+    required this.signUpWithEmail,
+    required this.signOut,
+    required this.signInWithGoogle,
+    required this.getCurrentUser,
+    required this.saveCachedUser,
+    required this.getCachedUser,
+  }) : super(AuthInitial()) {
+    on<SignInWithEmailEvent>(_onSignInWithEmail);
+    on<SignInWithGoogleEvent>(_onSignInWithGoogle);
+    on<SignUpWithEmailEvent>(_onSignUpWithEmail);
+    on<SignOutEvent>(_onSignOut);
+    on<GetCurrentUserEvent>(_onGetCurrentUser);
+    on<CheckCachedUserEvent>(_onCheckCachedUser);
+  }
 
-  AuthBloc({required this.loginUseCase, required this.signUpUseCase})
-      : super(AuthInitial()) {
-    on<UserIsLogIn>((event, emit) async {
-      emit(AuthLoading());
-      try {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<void> _onSignInWithEmail(
+      SignInWithEmailEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
 
-
-        var user = prefs.get("user",);
-        bool rememberMe = prefs.get("rememberMe",) as bool;
-        if (user != null && rememberMe) {
-          var userJson = jsonDecode(user.toString());
-          final userDate = UserModel.fromJson(userJson);
-          currentUser = userDate;
-          emit(Authenticated(userDate));
-        } else {
-          emit(AuthInitial());
-
-
+    final result = await signInWithEmail(
+        SignInWithEmailParams(email: event.email, password: event.password));
+    result.fold(
+      (failure) => emit(AuthError(failure.toString())),
+      (user) async {
+        if (event.rememberMe) {
+          await saveCachedUser(user);
         }
-      } catch (e) {
-        emit(AuthError(e.toString()));
-      }
-    });
-    on<ReloadState>((event, emit) async {
-      emit(AuthLoading());
-      try {
-        emit(RolesLoaded(roles));
-      } catch (e) {
-        emit(AuthError(e.toString()));
-      }
-    });
+        emit(Authenticated(user));
+      },
+    );
+  }
 
-    on<SignInRequested>((event, emit) async {
-      emit(AuthLoading());
-      try {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool('rememberMe',event.rememberMe??false) ;
-        final user = await loginUseCase(event.email, event.password);
-        final userJson = jsonEncode(user?.toJson());
-        prefs.setString("user", userJson);
-        currentUser = user;
-        print('cccccccccccc');
-        print(user?.email);
-        print(user?.role);
+  Future<void> _onSignInWithGoogle(
+      SignInWithGoogleEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final result = await signInWithGoogle(NoParams());
+    result.fold(
+      (failure) => emit(AuthError(failure.toString())),
+      (user) => emit(Authenticated(user)),
+    );
+  }
 
-        emit(Authenticated(user!));
-      } catch (e) {
+  Future<void> _onSignUpWithEmail(
+      SignUpWithEmailEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final result = await signUpWithEmail(
+        SignUpWithEmailParams(email: event.email, password: event.password));
+    result.fold(
+      (failure) => emit(AuthError(failure.toString())),
+      (user) => emit(Authenticated(user)),
+    );
+  }
 
-        print('sssssssssssssssss');
-        print(e);
-        String errorMessage;
+  Future<void> _onSignOut(SignOutEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final result = await signOut(NoParams());
+    result.fold(
+      (failure) => emit(AuthError(failure.toString())),
+      (_) => emit(Unauthenticated()),
+    );
+  }
 
-        // Check if the error is a FirebaseAuthException
-        if (e is FirebaseAuthException) {
-          switch (e.code) {
-            case 'email-already-in-use':
-              errorMessage =
-              "The email address is already in use by another account.";
-              break;
-            case 'invalid-email':
-              errorMessage = "The email address is not valid.";
-              break;
-            case 'weak-password':
-              errorMessage = "The password is too weak.";
-              break;
-            case 'operation-not-allowed':
-              errorMessage = "Email/password accounts are not enabled.";
-              break;
-            default:
-              errorMessage = "An unknown error occurred. Please try again.";
-              break;
-          }
-        } else {
-          // Fallback for any other exception types
-          errorMessage = "An unexpected error occurred. Please try again.";
-        }
+  Future<void> _onGetCurrentUser(
+      GetCurrentUserEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final result = await getCurrentUser(NoParams());
+    result.fold(
+      (failure) => emit(AuthError(failure.toString())),
+      (user) => user != null ? emit(Authenticated(user)) : emit(Unauthenticated()),
+    );
+  }
 
-        emit(AuthError(errorMessage));
-      }
-    });
-
-    on<SignUpRequested>((event, emit) async {
-      emit(AuthLoading());
-      try {
-        // Attempt to sign up using the provided use case
-        await signUpUseCase(event.email, event.password, event.role);
-
-        emit(SignUpRequestedDone());
-      } catch (e) {
-        String errorMessage;
-
-        // Check if the error is a FirebaseAuthException
-        if (e is FirebaseAuthException) {
-          switch (e.code) {
-            case 'email-already-in-use':
-              errorMessage =
-                  "The email address is already in use by another account.";
-              break;
-            case 'invalid-email':
-              errorMessage = "The email address is not valid.";
-              break;
-            case 'weak-password':
-              errorMessage = "The password is too weak.";
-              break;
-            case 'operation-not-allowed':
-              errorMessage = "Email/password accounts are not enabled.";
-              break;
-            default:
-              errorMessage = "An unknown error occurred. Please try again.";
-              break;
-          }
-        } else {
-          // Fallback for any other exception types
-          errorMessage = "An unexpected error occurred. Please try again.";
-        }
-
-
-
-        // Emit an AuthError state with a user-friendly error message
-        emit(AuthError(errorMessage));
-      }
-    });
-    on<LoadRolesRequested>((event, emit) async {
-      emit(AuthLoading());
-      print("??????????????  LoadRolesRequested");
-      try {
-        roles = await signUpUseCase.repository.fetchRoleNames();
-        print("signUpUseCase  RolesLoaded   ${roles.toString()}");
-        emit(RolesLoaded(roles));
-      } catch (e) {
-        print("xxxxxxxxxxxxxx  AuthError   ${e.toString()}");
-        emit(AuthError('Failed to load roles'));
-      }
-    });
-
-    on<SignOutRequested>((event, emit) async {
-      emit(AuthLoading());
-      try {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.remove('email');
-        prefs.remove('password');
-        prefs.setBool('rememberMe', false);
-        await FirebaseAuth.instance.signOut();
-        //  Get. context.pushScreen(LoginScreen());
-
-        emit(LoggedOut());
-      } catch (e) {
-        emit(AuthError('Failed to sign out'));
-      }
-    });
+  Future<void> _onCheckCachedUser(
+      CheckCachedUserEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+    final result = await getCachedUser(NoParams());
+    result.fold(
+      (failure) => emit(Unauthenticated()),
+      (user) =>
+          user != null ? emit(Authenticated(user)) : emit(Unauthenticated()),
+    );
   }
 }
 
-// class AuthBloc extends Bloc<AuthEvent, AuthState> {
-//   final AuthService _authService;
+// class AuthBloc1 extends Bloc<AuthEvent, AuthState> {
+//   final SignInWithEmail signInWithEmail;
+//   final SignUpWithEmail signUpWithEmail;
+//   static UserModel? currentUser;
+//   static List<String> roles = [];
+//   static runEvent(event) => BlocProvider.of<AuthBloc>(Get.context).add(event);
 //
-//   AuthBloc(this._authService) : super(AuthInitial()) {
-//     on<SignInRequested>((event, emit) async {
+//   AuthBloc1({required this.signInWithEmail, required this.signUpWithEmail})
+//       : super(AuthInitial()) {
+//     on<UserIsLogIn>((event, emit) async {
 //       emit(AuthLoading());
 //       try {
-//         final user = await _authService.signInWithEmailAndPassword(
-//           event.email,
-//           event.password,
-//         );
-//         // final List<Map<String, dynamic>> historyData = [
-//         //   {'date': '2024-01-25',
-//         //     "kal":512,
-//         //     "steps": 114141,
-//         //     "pt": 0,
-//         //     "distance": 1000.0,  },
-//         //
-//         //   {'date': '2024-09-07',
-//         //     "kal":454,
-//         //     "steps": 7447,
-//         //     "pt": 0,
-//         //     "distance": 1010.0,  },{'date': '2024-09-02',
-//         //     "kal":454,
-//         //     "steps": 7447,
-//         //     "pt": 0,
-//         //     "distance": 1400.0,  },{'date': '2024-12-02',
-//         //     "kal":454,
-//         //     "steps": 422,
-//         //     "pt": 0,
-//         //     "distance": 44.0,  },{'date': '2024-12-02',
-//         //     "kal":454,
-//         //     "steps": 7447,
-//         //     "pt": 100,
-//         //     "distance": 101.0,  },{'date': '2024-11-01',
-//         //     "kal":454,
-//         //     "steps": 7447,
-//         //     "pt": 0,
-//         //     "distance": 100.0,  },{'date': '2024-09-03',
-//         //     "kal":454,
-//         //     "steps": 1,
-//         //     "pt": 0,
-//         //     "distance": 400.0,  },{'date': '2024-09-04',
-//         //     "kal":454,
-//         //     "steps": 7447,
-//         //     "pt": 0,
-//         //     "distance": 100.0,  },{'date': '2024-09-05',
-//         //     "kal":454,
-//         //     "steps": 7447,
-//         //     "pt": 0,
-//         //     "distance": 1400.0,  },
-//         //
-//         //   {'date': '2024-07-06',
-//         //     "kal":313,
-//         //     "steps": 741,
-//         //     "pt": 100,
-//         //     "distance": 141.0,  },
-//         //
-//         // ];
-//         // HistoryService().setHistoryData(historyData);
-//         if (user != null) {
-//           emit(Authenticated(user));
+//         SharedPreferences prefs = await SharedPreferences.getInstance();
+//
+//
+//         var user = prefs.get("user",);
+//         bool rememberMe = prefs.get("rememberMe",) as bool;
+//         if (user != null && rememberMe) {
+//           var userJson = jsonDecode(user.toString());
+//           final userDate = UserModel.fromJson(userJson);
+//           currentUser = userDate;
+//           emit(Authenticated(userDate));
 //         } else {
-//           emit(AuthError('Invalid email or password'));
+//           emit(AuthInitial());
+//
+//
 //         }
 //       } catch (e) {
 //         emit(AuthError(e.toString()));
+//       }
+//     });
+//     on<ReloadState>((event, emit) async {
+//       emit(AuthLoading());
+//       try {
+//         emit(RolesLoaded(roles));
+//       } catch (e) {
+//         emit(AuthError(e.toString()));
+//       }
+//     });
+//
+//     on<SignInRequested>((event, emit) async {
+//       emit(AuthLoading());
+//       try {
+//         SharedPreferences prefs = await SharedPreferences.getInstance();
+//         prefs.setBool('rememberMe',event.rememberMe??false) ;
+//         final user = await signInWithEmail(SignInWithEmailParams(email: event.email, password: event.password));
+//         final userJson = jsonEncode(user.data?.toJson());
+//         prefs.setString("user", userJson);
+//         currentUser = user.data;
+//
+//
+//         emit(Authenticated(user.data!));
+//       } catch (e) {
+//
+//         print('sssssssssssssssss');
+//         print(e);
+//         String errorMessage;
+//
+//         // Check if the error is a FirebaseAuthException
+//         if (e is FirebaseAuthException) {
+//           switch (e.code) {
+//             case 'email-already-in-use':
+//               errorMessage =
+//               "The email address is already in use by another account.";
+//               break;
+//             case 'invalid-email':
+//               errorMessage = "The email address is not valid.";
+//               break;
+//             case 'weak-password':
+//               errorMessage = "The password is too weak.";
+//               break;
+//             case 'operation-not-allowed':
+//               errorMessage = "Email/password accounts are not enabled.";
+//               break;
+//             default:
+//               errorMessage = "An unknown error occurred. Please try again.";
+//               break;
+//           }
+//         } else {
+//           // Fallback for any other exception types
+//           errorMessage = "An unexpected error occurred. Please try again.";
+//         }
+//
+//         emit(AuthError(errorMessage));
 //       }
 //     });
 //
 //     on<SignUpRequested>((event, emit) async {
 //       emit(AuthLoading());
 //       try {
-//         final user = await _authService.registerWithEmailAndPassword(
-//           event.email,
-//           event.password,
-//           event.role,
-//         );
+//         // Attempt to sign up using the provided use case
+//         await signUpUseCase(event.email, event.password, event.role);
 //
-//         if (user != null) {
-//           emit(Authenticated(user));
-//         } else {
-//           emit(AuthError('Failed to create account'));
-//         }
+//         emit(SignUpRequestedDone());
 //       } catch (e) {
-//         emit(AuthError(e.toString()));
+//         String errorMessage;
+//
+//         // Check if the error is a FirebaseAuthException
+//         if (e is FirebaseAuthException) {
+//           switch (e.code) {
+//             case 'email-already-in-use':
+//               errorMessage =
+//               "The email address is already in use by another account.";
+//               break;
+//             case 'invalid-email':
+//               errorMessage = "The email address is not valid.";
+//               break;
+//             case 'weak-password':
+//               errorMessage = "The password is too weak.";
+//               break;
+//             case 'operation-not-allowed':
+//               errorMessage = "Email/password accounts are not enabled.";
+//               break;
+//             default:
+//               errorMessage = "An unknown error occurred. Please try again.";
+//               break;
+//           }
+//         } else {
+//           // Fallback for any other exception types
+//           errorMessage = "An unexpected error occurred. Please try again.";
+//         }
+//
+//
+//
+//         // Emit an AuthError state with a user-friendly error message
+//         emit(AuthError(errorMessage));
+//       }
+//     });
+//     on<LoadRolesRequested>((event, emit) async {
+//       emit(AuthLoading());
+//       print("??????????????  LoadRolesRequested");
+//       try {
+//         roles = (await signUpUseCase.repository.fetchRoleNames()).data!;
+//         print("signUpUseCase  RolesLoaded   ${roles.toString()}");
+//         emit(RolesLoaded(roles));
+//       } catch (e) {
+//         print("xxxxxxxxxxxxxx  AuthError   ${e.toString()}");
+//         emit(AuthError('Failed to load roles'));
 //       }
 //     });
 //
-
+//     on<SignOutRequested>((event, emit) async {
+//       emit(AuthLoading());
+//       try {
+//         SharedPreferences prefs = await SharedPreferences.getInstance();
+//         prefs.remove('email');
+//         prefs.remove('password');
+//         prefs.setBool('rememberMe', false);
+//         await FirebaseAuth.instance.signOut();
+//         //  Get. context.pushScreen(LoginScreen());
+//
+//         emit(LoggedOut());
+//       } catch (e) {
+//         emit(AuthError('Failed to sign out'));
+//       }
+//     });
 //   }
 // }

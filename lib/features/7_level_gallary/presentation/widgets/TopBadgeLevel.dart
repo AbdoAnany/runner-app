@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:runner_app/core/style/color.dart';
 
 import '../../../../core/const/const.dart';
 

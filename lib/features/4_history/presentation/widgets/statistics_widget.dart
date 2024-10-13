@@ -12,13 +12,11 @@ import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/features/4_history/data/models/history_data_model.dart';
 
 import '../../../../core/const/const.dart';
-import '../../../../core/helper/game.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../../../../core/share/text_field.dart';
 import '../../../../core/widgets/main_buttom.dart';
-import '../../../../dependency_injection.dart';
 import '../../../../my_app.dart';
 import '../../../3_home/presentation/widgets/home_progress_level_steps_bar.dart';
-import '../../domain/entities/history_entity.dart';
 import '../manager/bloc/runner_data_bloc.dart';
 import '../manager/bloc/runner_data_event.dart';
 import '../manager/bloc/runner_data_state.dart';
@@ -83,13 +81,13 @@ class StatisticsWidget extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(AppConst.addScore, style: AppStyle.textStyle21WhiteW700),
+                        Text(AppStrings.addScore, style: AppStyle.textStyle21WhiteW700),
                         MyTextField(
                           controller: controller,
                           keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
                         ),
                         MyMaterialButton(
-                          title: AppConst.addScore,
+                          title: AppStrings.addScore,
                           onPressed: () {
                             Navigator.of(context1).pop();
                             context.read<HistoryDataBloc>().add(AddHistoryData(

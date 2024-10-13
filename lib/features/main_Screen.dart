@@ -1,19 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:runner_app/core/share/share_app_bar.dart';
-import 'package:runner_app/core/style/app_style.dart';
-import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_event.dart';
 
-import '../../dependency_injection.dart';
-import '../../features/2_auth/presentation/manager/auth/auth_bloc.dart';
 import '../../features/3_home/presentation/pages/home_screen.dart';
-import '../../features/4_history/presentation/manager/bloc/runner_data_bloc.dart';
 import '../../features/4_history/presentation/pages/history_screen.dart';
-import '../../features/5_store/presentation/pages/popular_section.dart';
-import '../../features/5_store/presentation/pages/store_screen.dart';
 import '../../features/6_profile/presentation/pages/profile_screen.dart';
 import '../core/const/const.dart';
 import '../core/share/my_bottom_navigation_bar.dart';
@@ -43,9 +34,7 @@ class _MainScreenState extends State<MainScreen> {
     {
       "Home": const HomeScreenBlocProvider(),
     },
-  // {
-    //   "Home": const HomeScreen(),
-    // },
+
     {
       "History":  const HistoryScreenBlocProvider()
     },

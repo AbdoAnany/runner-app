@@ -16,6 +16,7 @@ class EmailField extends StatelessWidget {
     return Padding(
       padding:  EdgeInsets.only( top : 12.h),
       child: TextFormField(
+
         style: TextStyle(color: AppColors.white),
         controller: controller,
         decoration: AppStyle.inputDecoration(hintText: 'email'),

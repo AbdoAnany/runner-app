@@ -4,7 +4,6 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../my_app.dart';
 import '../../../2_auth/presentation/manager/auth/auth_bloc.dart';
-import '../../../2_auth/presentation/manager/auth/auth_event.dart';
 import '../widgets/header_profile.dart';
 import '../widgets/profile_body_list.dart';
 

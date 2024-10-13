@@ -1,21 +1,14 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kg_charts/kg_charts.dart';
 import 'package:runner_app/features/3_home/presentation/bloc/home_bloc.dart';
 
 import '../../../../core/const/const.dart';
-import '../../../../core/notification/notification_bloc.dart';
 import '../../../../core/service/NotificationService.dart';
 import '../../../../core/widgets/loading_widget.dart';
 import '../../../../dependency_injection.dart';
-import '../widgets/dayliy_activity_card.dart';
-import '../widgets/home_progress_level_steps_bar.dart';
 import '../widgets/share_and_gift_.dart';
-import '../widgets/total_point_and_steps.dart';
 
 
 class HomeScreenBlocProvider extends StatelessWidget {
@@ -265,50 +258,7 @@ class HomePage extends StatelessWidget {
             avatarUrl: AppImage.avatarUrl,
           ),
           // Button to send a test notification
-          ElevatedButton(
-            onPressed: () async {
-              String? token = await FirebaseMessaging.instance.getToken();
-              print(token);
-              if (token != null) {
-                locator<NotificationService>().sendNotification(
-                  title: 'Dynamic Notification',
-                  topic: '/topics/test',
-                  message: 'This is a test of dynamic data!',
-                   registrationTokens: token,
-                  data: {
-                    'xp': '100',
-                    'topic': '/topics/test',
-                    'customField': {"data123": "dataMess"},
-                  },
-                );
-              } else {
-                print('Unable to get FCM token');
-              }
-            },
-            child: Text('Send Test Notification'),
-          ),
 
-          SizedBox(height: 20),
-
-          // Button to subscribe to a topic
-          ElevatedButton(
-            onPressed: () async {
-              await locator<NotificationService>().subscribeToTopic('test'); // Replace 'test' with your desired topic
-              print('Subscribed to test topic');
-            },
-            child: Text('Subscribe to Topic'),
-          ),
-
-          SizedBox(height: 20),
-
-          // Button to unsubscribe from a topic
-          ElevatedButton(
-            onPressed: () async {
-              await locator<NotificationService>().unsubscribeFromTopic('test'); // Replace 'test' with your desired topic
-              print('Unsubscribed from test topic');
-            },
-            child: Text('Unsubscribe from Topic'),
-          ),
         ],
       ),
     );
