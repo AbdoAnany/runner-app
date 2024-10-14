@@ -26,12 +26,14 @@ class _SignUpScreenState extends State<SignUpScreen1> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   String _selectedRole = 'user';
+   List<String>  roles =[];
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     print("initStat e 1");
+
     BlocProvider.of<AuthBloc>(context).add(LoadRolesRequestedEvent());
     print("initStat e 2");
 
@@ -44,6 +46,10 @@ class _SignUpScreenState extends State<SignUpScreen1> {
       body: SingleChildScrollView(
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
+            if (state is RolesLoaded) {
+              roles=state.roles;
+            }
+
             // if (state is AuthError) {
             //   toastification.show(
             //     alignment: Alignment.bottomCenter,
@@ -108,15 +114,15 @@ class _SignUpScreenState extends State<SignUpScreen1> {
 
                     ),
 
-                    // RoleDropdown(
-                    //   roles: AuthBloc.roles,
-                    //   selectedRole: _selectedRole,
-                    //   onChanged: (String? newValue) {
-                    //     setState(() {
-                    //       _selectedRole = newValue!;
-                    //     });
-                    //   },
-                    // ),
+                    RoleDropdown(
+                      roles: roles,
+                      selectedRole: _selectedRole,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedRole = newValue!;
+                        });
+                      },
+                    ),
 
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12.h),
