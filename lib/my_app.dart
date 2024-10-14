@@ -9,8 +9,10 @@ import 'package:toastification/toastification.dart';
 
 import 'core/notification/notification_bloc.dart';
 import 'features/2_auth/presentation/manager/auth/auth_bloc.dart';
+import 'features/2_auth/presentation/pages/PhoneScreen.dart';
 import 'features/2_auth/presentation/pages/SignInPage.dart';
 import 'features/2_auth/presentation/pages/login_screen.dart';
+import 'features/2_auth/presentation/pages/otp_verification .dart';
 import 'features/2_auth/presentation/pages/sign_up_Screen.dart';
 import 'features/3_home/presentation/pages/home_screen.dart';
 import 'features/main_Screen.dart';
@@ -48,12 +50,15 @@ class MyApp extends StatelessWidget {
                 navigatorKey: Get.navigatorKey,
                 title: 'Runner App',
                 debugShowCheckedModeBanner: false,
+                themeMode: ThemeMode.dark,
                 theme: ThemeData(
                   primarySwatch: Colors.deepPurple,
+
                   scaffoldBackgroundColor: AppColors.bgColor,
                   appBarTheme: const AppBarTheme(
                     color: AppColors.bgColor,
                     //    backgroundColor: AppColors.bgColor,
+
                     iconTheme: IconThemeData(color: AppColors.white),
                   ),
                   visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -61,6 +66,8 @@ class MyApp extends StatelessWidget {
                 routes: {
                   '/home': (context) => const MainScreen(),
                   '/signup': (context) => SignUpScreen(),
+                  '/phone': (context) => PhoneScreen(),
+                  '/verification': (context) => VerificationScreen(),
                   // Add other routes
                 },
                 home: StreamBuilder<User?>(

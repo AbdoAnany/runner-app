@@ -52,7 +52,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
                     image: AssetImage(AppImage.person),
                   ))),
           SizedBox(width: 12.w),
-          Expanded(
+          SizedBox(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

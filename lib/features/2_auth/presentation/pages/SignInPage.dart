@@ -58,6 +58,12 @@ class SignInPage extends StatelessWidget {
                 },
                 child: Text('Create an account'),
               ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/signup');
+                },
+                child: Text('Sign By Phone'),
+              ),
             ],
           ),
         ),

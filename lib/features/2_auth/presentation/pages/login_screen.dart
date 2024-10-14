@@ -163,6 +163,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/phone');
+                    },
+                    child: Text('Sign By Phone'),
+                  ),
                 ],
               ),
             );
