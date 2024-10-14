@@ -24,9 +24,10 @@ class SignUpScreen1 extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen1> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   String _selectedRole = 'user';
-   List<String>  roles =[];
+  List<String> roles = [];
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -36,7 +37,6 @@ class _SignUpScreenState extends State<SignUpScreen1> {
 
     BlocProvider.of<AuthBloc>(context).add(LoadRolesRequestedEvent());
     print("initStat e 2");
-
   }
 
   @override
@@ -47,7 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen1> {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is RolesLoaded) {
-              roles=state.roles;
+              roles = state.roles;
             }
 
             // if (state is AuthError) {
@@ -61,13 +61,13 @@ class _SignUpScreenState extends State<SignUpScreen1> {
             //   );
             //
             // }
-             if (state is SignUpRequestedDone) {
+            if (state is SignUpRequestedDone) {
               toastification.show(
                 alignment: Alignment.bottomCenter,
                 context: context, // optional if you use ToastificationWrapper
                 title: const Text('sign up successfully'),
                 type: ToastificationType.success,
-                style: ToastificationStyle.flatColored,showProgressBar: false,
+                style: ToastificationStyle.flatColored, showProgressBar: false,
                 autoCloseDuration: const Duration(seconds: 3),
               );
               context.pop();
@@ -79,14 +79,14 @@ class _SignUpScreenState extends State<SignUpScreen1> {
             }
 
             return Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 16.h),
+              padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 16.h),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding:  EdgeInsets.only(top: 12.h,bottom: 32.h),
+                      padding: EdgeInsets.only(top: 12.h, bottom: 32.h),
                       child: Image.asset(
                         AppImage.logoImage,
                         height: 100.h,
@@ -95,25 +95,20 @@ class _SignUpScreenState extends State<SignUpScreen1> {
                     ),
                     Text(
                       AppStrings.signUp,
-
                       style: AppStyle.textStyle21WhiteW700,
                     ),
-
-
                     EmailField(controller: _emailController),
-
-                    PasswordField(controller: _passwordController,
-                      validator: (value) => Validators.validatePassword(value??""),
-                    ),
-
                     PasswordField(
-
-                      controller: _confirmPasswordController,
-                      hintText:  AppStrings.confirmPassword,
-                      validator: (value) => Validators.confirmPassword(value, _passwordController.text),
-
+                      controller: _passwordController,
+                      validator: (value) =>
+                          Validators.validatePassword(value ?? ""),
                     ),
-
+                    PasswordField(
+                      controller: _confirmPasswordController,
+                      hintText: AppStrings.confirmPassword,
+                      validator: (value) => Validators.confirmPassword(
+                          value, _passwordController.text),
+                    ),
                     RoleDropdown(
                       roles: roles,
                       selectedRole: _selectedRole,
@@ -123,12 +118,10 @@ class _SignUpScreenState extends State<SignUpScreen1> {
                         });
                       },
                     ),
-
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 12.h),
                       child: MyMaterialButton(
                         width: 326.w,
-
                         title: AppStrings.signUp,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -136,8 +129,9 @@ class _SignUpScreenState extends State<SignUpScreen1> {
                             final password = _passwordController.text.trim();
                             BlocProvider.of<AuthBloc>(context).add(
                               SignUpWithEmailEvent(
-                           email: email,password:password
-                              ),
+                                  email: email,
+                                  password: password,roles: _selectedRole),
+
                             );
                             // AuthBloc.runEvent(
                             //   SignUpRequested(email, password, _selectedRole),

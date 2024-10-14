@@ -14,7 +14,7 @@ abstract class AuthRepository {
   Future<Either<Failure, UserModel>> signInWithEmail(String email, String password);
   Future<Either<Failure, void>> saveCachedUser(UserModel user);
   Future<Either<Failure, UserModel?>> getCachedUser();
-  Future<Either<Failure, UserModel>> signUpWithEmail(String email, String password);
+  Future<Either<Failure, UserModel>> signUpWithEmail(String email, String password, String roles);
   Future<Either<Failure, void>> signOut();
   Future<Either<Failure, UserModel?>> getCurrentUser();
   Future<Either<Failure, void>> sendPasswordResetEmail(String email);

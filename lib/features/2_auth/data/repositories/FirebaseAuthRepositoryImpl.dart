@@ -25,9 +25,9 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> signUpWithEmail(String email, String password) async {
+  Future<Either<Failure, UserModel>> signUpWithEmail(String email, String password, String roles) async {
     try {
-      final user = await remoteDataSource.signUpWithEmail(email, password);
+      final user = await remoteDataSource.signUpWithEmail(email, password, roles);
       return Right(user);
     } on FirebaseAuthException catch (e) {
       return Left(AuthFailure(e.message ?? 'An unknown error occurred'));

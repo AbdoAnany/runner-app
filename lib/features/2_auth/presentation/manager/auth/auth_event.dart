@@ -48,11 +48,12 @@ class SignInWithGoogleEvent extends AuthEvent {
 class SignUpWithEmailEvent extends AuthEvent {
   final String email;
   final String password;
+  final String roles;
 
-  SignUpWithEmailEvent({required this.email, required this.password});
+  SignUpWithEmailEvent({required this.email, required this.password, required this.roles});
 
   @override
-  List<Object> get props => [email, password];
+  List<Object> get props => [email, password,roles];
 }
 
 class SignOutEvent extends AuthEvent {}

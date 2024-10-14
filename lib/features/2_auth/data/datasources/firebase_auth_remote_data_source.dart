@@ -33,7 +33,7 @@ class FirebaseAuthRemoteDataSourceImpl implements FirebaseAuthRemoteDataSource {
   }
 
   @override
-  Future<UserModel> signUpWithEmail(String email, String password) async {
+  Future<UserModel> signUpWithEmail(String email, String password, String roles) async {
     final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
