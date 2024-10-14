@@ -145,7 +145,7 @@ class AppStyle {
                 height: 25,
               ),
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.primary),
+          borderSide: const BorderSide(color: AppColors.primary),
           borderRadius: BorderRadius.circular(10),
         ),
         enabledBorder: OutlineInputBorder(

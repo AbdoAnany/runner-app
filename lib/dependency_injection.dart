@@ -3,19 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:runner_app/features/2_auth/data/repositories/auth_repository_impl.dart';
 import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_bloc.dart';
 
 import 'core/notification/notification_bloc.dart';
 import 'core/service/NotificationService.dart';
-import 'features/2_auth/data/datasources/auth_remote_data_source.dart';
 import 'features/2_auth/data/datasources/firebase_auth_remote_data_source.dart';
 import 'features/2_auth/data/repositories/FirebaseAuthRepositoryImpl.dart';
-import 'features/2_auth/data/repositories/firebase_auth.dart';
 import 'features/2_auth/domain/repositories/FirebaseAuthRemoteDataSource.dart';
 import 'features/2_auth/domain/repositories/auth_repository.dart';
 import 'features/2_auth/domain/use_cases/get_cached_user.dart';
 import 'features/2_auth/domain/use_cases/get_current_user.dart';
+import 'features/2_auth/domain/use_cases/role_load.dart';
 import 'features/2_auth/domain/use_cases/save_cached_user.dart';
 import 'features/2_auth/domain/use_cases/sign_in_with_email.dart';
 import 'features/2_auth/domain/use_cases/sign_in_with_google.dart';
@@ -48,6 +46,7 @@ Future<void> init() async {
       getCurrentUser: locator(),
       getCachedUser: locator(),
       saveCachedUser: locator(),
+      rolesLoad: locator(),
     ),
   );
 
@@ -58,6 +57,7 @@ Future<void> init() async {
   locator.registerLazySingleton(() => SignOut(locator()));
   locator.registerLazySingleton(() => GetCurrentUser(locator()));
   locator.registerLazySingleton(() => SaveCachedUser(locator()));
+  locator.registerLazySingleton(() => RolesLoad(locator()));
   locator.registerLazySingleton(() => GetCachedUser(locator()));
   // Repository
   locator.registerLazySingleton<AuthRepository>(
@@ -94,16 +94,16 @@ Future<void> authServiceLocator() async {
   locator.registerLazySingleton<FirebaseFirestore>(
       () => FirebaseFirestore.instance);
   // locator.registerLazySingleton<AuthService>(() => AuthService());
-  locator
-      .registerLazySingleton<AuthRemoteDataSource>(() => AuthRemoteDataSource(
-            locator(),
-            locator(),
-          ));
-  locator.registerLazySingleton<FirebaseAuthDataSource>(
-      () => FirebaseAuthDataSource(
-            locator(),
-            locator(),
-          ));
+  // locator
+  //     .registerLazySingleton<AuthRemoteDataSource>(() => AuthRemoteDataSource(
+  //           locator(),
+  //           locator(),
+  //         ));
+  // locator.registerLazySingleton<FirebaseAuthDataSource>(
+  //     () => FirebaseAuthDataSource(
+  //           locator(),
+  //           locator(),
+  //         ));
   // locator.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(locator(),locator(),));
 
   //  locator.registerLazySingleton<LoginUseCase>(() => LoginUseCase(locator()));

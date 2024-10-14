@@ -24,9 +24,9 @@ abstract class AuthRepository {
   Future<Either<Failure, UserModel>> signInWithFacebook();
   Future<Either<Failure, UserModel>> signInWithApple();
 
-  // Future<Result<void>> createRoles();
-  // Future<Result<List<String>>> fetchRoleNames();
-  // Future<Result<UserDataDataModel>> createUserData(UserDataDataModel userData);
-  // Future<Result<UserDataDataModel>> updateUserData(UserDataDataModel userData);
-  // Future<Result<UserDataDataModel>> getUserData(String userId);
+  Future<Either<Failure, void>> createRoles();
+  Future<Either<Failure, List<String>>>fetchRoleNames();
+  Future<Either<Failure, UserModel>> createUserData(UserModel userData);
+  Future<Either<Failure, UserModel>> updateUserData(UserModel userData);
+  Future<Either<Failure, UserModel>> getUserData(String userId);
 }

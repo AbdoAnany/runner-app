@@ -11,6 +11,7 @@ import 'core/notification/notification_bloc.dart';
 import 'features/2_auth/presentation/manager/auth/auth_bloc.dart';
 import 'features/2_auth/presentation/pages/PhoneScreen.dart';
 import 'features/2_auth/presentation/pages/SignInPage.dart';
+import 'features/2_auth/presentation/pages/SignUpScreen.dart';
 import 'features/2_auth/presentation/pages/login_screen.dart';
 import 'features/2_auth/presentation/pages/otp_verification .dart';
 import 'features/2_auth/presentation/pages/sign_up_Screen.dart';
@@ -65,7 +66,7 @@ class MyApp extends StatelessWidget {
                 ),
                 routes: {
                   '/home': (context) => const MainScreen(),
-                  '/signup': (context) => SignUpScreen(),
+                  // '/signup': (context) => const SignUpScreen(),
                   '/phone': (context) => PhoneScreen(),
                   '/verification': (context) => VerificationScreen(),
                   // Add other routes

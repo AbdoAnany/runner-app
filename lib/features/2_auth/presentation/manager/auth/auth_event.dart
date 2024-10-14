@@ -59,5 +59,6 @@ class SignOutEvent extends AuthEvent {}
 
 class GetCurrentUserEvent extends AuthEvent {}
 class CheckCachedUserEvent extends AuthEvent {}
+class LoadRolesRequestedEvent extends AuthEvent {}
 
 // Add other events for different authentication methods

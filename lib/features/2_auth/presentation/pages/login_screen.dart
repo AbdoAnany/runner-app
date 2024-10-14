@@ -19,6 +19,7 @@ import '../manager/auth/auth_bloc.dart';
 import '../widgets/email_field.dart';
 import '../widgets/password_field.dart';
 import '../widgets/social_auth_buttons.dart';
+import 'SignUpScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -152,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         InkWell(
                           onTap: () {
-                            context.pushScreen(SignUpScreen());
+                            context.pushScreen(SignUpScreen1());
                           },
                           child: Text(
                             AppStrings.signUp,

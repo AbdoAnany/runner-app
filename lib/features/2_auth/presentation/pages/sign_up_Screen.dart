@@ -16,12 +16,12 @@ import '../widgets/email_field.dart';
 import '../widgets/password_field.dart';
 import '../widgets/role_dropdown.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen1 extends StatefulWidget {
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen1> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
@@ -32,7 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void initState() {
     super.initState();
     print("initStat e 1");
-    BlocProvider.of<AuthBloc>(context).add(LoadRolesRequested());
+    BlocProvider.of<AuthBloc>(context).add(LoadRolesRequestedEvent());
     print("initStat e 2");
 
   }
@@ -128,6 +128,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (_formKey.currentState!.validate()) {
                             final email = _emailController.text.trim();
                             final password = _passwordController.text.trim();
+                            BlocProvider.of<AuthBloc>(context).add(
+                              SignUpWithEmailEvent(
+                           email: email,password:password
+                              ),
+                            );
                             // AuthBloc.runEvent(
                             //   SignUpRequested(email, password, _selectedRole),
                             // );

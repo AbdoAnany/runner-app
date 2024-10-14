@@ -1,13 +1,12 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/errors/failure.dart';
-
 import '../../domain/repositories/FirebaseAuthRemoteDataSource.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../datasources/firebase_auth_remote_data_source.dart';
 import '../models/user_model.dart';
 
 class FirebaseAuthRepositoryImpl implements AuthRepository {
@@ -139,4 +138,84 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
       return const Left(CacheFailure('Failed to get save user'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>>  createRoles() async {
+
+    try {
+      CollectionReference roles = FirebaseFirestore.instance.collection('roles');
+      await roles.doc('roleDocument').set({
+        'roleNames': ['Admin', 'User', 'Manager', 'Guest'],
+      });
+      return Right(null);
+    } catch (e) {
+      return const Left(CacheFailure('Failed to get save user'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> createUserData(UserModel userData) async {
+        try {
+          await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userData.id)
+          .set(userData.toMap());
+          return Right(userData);
+
+    } catch (e) {
+          return  const Left(CacheFailure('Failed to create roles'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<String>>> fetchRoleNames() async {
+    try {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('roles')
+          .doc('roleDocument')
+          .get();
+
+      List<String> roleNames = List<String>.from(snapshot.get('roleNames'));
+
+      return Right(roleNames);
+    } catch (e) {
+      return  const Left(CacheFailure('Failed to get save user'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> getUserData(String userId) async {
+
+    try {
+      DocumentSnapshot doc =
+          await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      if (doc.exists) {
+        return Right(UserModel.fromJson(doc.data() as Map<String, dynamic>));
+      } else {
+        return   const Left(AuthFailure( 'not found user'));
+      }
+    } catch (e) {
+      return  Left(AuthFailure( 'Failed to sign in with ${e.toString()}'));
+    }
+
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> updateUserData(UserModel userData) async {
+        try {
+          await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userData.id)
+          .update(userData.toMap());
+          return Right(UserModel.fromJson(userData.toMap()));
+    } catch (e) {
+          return  Left(AuthFailure( 'Failed to update user data: ${e.toString()}'));
+
+    }
+  }
+
+
+
+
+
 }
