@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:equatable/equatable.dart';
@@ -108,7 +109,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onGetCurrentUser(
       GetCurrentUserEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    final result = await getCurrentUser(NoParams());
+    final result = await getCurrentUser(FirebaseAuth.instance.currentUser!.uid);
     result.fold(
       (failure) => emit(AuthError(failure.toString())),
       (user) =>

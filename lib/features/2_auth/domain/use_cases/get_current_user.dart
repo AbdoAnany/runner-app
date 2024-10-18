@@ -5,13 +5,13 @@ import '../../../../core/errors/failure.dart';
 import '../../../../core/usecase/use_case.dart';
 import '../repositories/auth_repository.dart';
 
-class GetCurrentUser implements UseCase<UserModel?, NoParams> {
+class GetCurrentUser implements UseCase<UserModel?, String> {
   final AuthRepository repository;
 
   GetCurrentUser(this.repository);
 
   @override
-  Future<Either<Failure, UserModel?>> call(NoParams params) async {
-    return await repository.getCurrentUser();
+  Future<Either<Failure, UserModel?>> call(String userId) async {
+    return await repository.getUserData(userId);
   }
 }

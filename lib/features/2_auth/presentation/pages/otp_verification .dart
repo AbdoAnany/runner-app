@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/widgets/main_buttom.dart';
 
+import '../../../../core/const/const.dart';
+import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -15,12 +18,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor:  AppColors.bgColor,
       body: LogoWithTitle(
         title: 'Verification',
         subText: "SMS Verification code has been sent",
         children: [
-          const Text("+1 18577 11111"),
+           Text("+1 18577 11111", style: AppStyle.textStyle12WhiteW400,),
           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
           // OTP Form
           const OtpForm(),
@@ -127,7 +130,9 @@ class _OtpFormState extends State<OtpForm> {
           const SizedBox(height: 32.0),
           MyMaterialButton(
             width: double.infinity,
-            onPressed: () {},
+            onPressed: () {
+
+            },
             title: 'Verify',
           )
         ],
@@ -202,34 +207,37 @@ class LogoWithTitle extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: constraints.maxHeight * 0.1),
-                Image.network(
-                  "https://i.postimg.cc/nz0YBQcH/Logo-light.png",
-                  height: 100,
-                ),
-                SizedBox(
-                  height: constraints.maxHeight * 0.1,
-                  width: double.infinity,
+                Padding(
+                  padding: EdgeInsets.only(top: 0.h, bottom: 12.h),
+                  child: Image.asset(
+                    AppImage.logoImage,
+                    height: 100.h,
+                    width: 100.w,
+                  ),
                 ),
                 Text(
                   title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall!
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: AppStyle.textStyle21WhiteW700,
                 ),
+
+                // SizedBox(
+                //   height: constraints.maxHeight * 0.05,
+                //   width: double.infinity,
+                // ),
+                // Text(
+                //   title,
+                //   style: Theme.of(context)
+                //       .textTheme
+                //       .headlineSmall!
+                //       .copyWith(fontWeight: FontWeight.bold),
+                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
                     subText,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      height: 1.5,
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .color!
-                          .withOpacity(0.64),
-                    ),
+                    style: AppStyle.textStyle18WhiteW700,
+
                   ),
                 ),
                 ...children,

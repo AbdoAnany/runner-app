@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/share/share_app_bar.dart';
+import 'package:runner_app/dependency_injection.dart';
+import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_bloc.dart';
 
 import '../../features/3_home/presentation/pages/home_screen.dart';
 import '../../features/4_history/presentation/pages/history_screen.dart';
@@ -50,6 +52,11 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _currentIndex = index;
     });
+  }
+  @override
+  void initState() {
+    locator<AuthBloc>().add(GetCurrentUserEvent());
+    super.initState();
   }
 
   @override

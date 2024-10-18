@@ -44,15 +44,7 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, UserModel?>> getCurrentUser() async {
-    try {
-      final user = await remoteDataSource.getCurrentUser();
-      return Right(user);
-    } catch (e) {
-      return Left(AuthFailure('Failed to get current user'));
-    }
-  }
+
 
   @override
   Future<Either<Failure, void>> sendPasswordResetEmail(String email) async {
@@ -180,6 +172,16 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
       return Right(roleNames);
     } catch (e) {
       return  const Left(CacheFailure('Failed to get save user'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel?>> getCurrentUser() async {
+    try {
+      final user = await remoteDataSource.getCurrentUser();
+      return Right(user);
+    } catch (e) {
+      return Left(AuthFailure('Failed to get current user'));
     }
   }
 

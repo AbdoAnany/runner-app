@@ -22,6 +22,27 @@ class UserDataService {
 
       return userData;
     } catch (e) {
+      // if (e=="Bad state: cannot get field \"userData\" on a DocumentSnapshotPlatform which does not exist") {
+      print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+      await setUserDataData({
+        "date": DateTime.now().toIso8601String(),
+        "currentXP": 1,
+        "roles": "user",
+        "xpForNextLevel": 100,
+        "xpProgress": 1,
+        "userId": FirebaseAuth.instance.currentUser?.uid,
+        "currentLevel": 1,
+        "phone":FirebaseAuth.instance.currentUser?.phoneNumber??'',
+        "userState": "active",
+        "activeNumber": 0,
+        "adminId": "",
+        "name": FirebaseAuth.instance.currentUser?.displayName??'',
+        "rank": "D",
+        "email": FirebaseAuth.instance.currentUser?.email??''
+      });
+      await getUserDataData();
+      // }
+
       print('Error getting UserData data: $e');
       return null;
     }
