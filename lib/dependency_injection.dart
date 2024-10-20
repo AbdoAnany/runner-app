@@ -37,13 +37,14 @@ final locator = GetIt.instance;
 
 Future<void> init() async {
   // Bloc
-  locator.registerFactory(
+  locator.registerLazySingleton(
     () => AuthBloc(
       signInWithEmail: locator(),
       signUpWithEmail: locator(),
       signOut: locator(),
       signInWithGoogle: locator(),
       getCurrentUser: locator(),
+      clearUserDateCached: locator(),
       getCachedUser: locator(),
       saveCachedUser: locator(),
       rolesLoad: locator(),

@@ -61,7 +61,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
                   height: 20,
                 ),
                 Text(
-                  "AuthBloc.currentUser!.email",
+                  "name",
                   style: AppStyle.textStyle16GWhiteW800,
                 ),
                 Row(
@@ -85,7 +85,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
             ),
           ),
           Text(
-           " AuthBloc.currentUser!.role.toUpperCase()",
+           "role",
             style: AppStyle.textStyle20GoldW800,
           ),
         ],

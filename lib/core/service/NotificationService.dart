@@ -42,30 +42,6 @@ class NotificationService {
 
     subscribeToTopic('test');
   }
-  Future<void> sendXp({required int xp, required String topic, String? userId}) async {
-
-    final Map<String, dynamic> data = {
-      'xp': xp,
-      'topic': topic,
-      if (userId != null) 'userId': userId,
-    };
-
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(data),
-      );
-
-      if (response.statusCode == 200) {
-        print('XP sent successfully');
-      } else {
-        print('Failed to send XP. Status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error sending XP: $e');
-    }
-  }
   Future<void> sendNotification({
     required String title,
     required String message,

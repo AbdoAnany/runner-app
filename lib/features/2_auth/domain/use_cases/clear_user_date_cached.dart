@@ -1,4 +1,6 @@
 
+
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -7,14 +9,14 @@ import '../../../../core/usecase/use_case.dart';
 import '../../data/models/user_model.dart';
 import '../repositories/auth_repository.dart';
 
-class GetCachedUser implements UseCase<UserModel?, String> {
+class ClearUserDateCached implements UseCase<bool?, String> {
   final AuthRepository repository;
 
-  GetCachedUser(this.repository);
+  ClearUserDateCached(this.repository);
 
   @override
-  Future<Either<Failure, UserModel?>> call(String userId) async {
-    return await repository.getCachedUser(userId);
+  Future<Either<Failure, bool?>> call(String userId) async {
+    return await repository.clearCachedUser(userId);
   }
 }
 

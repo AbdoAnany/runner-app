@@ -110,7 +110,7 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, void>> saveCachedUser(UserModel user) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('cached_user', json.encode(user.toMap()));
+      await prefs.setString('cached_user${user.id}', json.encode(user.toMap()));
       return const Right(null);
     } catch (e) {
       return const Left(CacheFailure("Failed to save cached user"));
@@ -118,10 +118,10 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel?>> getCachedUser() async {
+  Future<Either<Failure, UserModel?>> getCachedUser(String userId) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final userJson = prefs.getString('cached_user');
+      final userJson = prefs.getString('cached_user$userId');
       if (userJson != null) {
         return Right(UserModel.fromJson(json.decode(userJson)));
       }
@@ -130,6 +130,21 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
       return const Left(CacheFailure('Failed to get save user'));
     }
   }
+
+  @override
+  Future<Either<Failure, bool?>> clearCachedUser(String userId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userJson =await prefs.remove('cached_user$userId');
+      if (userJson != null) {
+        return Right(userJson);
+      }
+      return Right(null);
+    } catch (e) {
+      return const Left(CacheFailure('Failed to get save user'));
+    }
+  }
+
 
   @override
   Future<Either<Failure, void>>  createRoles() async {
@@ -215,6 +230,7 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
 
     }
   }
+
 
 
 
