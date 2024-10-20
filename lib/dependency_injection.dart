@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:runner_app/features/2_auth/domain/use_cases/clear_user_date_cached.dart';
 import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_bloc.dart';
 
 import 'core/notification/notification_bloc.dart';
@@ -59,6 +60,7 @@ Future<void> init() async {
   locator.registerLazySingleton(() => GetCurrentUser(locator()));
   locator.registerLazySingleton(() => SaveCachedUser(locator()));
   locator.registerLazySingleton(() => RolesLoad(locator()));
+  locator.registerLazySingleton(() => ClearUserDateCached(locator()));
   locator.registerLazySingleton(() => GetCachedUser(locator()));
   // Repository
   locator.registerLazySingleton<AuthRepository>(
