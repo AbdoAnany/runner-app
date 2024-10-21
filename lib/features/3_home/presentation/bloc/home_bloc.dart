@@ -29,6 +29,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _onLoadHomeData(LoadHomeData event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
+    print("_onLoadHomeData   ");
+
     try {
 
       final userDataServer = await getUserData();
@@ -48,6 +50,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeLoaded(userDataDataModel: userDataServer,));
 
     } catch (e) {
+      print('_onRefreshHomeData >>>>>>>>>>>>  ${e}');
       emit(HomeError(message: e.toString()));
     }
   }
@@ -59,6 +62,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeLoaded(userDataDataModel: event.userData));
 
     } catch (e) {
+      print('_onUpdateHomeData >>>>>>>>>>>>  ${e}');
+
       emit(HomeError(message: e.toString()));
     }
   }
@@ -105,7 +110,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       sendNotification(
           title: title,
           message: message,
-          topic: 'history',
+          // topic: 'history',
           data: updatedUserData.toMap()
       );
 
@@ -116,6 +121,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeError(message: e.toString()));
     }
   }
+
+
   sendNotification({String? title,String? message,String? topic, required Map<String, dynamic> data}) async {
     String? token = await FirebaseMessaging.instance.getToken();
     print("token >>>>>>>>>>>>>>>>>>>>>>>>");
@@ -123,9 +130,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (token != null) {
       locator<NotificationService>().sendNotification(
         title: title ?? 'Dynamic Notification',
-        topic: topic ?? '/topics/',
+        topic: topic  ,
         message: message ?? 'This is a test of dynamic data!',
-        registrationTokens: "c9wv3N-gRn-IP60oTS5IBa:APA91bEvnGE6Q8-oXGjC5N-6dgmTGMIW2cGNcw6quTqYrei9sGF7y9wBSev_2pe327pjrgby17QNTNkMvbl1CxTD-IVTVxdSmJ8XowH1Xxorsr-a0NyAYpK3OFFb1oJ1R3u7fnth5lMx",
+        registrationTokens: token,
         data: data,
       );
     } else {

@@ -56,6 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (emit.isDone) return; // Check if the emitter is still valid
 
+print('_onSignInWithEmail  result');
     await result.fold(
       (failure) async => emit(AuthError(failure.toString())),
       (user) async {
@@ -138,6 +139,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     final result = await getCachedUser(event.userId);
 
+    print("result qqqqqqqqqqqqqqqqqqqqqqq");
     print(result);
     result.fold(
       (failure) => emit(Unauthenticated()),

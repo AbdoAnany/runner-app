@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../domain/entities/user_entity.dart';
@@ -16,9 +17,10 @@ class UserModel extends UserEntity {
     super.role,
 
   }) ;
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromJson(  json) {
+    print(json.data());
     return UserModel(
-      id: json['id'],
+      id: json['userId'],
       email: json['email'],
       role: json['role'],
       photoUrl: json['photoUrl']??'',

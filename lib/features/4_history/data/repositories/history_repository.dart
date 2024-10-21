@@ -1,3 +1,5 @@
+import 'package:runner_app/features/2_auth/data/models/user_model.dart';
+
 import '../../domain/entities/history_entity.dart';
 import '../../domain/repositories/history_repository.dart';
 import '../models/history_data_model.dart';
@@ -38,5 +40,11 @@ return res;
   @override
   Future<bool> deleteHistoryEntry(String date) async {
  return   await service.deleteHistoryEntry(date);
+  }
+
+  @override
+  Future<List<UserModel>> getAllUsersDataList() async {
+    // TODO: implement getAllUsersDataList
+   return await service.getAllUsersDataList();
   }
 }

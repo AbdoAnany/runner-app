@@ -13,9 +13,47 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   final FirebaseAuthRemoteDataSource remoteDataSource;
 
   FirebaseAuthRepositoryImpl(this.remoteDataSource);
+  @override
+  Future<Either<Failure, void>> saveCachedUser(UserModel user) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('cached_user${user.id}', json.encode(user.toMap()));
+      return const Right(null);
+    } catch (e) {
+      return const Left(CacheFailure("Failed to save cached user"));
+    }
+  }
+  @override
+  Future<Either<Failure, UserModel?>> getCachedUser(String userId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userJson = prefs.getString('cached_user$userId');
+      if (userJson != null) {
+        return Right(UserModel.fromJson(json.decode(userJson)));
+      }
+      return Right(null);
+    } catch (e) {
+      return const Left(CacheFailure('Failed to get save user'));
+    }
+  }
+  @override
+  Future<Either<Failure, bool?>> clearCachedUser(String userId) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final userJson = await prefs.remove('cached_user$userId');
+      if (userJson != null) {
+        return Right(userJson);
+      }
+      return Right(null);
+    } catch (e) {
+      return const Left(CacheFailure('Failed to get save user'));
+    }
+  }
+
 
   @override
-  Future<Either<Failure, UserModel>> signInWithEmail(String email, String password) async {
+  Future<Either<Failure, UserModel>> signInWithEmail(
+      String email, String password) async {
     try {
       final user = await remoteDataSource.signInWithEmail(email, password);
       return Right(user);
@@ -25,9 +63,11 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> signUpWithEmail(String email, String password, String roles) async {
+  Future<Either<Failure, UserModel>> signUpWithEmail(
+      String email, String password, String roles) async {
     try {
-      final user = await remoteDataSource.signUpWithEmail(email, password, roles);
+      final user =
+          await remoteDataSource.signUpWithEmail(email, password, roles);
       return Right(user);
     } on FirebaseAuthException catch (e) {
       return Left(AuthFailure(e.message ?? 'An unknown error occurred'));
@@ -44,20 +84,20 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
     }
   }
 
-
-
   @override
   Future<Either<Failure, void>> sendPasswordResetEmail(String email) async {
     try {
       await remoteDataSource.sendPasswordResetEmail(email);
       return Right(null);
     } on FirebaseAuthException catch (e) {
-      return Left(AuthFailure(e.message ?? 'Failed to send password reset email'));
+      return Left(
+          AuthFailure(e.message ?? 'Failed to send password reset email'));
     }
   }
 
   @override
-  Future<Either<Failure, void>> verifyPhoneNumber(String phoneNumber, Function(String) codeSent) async {
+  Future<Either<Failure, void>> verifyPhoneNumber(
+      String phoneNumber, Function(String) codeSent) async {
     try {
       await remoteDataSource.verifyPhoneNumber(phoneNumber, codeSent);
       return Right(null);
@@ -67,9 +107,11 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, UserModel>> signInWithPhone(String verificationId, String smsCode) async {
+  Future<Either<Failure, UserModel>> signInWithPhone(
+      String verificationId, String smsCode) async {
     try {
-      final user = await remoteDataSource.signInWithPhone(verificationId, smsCode);
+      final user =
+          await remoteDataSource.signInWithPhone(verificationId, smsCode);
       return Right(user);
     } on FirebaseAuthException catch (e) {
       return Left(AuthFailure(e.message ?? 'Failed to sign in with phone'));
@@ -106,54 +148,12 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, void>> saveCachedUser(UserModel user) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('cached_user${user.id}', json.encode(user.toMap()));
-      return const Right(null);
-    } catch (e) {
-      return const Left(CacheFailure("Failed to save cached user"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, UserModel?>> getCachedUser(String userId) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final userJson = prefs.getString('cached_user$userId');
-      if (userJson != null) {
-        return Right(UserModel.fromJson(json.decode(userJson)));
-      }
-      return Right(null);
-    } catch (e) {
-      return const Left(CacheFailure('Failed to get save user'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool?>> clearCachedUser(String userId) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final userJson =await prefs.remove('cached_user$userId');
-      if (userJson != null) {
-        return Right(userJson);
-      }
-      return Right(null);
-    } catch (e) {
-      return const Left(CacheFailure('Failed to get save user'));
-    }
-  }
 
 
   @override
-  Future<Either<Failure, void>>  createRoles() async {
-
+  Future<Either<Failure, void>> createRoles() async {
     try {
-      CollectionReference roles = FirebaseFirestore.instance.collection('roles');
-      await roles.doc('roleDocument').set({
-        'roleNames': ['Admin', 'User', 'Manager', 'Guest'],
-      });
+      await remoteDataSource.createRoles();
       return Right(null);
     } catch (e) {
       return const Left(CacheFailure('Failed to get save user'));
@@ -162,31 +162,22 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<Failure, UserModel>> createUserData(UserModel userData) async {
-        try {
-          await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userData.id)
-          .set(userData.toMap());
-          return Right(userData);
-
+    try {
+      await remoteDataSource.createUserData(userData);
+      return Right(userData);
     } catch (e) {
-          return  const Left(CacheFailure('Failed to create roles'));
+      return const Left(CacheFailure('Failed to create roles'));
     }
   }
 
   @override
   Future<Either<Failure, List<String>>> fetchRoleNames() async {
     try {
-      DocumentSnapshot snapshot = await FirebaseFirestore.instance
-          .collection('roles')
-          .doc('roleDocument')
-          .get();
-
-      List<String> roleNames = List<String>.from(snapshot.get('roleNames'));
+      List<String> roleNames = await remoteDataSource.fetchRoleNames();
 
       return Right(roleNames);
     } catch (e) {
-      return  const Left(CacheFailure('Failed to get save user'));
+      return const Left(CacheFailure('Failed to get save user'));
     }
   }
 
@@ -196,44 +187,32 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
       final user = await remoteDataSource.getCurrentUser();
       return Right(user);
     } catch (e) {
-      return Left(AuthFailure('Failed to get current user'));
+      return const Left(AuthFailure('Failed to get current user'));
     }
   }
 
   @override
   Future<Either<Failure, UserModel>> getUserData(String userId) async {
-
     try {
-      DocumentSnapshot doc =
-          await FirebaseFirestore.instance.collection('users').doc(userId).get();
-      if (doc.exists) {
-        return Right(UserModel.fromJson(doc.data() as Map<String, dynamic>));
+      final user = await remoteDataSource.getUserData(userId);
+      if (user != null) {
+        return Right(user);
       } else {
-        return   const Left(AuthFailure( 'not found user'));
+        return const Left(AuthFailure('not found user'));
       }
     } catch (e) {
-      return  Left(AuthFailure( 'Failed to sign in with ${e.toString()}'));
+      return Left(AuthFailure('Failed to sign in with ${e.toString()}'));
     }
-
   }
 
   @override
   Future<Either<Failure, UserModel>> updateUserData(UserModel userData) async {
-        try {
-          await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userData.id)
-          .update(userData.toMap());
-          return Right(UserModel.fromJson(userData.toMap()));
-    } catch (e) {
-          return  Left(AuthFailure( 'Failed to update user data: ${e.toString()}'));
+    try {
+      final user = await remoteDataSource.updateUserData(userData);
 
+      return Right(user);
+    } catch (e) {
+      return Left(AuthFailure('Failed to update user data: ${e.toString()}'));
     }
   }
-
-
-
-
-
-
 }
