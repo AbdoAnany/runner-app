@@ -55,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
   }
   @override
   void initState() {
-    locator<AuthBloc>().add(GetCurrentUserEvent());
+    locator<AuthBloc>().add(GetCurrentUserEvent(userId: FirebaseAuth.instance.currentUser!.uid));
     super.initState();
   }
 

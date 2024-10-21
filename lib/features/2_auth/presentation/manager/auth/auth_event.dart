@@ -56,10 +56,29 @@ class SignUpWithEmailEvent extends AuthEvent {
   List<Object> get props => [email, password,roles];
 }
 
-class SignOutEvent extends AuthEvent {}
+class SignOutEvent extends AuthEvent {
+  final String userId;
+  SignOutEvent({required this.userId});
+  @override
 
-class GetCurrentUserEvent extends AuthEvent {}
-class CheckCachedUserEvent extends AuthEvent {}
+  List<Object> get props => [userId,];
+}
+
+class GetCurrentUserEvent extends AuthEvent {
+  final String userId;
+  GetCurrentUserEvent({required this.userId});
+  @override
+
+  List<Object> get props => [userId,];
+}
+class CheckCachedUserEvent extends AuthEvent {
+  final String userId;
+  CheckCachedUserEvent({required this.userId});
+  @override
+
+  List<Object> get props => [userId,];
+
+}
 class LoadRolesRequestedEvent extends AuthEvent {}
 
 // Add other events for different authentication methods

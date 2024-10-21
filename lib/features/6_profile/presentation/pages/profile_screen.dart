@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:runner_app/dependency_injection.dart';
 
 import '../../../../my_app.dart';
 import '../../../2_auth/presentation/manager/auth/auth_bloc.dart';
@@ -18,7 +20,7 @@ final List<ProfileListItemModel> profileItems = [
   ProfileListItemModel(icon: Iconsax.message_question, text: 'FAQs'),
   ProfileListItemModel(icon: Iconsax.share, text: 'Share App'),
   ProfileListItemModel(icon: Iconsax.logout_1, text: 'Log Out',onTap:
-    () =>BlocProvider.of<AuthBloc>(Get.context).add(SignOutRequested(),)
+    () =>locator<AuthBloc>().add(SignOutEvent(userId: FirebaseAuth.instance.currentUser!.uid),)
 
   ),
 ];

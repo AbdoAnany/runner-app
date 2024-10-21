@@ -118,13 +118,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
   sendNotification({String? title,String? message,String? topic, required Map<String, dynamic> data}) async {
     String? token = await FirebaseMessaging.instance.getToken();
+    print("token >>>>>>>>>>>>>>>>>>>>>>>>");
     print(token);
     if (token != null) {
       locator<NotificationService>().sendNotification(
         title: title ?? 'Dynamic Notification',
         topic: topic ?? '/topics/',
         message: message ?? 'This is a test of dynamic data!',
-        registrationTokens: token,
+        registrationTokens: "c9wv3N-gRn-IP60oTS5IBa:APA91bEvnGE6Q8-oXGjC5N-6dgmTGMIW2cGNcw6quTqYrei9sGF7y9wBSev_2pe327pjrgby17QNTNkMvbl1CxTD-IVTVxdSmJ8XowH1Xxorsr-a0NyAYpK3OFFb1oJ1R3u7fnth5lMx",
         data: data,
       );
     } else {

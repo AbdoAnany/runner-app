@@ -23,84 +23,100 @@ class Get {
       GlobalKey<NavigatorState>();
 
   static BuildContext get context => navigatorKey.currentContext!;
+
   static NavigatorState get navigator => navigatorKey.currentState!;
 }
 
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    _checkCurrentUser();
+  }
+
+  Future<void> _checkCurrentUser() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      locator<AuthBloc>().add(CheckCachedUserEvent(userId: user.uid));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider<AuthBloc>(
-              create: (context) => locator<AuthBloc>()),
-          BlocProvider<NotificationBloc>(
-            create: (context) => locator<NotificationBloc>(),
-          ),
-
-        ],
-
-        child: ScreenUtilInit(
-          designSize: const Size(375, 768),
-          // minTextAdapt: true,
-          // splitScreenMode: true,
-          // Use builder only if you need to use library outside ScreenUtilInit context
-          builder: (ctx, child) {
-            ScreenUtil.init(ctx);
-            return ToastificationWrapper(
-              child: MaterialApp(
-                navigatorKey: Get.navigatorKey,
-                title: 'Runner App',
-                debugShowCheckedModeBanner: false,
-                themeMode: ThemeMode.dark,
-                theme: ThemeData(
-                  primarySwatch: Colors.deepPurple,
-
-                  scaffoldBackgroundColor: AppColors.bgColor,
-                  appBarTheme: const AppBarTheme(
-                    color: AppColors.bgColor,
-                    //    backgroundColor: AppColors.bgColor,
-
-                    iconTheme: IconThemeData(color: AppColors.white),
-                  ),
-                  visualDensity: VisualDensity.adaptivePlatformDensity,
+      providers: [
+        BlocProvider<AuthBloc>(create: (context) => locator<AuthBloc>()),
+        BlocProvider<NotificationBloc>(create: (context) => locator<NotificationBloc>(),),
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(375, 768),
+        builder: (ctx, child) {
+          ScreenUtil.init(ctx);
+          return ToastificationWrapper(
+            child: MaterialApp(
+              navigatorKey: Get.navigatorKey,
+              title: 'Runner App',
+              debugShowCheckedModeBanner: false,
+              themeMode: ThemeMode.dark,
+              theme: ThemeData(
+                primarySwatch: Colors.deepPurple,
+                scaffoldBackgroundColor: AppColors.bgColor,
+                appBarTheme: const AppBarTheme(
+                  color: AppColors.bgColor,
+                  iconTheme: IconThemeData(color: AppColors.white),
                 ),
-                routes: {
-                  '/home': (context) => const MainScreen(),
-                  // '/signup': (context) => const SignUpScreen(),
-                  '/phone': (context) => PhoneScreen(),
-                  '/verification': (context) => VerificationScreen(),
-                  // Add other routes
-                },
-                home: StreamBuilder<User?>(
-                    stream: FirebaseAuth.instance.authStateChanges(),
-                    builder: (context, snapshot) {
-                      return BlocBuilder<AuthBloc, AuthState>(
-                        // listener: (context, state) {
-                        //   if (state is Authenticated) {
-                        //     Navigator.of(context).pushReplacementNamed('/home');
-                        //   } else if (state is AuthError) {
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(content: Text(state.message)),
-                        //     );
-                        //   }
-                        // },
-                        builder: (context, state) {
-
-                          if (state is Authenticated) {
-                            return const MainScreen();
-                          } else {
-                            return  const LoginScreen();
-                            //       return const GetStarted();
-                          }
-                        },
-                      );
-                    }),
+                visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-            );
-          },
-        )
-        //  child: const HomePage(title: 'First Method'),
-
-        );
+              routes: {
+                '/home': (context) => const MainScreen(),
+                '/phone': (context) => PhoneScreen(),
+                '/verification': (context) => VerificationScreen(),
+              },
+              home: BlocConsumer<AuthBloc, AuthState>(
+                bloc: locator<AuthBloc>(),
+                listener: (context, state) {
+                  print('listener '+state.toString());
+                  // if (state is AuthInitial) {
+                  //   locator<AuthBloc>().add(CheckCachedUserEvent(userId:FirebaseAuth.instance.currentUser!.uid));
+                  //
+                  //
+                  // }
+                  // if (state is Authenticated) {
+                  //   Navigator.pushReplacementNamed(context, '/home');
+                  // }
+                },
+                builder: (context, state) {
+                   print('builder '+state.toString());
+                  // if (state is AuthInitial) {
+                  //   locator<AuthBloc>().add(CheckCachedUserEvent(userId:FirebaseAuth.instance.currentUser!.uid));
+                  //
+                  //
+                  // }
+                 if (state is AuthLoading) {
+                    return const Scaffold(
+                      body: Center(child: CircularProgressIndicator()),
+                    );
+                  } else if (state is Authenticated) {
+                    return const MainScreen();
+                  } else {
+                    return const LoginScreen();
+                  }
+                },
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }
