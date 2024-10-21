@@ -1,6 +1,7 @@
 // data/services/user_data_service.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:runner_app/features/2_auth/data/models/user_model.dart';
 
 class HistoryService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -18,6 +19,27 @@ class HistoryService {
       print(history);
 
       return history;
+    } catch (e) {
+      print('Error getting history data: $e');
+      return [];
+    }
+  }
+
+  Future<List<UserModel>> getAllUsersDataList() async {
+
+    // FirebaseFirestore firestore = FirebaseFirestore.instance;
+    //
+    // QuerySnapshot snapshot = await firestore.collection('users').get();
+    // return snapshot.docs.map((doc) => User.fromDocument(doc)).toList();
+
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('users').get();
+
+      // Retrieve the history list from the user's document
+     return snapshot.docs.map((doc) => UserModel.fromJson(doc)).toList();
+
+
+      // return history;
     } catch (e) {
       print('Error getting history data: $e');
       return [];
@@ -99,4 +121,6 @@ print(history.length);
       return false;
     }
   }
+
+
 }

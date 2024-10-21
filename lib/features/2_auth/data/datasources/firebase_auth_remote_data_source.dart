@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -14,14 +15,19 @@ class FirebaseAuthRemoteDataSourceImpl implements FirebaseAuthRemoteDataSource {
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
   final FacebookAuth _facebookAuth;
-
+  final FirebaseFirestore _fireStore;
   FirebaseAuthRemoteDataSourceImpl({
     required FirebaseAuth firebaseAuth,
     required GoogleSignIn googleSignIn,
     required FacebookAuth facebookAuth,
-  })  : _firebaseAuth = firebaseAuth,
+    required FirebaseFirestore fireStore,
+
+  })  :
+        _fireStore = fireStore,
+        _firebaseAuth = firebaseAuth,
         _googleSignIn = googleSignIn,
         _facebookAuth = facebookAuth;
+
 
   @override
   Future<UserModel> signInWithEmail(String email, String password) async {
@@ -121,5 +127,56 @@ class FirebaseAuthRemoteDataSourceImpl implements FirebaseAuthRemoteDataSource {
     );
     final userCredential = await _firebaseAuth.signInWithCredential(oauthCredential);
     return UserModel.fromFirebaseUser(userCredential.user!);
+  }
+
+  @override
+  Future<void> createRoles() async {
+    CollectionReference roles =
+    _fireStore.collection('roles');
+    await roles.doc('roleDocument').set({
+      'roleNames': ['Admin', 'User', 'Manager', 'Guest'],
+    });
+   ;
+  }
+
+  @override
+  Future<UserModel> createUserData(UserModel userData) async {
+    await _fireStore
+        .collection('users')
+        .doc(userData.id)
+        .set(userData.toMap());
+
+    return userData;
+  }
+
+  @override
+  Future<List<String>> fetchRoleNames() async {
+    DocumentSnapshot snapshot = await _fireStore
+        .collection('roles')
+        .doc('roleDocument')
+        .get();
+
+    List<String> roleNames = List<String>.from(snapshot.get('roleNames'));
+    return roleNames;
+
+  }
+
+  @override
+  Future<UserModel?> getUserData(String userId) async {
+    DocumentSnapshot doc = await _fireStore
+        .collection('users')
+        .doc(userId)
+        .get();
+    return UserModel.fromJson(doc.data() as Map<String, dynamic>);
+
+  }
+
+  @override
+  Future<UserModel> updateUserData(UserModel userData) async {
+    await _fireStore
+        .collection('users')
+        .doc(userData.id)
+        .update(userData.toMap());
+    throw UnimplementedError();
   }
 }

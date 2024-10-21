@@ -10,6 +10,7 @@ import '../../features/4_history/presentation/pages/history_screen.dart';
 import '../../features/6_profile/presentation/pages/profile_screen.dart';
 import '../core/const/const.dart';
 import '../core/share/my_bottom_navigation_bar.dart';
+import '10_user_point_control/presentation/pages/user_point_control.dart';
 import '7_level_gallary/presentation/pages/level_gallery.dart';
 
 
@@ -41,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
       "History":  const HistoryScreenBlocProvider()
     },
     {
-      "Store":const LevelGallery(),
+      "Store":const UserPointControlBlocProvider(),
     },
     {
       "Profile":  ProfileScreen(),

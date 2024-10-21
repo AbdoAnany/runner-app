@@ -11,4 +11,10 @@ abstract class FirebaseAuthRemoteDataSource {
   Future<UserModel> signInWithGoogle();
   Future<UserModel> signInWithFacebook();
   Future<UserModel> signInWithApple();
+
+  Future<void> createRoles();
+  Future< List<String>>fetchRoleNames();
+  Future<UserModel> createUserData(UserModel userData);
+  Future<UserModel> updateUserData(UserModel userData);
+  Future<UserModel?> getUserData(String userId);
 }

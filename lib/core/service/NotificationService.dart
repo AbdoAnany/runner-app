@@ -7,20 +7,21 @@ import 'package:http/http.dart' as http;
 import '../notification/notification_bloc.dart';
 
 class NotificationService {
-  final url = 'https://abdoanany.pythonanywhere.com/pushFCM'; // Replace with your actual Firebase Cloud Function URL
+  final url =
+      'https://abdoanany.pythonanywhere.com/pushFCM'; // Replace with your actual Firebase Cloud Function URL
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   final NotificationBloc _notificationBloc;
 
-  NotificationService(this._notificationBloc){
+  NotificationService(this._notificationBloc) {
     initialize();
   }
 
   Future<void> initialize() async {
     // Request permission for iOS devices
     await _firebaseMessaging.requestPermission(
-
       alert: true,
 
       badge: true,
@@ -41,7 +42,9 @@ class NotificationService {
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
     subscribeToTopic('test');
+    subscribeToTopic('history');
   }
+
   Future<void> sendNotification({
     required String title,
     required String message,
@@ -49,18 +52,20 @@ class NotificationService {
     required Map<String, dynamic> data,
     String? topic,
   }) async {
-    final List<String> tokens = registrationTokens is String ? [registrationTokens] : List<String>.from(registrationTokens);
-
+    final List<String> tokens = registrationTokens is String
+        ? [registrationTokens]
+        : List<String>.from(registrationTokens);
+    print('topic ${topic ?? 'topics'}');
     final response = await http.post(
       Uri.parse(url),
       body: json.encode({
         'title': title,
         'msg': message,
-        'registration_token': tokens,
+        'token':
+            "dT1dKPawRkC_sboihT22E_:APA91bGhWrs4kjH5e5b3WZxbpGTWyasJ5ZVLMWhC3WEV8cU0_1Njj8PZVtx5S2AtZ-XWixu5UnmM8zhJgUMHAP_Is4PGq0dgCUOhOjfpbL9aUnqRaZXFdPpKKRnd6huGbQP7egrHUH8R",
         'data': data,
-        'topic': topic,
+        'topic': topic ?? '',
       }),
-
       headers: {'Content-Type': 'application/json'},
     );
     print(data.toString());
@@ -68,56 +73,28 @@ class NotificationService {
     if (response.statusCode == 200) {
       print('Notification sent successfully');
       print('Notification body ${response.body}');
-      var notificationBody=jsonDecode(response.body);
-      _showLocalNotification(
-        notificationBody['title'],
-        notificationBody['body'],
-        notificationBody['data'],
 
+      var notificationBody = jsonDecode(response.body);
+      print('Notification body ${notificationBody['responses']}');
 
-      );
+      // _showLocalNotification(
+      //   notificationBody['title'],
+      //   notificationBody['body'],
+      //   notificationBody['data'],
+      // );
     } else {
       print('Failed to send notification. Status code: ${response.statusCode}');
-    }
-  }
-  Future<void> sendMassNotification({
-    required String title,
-    required String message,
-    required Map<String, dynamic> data,
-    String? topic,
-  }) async {
-
-    final response = await http.post(
-      Uri.parse(url),
-      body: json.encode({
-        'title': title,
-        'msg': message,
-        'data': data,
-        'topic': topic,
-      }),
-      headers: {'Content-Type': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      print(response.body);
-      print('Mass notification sent successfully');
-    } else {
-      print('Failed to send mass notification. Status code: ${response.statusCode}');
     }
   }
 
 
   void _handleMessage(RemoteMessage message) {
+    //  _notificationBloc.add(ReceiveXpNotification(xp, topic));
 
-  //  _notificationBloc.add(ReceiveXpNotification(xp, topic));
-
-    _showLocalNotification(
-      'XP Update',
-      'You received xp XP for topic: topic',message.data
-    );
+    _showLocalNotification(message.notification!.title!, message.notification!.body!, message.data);
   }
 
-  Future<void> _showLocalNotification(String title, String body,payload) async {
+  Future<void> _showLocalNotification(String title, String body, payload) async {
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'xp_channel_id',
       'XP Notifications',
@@ -131,11 +108,8 @@ class NotificationService {
     );
 
     await _flutterLocalNotificationsPlugin.show(
-      0,
-      title,
-      body,
-      platformChannelSpecifics,payload: payload.toString()
-    );
+        0, title, body, platformChannelSpecifics,
+        payload: payload.toString());
   }
 
   Future<void> subscribeToTopic(String topic) async {
