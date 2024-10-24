@@ -8,13 +8,13 @@ class LoadHistoryData extends HistoryDataEvent {}
 
 class AddHistoryData extends HistoryDataEvent {
 
-  final HistoryEntity historyEntity;
+  final PointHistoryEntity historyEntity;
   AddHistoryData(this.historyEntity);
 }
 
 class DeleteHistoryData extends HistoryDataEvent {
 
-  final HistoryEntity historyEntity;
+  final PointHistoryEntity historyEntity;
   DeleteHistoryData(this.historyEntity);
 }
 // Add this event to runner_data_event.dart

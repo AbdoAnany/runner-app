@@ -56,13 +56,13 @@ class NotificationService {
         ? [registrationTokens]
         : List<String>.from(registrationTokens);
     print('topic ${topic ?? 'topics'}');
+    print('tokens ${tokens ?? 'tokens'}');
     final response = await http.post(
       Uri.parse(url),
       body: json.encode({
         'title': title,
         'msg': message,
-        'token':
-            "dT1dKPawRkC_sboihT22E_:APA91bGhWrs4kjH5e5b3WZxbpGTWyasJ5ZVLMWhC3WEV8cU0_1Njj8PZVtx5S2AtZ-XWixu5UnmM8zhJgUMHAP_Is4PGq0dgCUOhOjfpbL9aUnqRaZXFdPpKKRnd6huGbQP7egrHUH8R",
+        'token': tokens.first,
         'data': data,
         'topic': topic ?? '',
       }),

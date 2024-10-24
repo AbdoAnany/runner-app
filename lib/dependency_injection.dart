@@ -9,13 +9,16 @@ import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_bloc.d
 
 import 'core/notification/notification_bloc.dart';
 import 'core/service/NotificationService.dart';
+import 'features/10_user_point_control/data/data_sources/UserPointControlService.dart';
 import 'features/10_user_point_control/domain/repositories/user_control_repo.dart';
 import 'features/10_user_point_control/domain/use_cases/get_user_list.dart';
+import 'features/10_user_point_control/domain/use_cases/set_user_point_data.dart';
 import 'features/10_user_point_control/presentation/manager/userpoint_bloc.dart';
 import 'features/2_auth/data/datasources/firebase_auth_remote_data_source.dart';
 import 'features/2_auth/data/repositories/FirebaseAuthRepositoryImpl.dart';
 import 'features/2_auth/domain/repositories/FirebaseAuthRemoteDataSource.dart';
 import 'features/2_auth/domain/repositories/auth_repository.dart';
+import 'features/2_auth/domain/use_cases/create_profile.dart';
 import 'features/2_auth/domain/use_cases/get_cached_user.dart';
 import 'features/2_auth/domain/use_cases/get_current_user.dart';
 import 'features/2_auth/domain/use_cases/role_load.dart';
@@ -46,6 +49,7 @@ Future<void> init() async {
     () => AuthBloc(
       signInWithEmail: locator(),
       signUpWithEmail: locator(),
+      createProfile: locator(),
       signOut: locator(),
       signInWithGoogle: locator(),
       getCurrentUser: locator(),
@@ -58,12 +62,14 @@ Future<void> init() async {
   locator.registerFactory(
     () => UserPointBloc(
      getUserListUseCase: locator(),
+      setUserPointData: locator(),homeBloc: locator()
     ),
   );
 
   // Use cases Auth
   locator.registerLazySingleton(() => SignInWithEmail(locator()));
   locator.registerLazySingleton(() => SignUpWithEmail(locator()));
+  locator.registerLazySingleton(() => CreateProfile(locator()));
   locator.registerLazySingleton(() => SignInWithGoogle(locator()));
   locator.registerLazySingleton(() => SignOut(locator()));
   locator.registerLazySingleton(() => GetCurrentUser(locator()));
@@ -75,6 +81,7 @@ Future<void> init() async {
 
   // Use cases UserPoint
   locator.registerLazySingleton(() => GetUserListUseCase(locator()));
+  locator.registerLazySingleton(() => SetUserPointData(locator()));
 
 
 
@@ -82,7 +89,7 @@ Future<void> init() async {
   locator.registerLazySingleton<AuthRepository>(() => FirebaseAuthRepositoryImpl(locator()),);
 
   // Repository UserPoint
-  locator.registerLazySingleton<UserControlRepository>(() => UserControlRepositoryImpl(),);
+  locator.registerLazySingleton<UserControlRepository>(() => UserControlRepositoryImpl(locator()),);
 
   // Data sources
   locator.registerLazySingleton<FirebaseAuthRemoteDataSource>(
@@ -92,7 +99,9 @@ Future<void> init() async {
       facebookAuth: locator(),
       fireStore: locator(),
     ),
+
   );
+  locator.registerLazySingleton<UserPointControlService>(() => UserPointControlService());
 
   // External
   // locator.registerLazySingleton(() => FirebaseAuth.instance);
@@ -162,6 +171,8 @@ void historyServiceLocator() {
   // History services
   locator.registerLazySingleton<HistoryService>(() => HistoryService());
 
+
+
   // History repositories
   locator.registerLazySingleton<HistoryRepository>(
     () => HistoryRepositoryImpl(locator()),
@@ -181,3 +192,5 @@ void historyServiceLocator() {
         setHistoryData: locator()),
   );
 }
+
+

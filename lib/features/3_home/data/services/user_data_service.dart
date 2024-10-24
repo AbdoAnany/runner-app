@@ -1,6 +1,7 @@
 // data/services/user_data_service.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class UserDataService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -18,7 +19,8 @@ class UserDataService {
       // Retrieve the history list from the user's document
       Map<String, dynamic> userData = userDoc.get('userData');
       print("UserData ===============");
-      print(userData);
+      final fcmTocken=await FirebaseMessaging.instance.getToken();
+      print(fcmTocken);
 
       return userData;
     } catch (e) {

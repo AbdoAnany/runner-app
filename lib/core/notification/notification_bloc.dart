@@ -17,7 +17,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
 
   void _onReceiveXpNotification(ReceiveXpNotification event, Emitter<NotificationState> emit) {
 
-    final updatedEntry = HistoryEntity(
+    final updatedEntry = PointHistoryEntity(userId: "",
 
       id : DateTime.now().millisecondsSinceEpoch.toString(),
       date: DateTime.now().toIso8601String(),

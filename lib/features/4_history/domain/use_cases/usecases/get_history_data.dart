@@ -8,7 +8,7 @@ class GetHistoryData {
 
   GetHistoryData(this.repository);
 
-  Future<List<HistoryEntity>> call() async {
+  Future<List<PointHistoryEntity>> call() async {
     return await repository.getHistoryData();
   }
 }

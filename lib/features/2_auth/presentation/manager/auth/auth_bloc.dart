@@ -1,9 +1,13 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:runner_app/features/2_auth/data/models/UserDataDataModel.dart';
 import '../../../../../core/usecase/use_case.dart';
-import '../../../data/models/user_model.dart';
+
+import '../../../../3_home/data/models/user_data_model.dart';
 import '../../../domain/use_cases/clear_user_date_cached.dart';
+import '../../../domain/use_cases/create_profile.dart';
 import '../../../domain/use_cases/get_cached_user.dart';
 import '../../../domain/use_cases/get_current_user.dart';
 import '../../../domain/use_cases/role_load.dart';
@@ -23,6 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final GetCurrentUser getCurrentUser;
   final SaveCachedUser saveCachedUser;
   final GetCachedUser getCachedUser;
+  final CreateProfile createProfile;
   final ClearUserDateCached clearUserDateCached;
   final RolesLoad rolesLoad;
 
@@ -33,6 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.signInWithGoogle,
     required this.getCurrentUser,
     required this.saveCachedUser,
+    required this.createProfile,
     required this.getCachedUser,
     required this.clearUserDateCached,
     required this.rolesLoad,
@@ -40,6 +46,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SignInWithEmailEvent>(_onSignInWithEmail);
     on<SignInWithGoogleEvent>(_onSignInWithGoogle);
     on<SignUpWithEmailEvent>(_onSignUpWithEmail);
+    on<CreateUserDataEvent>(_createUserData);
     on<SignOutEvent>(_onSignOut);
     on<GetCurrentUserEvent>(_onGetCurrentUser);
     on<CheckCachedUserEvent>(_onCheckCachedUser);
@@ -48,25 +55,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onSignInWithEmail(
       SignInWithEmailEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    try {
+      emit(AuthLoading());
 
-    final result = await signInWithEmail(
-      SignInWithEmailParams(email: event.email, password: event.password),
-    );
+      final result = await signInWithEmail(
+        SignInWithEmailParams(email: event.email, password: event.password),
+      );
 
-    if (emit.isDone) return; // Check if the emitter is still valid
+      await result.fold(
+        (failure) async => emit(AuthError(failure.toString())),
+        (userData) async {
+          try {
+            if (event.rememberMe) {
+              await saveCachedUser(userData);
+            }
 
-print('_onSignInWithEmail  result');
-    await result.fold(
-      (failure) async => emit(AuthError(failure.toString())),
-      (user) async {
-        if (event.rememberMe) {
-          await saveCachedUser(user);
-        }
-        if (emit.isDone) return; // Check again after the async operation
-        emit(Authenticated(user));
-      },
-    );
+            emit(Authenticated(userData));
+          } catch (e) {
+            emit(AuthError('Error processing user data: ${e.toString()}'));
+          }
+        },
+      );
+    } catch (e) {
+      emit(AuthError('Authentication error: ${e.toString()}'));
+    }
   }
 
   Future<void> _onSignInWithGoogle(
@@ -74,89 +86,145 @@ print('_onSignInWithEmail  result');
     emit(AuthLoading());
 
     final result = await signInWithGoogle(NoParams());
-
-    if (emit.isDone) return; // Check if the emitter is still valid
-
+    print("------------------------  result ------------------");
+    print(result);
     await result.fold(
-      (failure) async => emit(AuthError(failure.toString())),
-      (user) async {
-        await saveCachedUser(user);
-        if (emit.isDone) return; // Check again after the async operation
-        emit(Authenticated(user));
+      (failure) async => emit(Unauthenticated()),
+      (userData) async {
+        print("------------------------  result 123------------------");
+        final fcmToken = await FirebaseMessaging.instance.getToken();
+        userData.fcmToken= fcmToken;
+        await saveCachedUser(userData);
+        await createProfile(userData);
+        emit(Authenticated(userData));
+      },
+    );
+  }
+
+  Future<void> _createUserData(
+      CreateUserDataEvent event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+
+    final result = await createProfile(event.userData);
+    print("------------------------  result ------------------");
+    print(result);
+    await result.fold(
+      (failure) async => emit(Unauthenticated()),
+      (userData) async {
+        print("------------------------  result 123------------------");
+
+        await saveCachedUser(userData!);
+        emit(CreateProfileState(userData!));
       },
     );
   }
 
   Future<void> _onSignUpWithEmail(
       SignUpWithEmailEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    try {
+      emit(AuthLoading());
 
-    final result = await signUpWithEmail(
-      SignUpWithEmailParams(
-        email: event.email,
-        password: event.password,
-        roles: event.roles,
-      ),
-    );
+      final result = await signUpWithEmail(
+        SignUpWithEmailParams(
+          email: event.email,
+          password: event.password,
+          roles: event.roles,
+        ),
+      );
 
-    result.fold(
-      (failure) => emit(AuthError(failure.toString())),
-      (user) async {
-        await saveCachedUser(user);
-        emit(Authenticated(user));
-      },
-    );
+      result.fold(
+        (failure) => emit(AuthError(failure.toString())),
+        (userData) async {
+          try {
+            final fcmToken = await FirebaseMessaging.instance.getToken();
+            userData.fcmToken = fcmToken;
+            await saveCachedUser(userData);
+            await createProfile(userData);
+
+            emit(Authenticated(userData));
+          } catch (e) {
+            emit(AuthError('Error processing signup data: ${e.toString()}'));
+          }
+        },
+      );
+    } catch (e) {
+      emit(AuthError('Sign-up error: ${e.toString()}'));
+    }
   }
 
   Future<void> _onSignOut(SignOutEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    try {
+      emit(AuthLoading());
 
-    final result = await signOut(NoParams());
-    final isCleared = await clearUserDateCached(event.userId);
+      final result = await signOut(NoParams());
+      final isCleared = await clearUserDateCached(event.userId);
 
-    result.fold(
-      (failure) => emit(AuthError(failure.toString())),
-      (_) => emit(Unauthenticated()),
-    );
+      result.fold(
+        (failure) => emit(AuthError(failure.toString())),
+        (_) => emit(Unauthenticated()),
+      );
+    } catch (e) {
+      emit(AuthError('Sign-out error: ${e.toString()}'));
+    }
   }
 
   Future<void> _onGetCurrentUser(
       GetCurrentUserEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    try {
+      emit(AuthLoading());
 
-    final result = await getCurrentUser(event.userId);
+      final result = await getCurrentUser(event.userId);
 
-    result.fold(
-      (failure) => emit(AuthError(failure.toString())),
-      (user) =>
-          user != null ? emit(Authenticated(user)) : emit(Unauthenticated()),
-    );
+      result.fold(
+        (failure) => emit(AuthError(failure.toString())),
+        (userData) {
+          if (userData == null) {
+            emit(Unauthenticated());
+          } else {
+            emit(Authenticated(userData));
+          }
+        },
+      );
+    } catch (e) {
+      emit(AuthError('Get current user error: ${e.toString()}'));
+    }
   }
 
   Future<void> _onCheckCachedUser(
       CheckCachedUserEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    try {
+      emit(AuthLoading());
 
-    final result = await getCachedUser(event.userId);
+      final result = await getCachedUser(event.userId);
 
-    print("result qqqqqqqqqqqqqqqqqqqqqqq");
-    print(result);
-    result.fold(
-      (failure) => emit(Unauthenticated()),
-      (user) =>
-          user != null ? emit(Authenticated(user)) : emit(Unauthenticated()),
-    );
+      result.fold(
+        (failure) => emit(Unauthenticated()),
+        (userData) {
+          if (userData == null) {
+            emit(Unauthenticated());
+          } else {
+            emit(Authenticated(userData));
+          }
+        },
+      );
+    } catch (e) {
+      emit(AuthError('Check cached user error: ${e.toString()}'));
+    }
   }
 
   Future<void> _getLoadRoles(
       LoadRolesRequestedEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    try {
+      emit(AuthLoading());
 
-    final result = await rolesLoad(NoParams());
+      final result = await rolesLoad(NoParams());
 
-    result.fold(
-      (failure) => emit(AuthError(failure.toString())),
-      (user) => emit(RolesLoaded(user)),
-    );
+      result.fold(
+        (failure) => emit(AuthError(failure.toString())),
+        (roles) => emit(RolesLoaded(roles)),
+      );
+    } catch (e) {
+      emit(AuthError('Load roles error: ${e.toString()}'));
+    }
   }
 }

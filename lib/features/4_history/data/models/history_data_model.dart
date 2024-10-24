@@ -4,17 +4,19 @@
 
 import '../../domain/entities/history_entity.dart';
 
-class HistoryDataModel extends HistoryEntity {
-  HistoryDataModel({
+class PointUserHistoryDataModel extends PointHistoryEntity {
+  PointUserHistoryDataModel({
     required super.id,
+    required super.userId,
     required super.date,
 
     required super.xp,
   });
 
-  factory HistoryDataModel.fromMap(Map<String, dynamic> map) {
-    return HistoryDataModel(
+  factory PointUserHistoryDataModel.fromMap(Map<String, dynamic> map) {
+    return PointUserHistoryDataModel(
       id: map['id'] ?? '0',
+      userId: map['userId'] ?? '0',
       date: map['date'] ?? '',
 
       xp: map['xp'] ?? 0,
@@ -25,6 +27,7 @@ class HistoryDataModel extends HistoryEntity {
     return {
       'id': id,
       'date': date,
+      'userId': userId,
 
       'xp': xp,
     };

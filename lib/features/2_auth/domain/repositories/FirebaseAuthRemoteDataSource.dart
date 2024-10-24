@@ -1,20 +1,21 @@
+import '../../../3_home/data/models/user_data_model.dart';
 import '../../data/models/user_model.dart';
 
 abstract class FirebaseAuthRemoteDataSource {
-  Future<UserModel> signInWithEmail(String email, String password);
-  Future<UserModel> signUpWithEmail(String email, String password, String roles);
+  Future<UserDataDataModel> signInWithEmail(String email, String password);
+  Future<UserDataDataModel> signUpWithEmail(String email, String password, String roles);
   Future<void> signOut();
-  Future<UserModel?> getCurrentUser();
+  Future<UserDataDataModel?> getCurrentUser();
   Future<void> sendPasswordResetEmail(String email);
   Future<void> verifyPhoneNumber(String phoneNumber, Function(String) codeSent);
-  Future<UserModel> signInWithPhone(String verificationId, String smsCode);
-  Future<UserModel> signInWithGoogle();
-  Future<UserModel> signInWithFacebook();
-  Future<UserModel> signInWithApple();
+  Future<UserDataDataModel> signInWithPhone(String verificationId, String smsCode);
+  Future<UserDataDataModel> signInWithGoogle();
+  Future<UserDataDataModel> signInWithFacebook();
+  Future<UserDataDataModel> signInWithApple();
 
   Future<void> createRoles();
   Future< List<String>>fetchRoleNames();
-  Future<UserModel> createUserData(UserModel userData);
-  Future<UserModel> updateUserData(UserModel userData);
-  Future<UserModel?> getUserData(String userId);
+  Future<UserDataDataModel> createUserData(UserDataDataModel userData);
+  Future<UserDataDataModel> updateUserData(UserDataDataModel userData);
+  Future<UserDataDataModel?> getUserData(String userId);
 }

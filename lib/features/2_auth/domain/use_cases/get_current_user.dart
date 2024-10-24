@@ -1,17 +1,17 @@
 import 'package:dartz/dartz.dart';
-import 'package:runner_app/features/2_auth/data/models/user_model.dart';
-
+import '../../../3_home/data/models/user_data_model.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/usecase/use_case.dart';
+import '../../../3_home/data/models/user_data_model.dart';
 import '../repositories/auth_repository.dart';
 
-class GetCurrentUser implements UseCase<UserModel?, String> {
+class GetCurrentUser implements UseCase<UserDataDataModel?, String> {
   final AuthRepository repository;
 
   GetCurrentUser(this.repository);
 
   @override
-  Future<Either<Failure, UserModel?>> call(String userId) async {
+  Future<Either<Failure, UserDataDataModel?>> call(String userId) async {
     return await repository.getUserData(userId);
   }
 }

@@ -91,7 +91,7 @@ class HomeScreenBody extends StatelessWidget {
 
           HomePage(),
 
-          ShareAndGiftWidget(),
+          // ShareAndGiftWidget(),
         ],
       ),
     );
@@ -105,7 +105,7 @@ class EmployeePerformanceWidget extends StatelessWidget {
   final double progress;
   final String avatarUrl;
 
-  EmployeePerformanceWidget({
+  const EmployeePerformanceWidget({super.key,
     required this.employeeName,
     required this.rank,
     required this.progress,
@@ -116,6 +116,53 @@ class EmployeePerformanceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: RadarWidget(
+            radarMap: RadarMapModel(
+              legend: [
+                // LegendModel('10/10',const Color(0XFF0EBD8D)),
+                LegendModel('10/11',const Color(0XFFEAA035)),
+              ],
+
+              indicator: [
+                IndicatorModel("English",100),
+                IndicatorModel("Physics",100),
+                IndicatorModel("Chemistry",100),
+                IndicatorModel("Biology",100),
+                IndicatorModel("Politics",100),
+                IndicatorModel("History",100),
+              ],
+              data: [
+
+                // MapDataModel([100,90,90,90,10,20]),
+                MapDataModel([68,55,60,70,70,50]),
+              ],
+              radius: 120,
+              duration: 2000,
+              shape: Shape.square,
+              maxWidth: 70,
+              line: LineModel(5),
+            ),
+            textStyle: const TextStyle(color: Colors.white,fontSize: 14),
+            isNeedDrawLegend: false,
+
+            lineText: (p,length) =>  "${(p*100~/length)}%",
+
+            dilogText: (IndicatorModel indicatorModel,List<LegendModel> legendModels,List<double> mapDataModels) {
+              StringBuffer text = StringBuffer("");
+              for(int i=0;i<mapDataModels.length;i++){
+                text.write("${legendModels[i].name} : ${mapDataModels[i].toString()}");
+                if(i!=mapDataModels.length-1){
+                  text.write("\n");
+                }
+              }
+              return text.toString();
+            },
+            outLineText: (data,max)=> "${data*100~/max}%",
+          ),
+        ),
         Card(
           elevation: 5,
           shape: RoundedRectangleBorder(
@@ -167,7 +214,7 @@ class EmployeePerformanceWidget extends StatelessWidget {
                         style: TextStyle(fontSize: 16),
                       ),
                       Text(
-                        '${(progress * 100).toInt()}%',
+                        '${(progress ).toInt()}%',
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
@@ -180,66 +227,6 @@ class EmployeePerformanceWidget extends StatelessWidget {
 
 
 
-                ],
-              ),
-            ),
-          ),
-        ),
-        Card(
-
-          elevation: 0,
-
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-
-
-                  // Badges
-                  RadarWidget(
-                    radarMap: RadarMapModel(
-                      legend: [
-                        LegendModel('10/10',const Color(0XFF0EBD8D)),
-                        LegendModel('10/11',const Color(0XFFEAA035)),
-                      ],
-                      indicator: [
-                        IndicatorModel("English",100),
-                        IndicatorModel("Physics",100),
-                        IndicatorModel("Chemistry",100),
-                        IndicatorModel("Biology",100),
-                        IndicatorModel("Politics",100),
-                        IndicatorModel("History",100),
-                      ],
-                      data: [
-
-                        MapDataModel([100,90,90,90,10,20]),
-                        MapDataModel([90,90,90,90,10,20]),
-                      ],
-                      radius: 130,
-                      duration: 2000,
-                      shape: Shape.square,
-                      maxWidth: 70,
-                      line: LineModel(4),
-                    ),
-                    textStyle: const TextStyle(color: Colors.black,fontSize: 14),
-                    isNeedDrawLegend: true,
-                    lineText: (p,length) =>  "${(p*100~/length)}%",
-                    dilogText: (IndicatorModel indicatorModel,List<LegendModel> legendModels,List<double> mapDataModels) {
-                      StringBuffer text = StringBuffer("");
-                      for(int i=0;i<mapDataModels.length;i++){
-                        text.write("${legendModels[i].name} : ${mapDataModels[i].toString()}");
-                        if(i!=mapDataModels.length-1){
-                          text.write("\n");
-                        }
-                      }
-                      return text.toString();
-                    },
-                    outLineText: (data,max)=> "${data*100~/max}%",
-                  ),
                 ],
               ),
             ),

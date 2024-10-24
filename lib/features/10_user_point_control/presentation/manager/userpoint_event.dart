@@ -11,3 +11,15 @@ abstract class UserPointEvent extends Equatable {
    @override
    List<Object> get props => [];
  }
+
+@immutable
+
+class AddUserPointEvent extends UserPointEvent {
+
+  final PointUserHistoryDataModel historyEntity;
+  final String fcmToken;
+  AddUserPointEvent(this.historyEntity,this.fcmToken);
+  @override
+  List<Object> get props => [];
+}
+

@@ -29,7 +29,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _onLoadHomeData(LoadHomeData event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
-    print("_onLoadHomeData   ");
+    print("-------------------- _onLoadHomeData   ");
+
 
     try {
 
@@ -45,6 +46,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _onRefreshHomeData(RefreshHomeData event, Emitter<HomeState> emit) async {
     emit(HomeLoading());
     try {
+      print("-------------------- _onRefreshHomeData   ");
+
       final userDataServer = await getUserData();
       userData=userDataServer;
       emit(HomeLoaded(userDataDataModel: userDataServer,));
@@ -71,6 +74,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeLoading());
     try {
       // Fetch the current user data
+      print("_onUpdateLevelData ${event.levelSystem.currentLevel}");
       final currentUserData = await getUserData();
 
       // Update the level system data
@@ -110,6 +114,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       sendNotification(
           title: title,
           message: message,
+          token:event.token,
           // topic: 'history',
           data: updatedUserData.toMap()
       );
@@ -123,8 +128,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
 
-  sendNotification({String? title,String? message,String? topic, required Map<String, dynamic> data}) async {
-    String? token = await FirebaseMessaging.instance.getToken();
+  sendNotification({String? title,String? message,String? topic,String? token, required Map<String, dynamic> data}) async {
+    // String? token = await FirebaseMessaging.instance.getToken();
     print("token >>>>>>>>>>>>>>>>>>>>>>>>");
     print(token);
     if (token != null) {

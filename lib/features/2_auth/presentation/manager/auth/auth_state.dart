@@ -30,9 +30,17 @@ class RolesLoaded extends AuthState {
 
 
 class Authenticated extends AuthState {
-  final UserModel user;
+  final UserDataDataModel user;
 
   Authenticated(this.user);
+
+  @override
+  List<Object> get props => [user];
+}
+class CreateProfileState extends AuthState {
+  final UserDataDataModel user;
+
+  CreateProfileState(this.user);
 
   @override
   List<Object> get props => [user];

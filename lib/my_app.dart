@@ -82,37 +82,22 @@ class _MyAppState extends State<MyApp> {
                 '/phone': (context) => PhoneScreen(),
                 '/verification': (context) => VerificationScreen(),
               },
-              home: BlocConsumer<AuthBloc, AuthState>(
-                bloc: locator<AuthBloc>(),
-                listener: (context, state) {
-                  print('listener '+state.toString());
-                  // if (state is AuthInitial) {
-                  //   locator<AuthBloc>().add(CheckCachedUserEvent(userId:FirebaseAuth.instance.currentUser!.uid));
-                  //
-                  //
-                  // }
-                  // if (state is Authenticated) {
-                  //   Navigator.pushReplacementNamed(context, '/home');
-                  // }
-                },
-                builder: (context, state) {
-                   print('builder '+state.toString());
-                  // if (state is AuthInitial) {
-                  //   locator<AuthBloc>().add(CheckCachedUserEvent(userId:FirebaseAuth.instance.currentUser!.uid));
-                  //
-                  //
-                  // }
-                 if (state is AuthLoading) {
-                    return const Scaffold(
-                      body: Center(child: CircularProgressIndicator()),
-                    );
-                  } else if (state is Authenticated) {
+              home:StreamBuilder(
+                stream: FirebaseAuth.instance.authStateChanges(),
+
+                builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+                  if (snapshot.hasData) {
+                    print(">> >> "+snapshot.data!.uid);
                     return const MainScreen();
                   } else {
                     return const LoginScreen();
                   }
+
                 },
-              ),
+              )
+
+
+
             ),
           );
         },

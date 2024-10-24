@@ -22,9 +22,9 @@ class AppFunction {
   static String getDistance(val) => NumberFormat('###,#').format(val);
   static String getDateDayMonth(String date) => DateFormat('y   MMM-dd ').format(DateTime.parse(date));
   static String getDecimal(decimal,) =>  NumberFormat("#,###").format(decimal).toString();
-  static List<HistoryDataModel> generateFakeHistoryData(int count) {
+  static List<PointUserHistoryDataModel> generateFakeHistoryData(int count) {
     Random random = Random();
-    List<HistoryDataModel> historyList = [];
+    List<PointUserHistoryDataModel> historyList = [];
 
     for (int i = 0; i < count; i++) {
       // Generate a random date (e.g., past 30 days)
@@ -38,9 +38,9 @@ class AppFunction {
       int steps = random.nextInt(20000); // steps (0 to 20,000)
 
       // Create a new HistoryEntity instance and add it to the list
-      historyList.add(HistoryDataModel(
+      historyList.add(PointUserHistoryDataModel(
         date: date,id: i.toString(),
-
+userId: "",
         xp: steps,
       ));
     }

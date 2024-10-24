@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:runner_app/features/2_auth/data/models/user_model.dart';
-
+import '../../../3_home/data/models/user_data_model.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/usecase/use_case.dart';
 import '../repositories/auth_repository.dart';
@@ -14,7 +13,7 @@ class RolesLoad implements UseCase<List<String>, NoParams> {
     return await repository.fetchRoleNames();
   }
 }
-// class RolesLoad implements UseCase<UserModel, List<String>> {
+// class RolesLoad implements UseCase<UserDataDataModel, List<String>> {
 //   final AuthRepository repository;
 //
 //   RolesLoad(this.repository);

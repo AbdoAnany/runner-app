@@ -1,25 +1,28 @@
 // data/models/user_data_model.dart
 class UserDataEntity {
-  final String userId;
-  final String date;
-  final String roles;
-  final String email;
-  final String name;
-  final String rank;
-  final String phone;
-  final int currentLevel;
-  final int currentXP;
-  final int xpForNextLevel;
-  final int activeNumber;
-  final int xpProgress;
-  final String adminId;
-  final String userState;
+   String userId;
+   String date;
+   String roles;
+   String email;
+   String name;
+   String rank;
+   String phone;
+   int currentLevel;
+   int currentXP;
+   int xpForNextLevel;
+   int activeNumber;
+   int xpProgress;
+   String adminId;
+   String userState;
+   String? photoUrl;
+   String? fcmToken;
 
 
 
   UserDataEntity({
     required this.userId,
     required this.name,
+    required this.fcmToken,
     required this.rank,
     required this.roles,
     required this.email,
@@ -27,6 +30,7 @@ class UserDataEntity {
     required this.date,
     required this.currentLevel,
     required this.currentXP,
+    required this.photoUrl,
     required this.xpForNextLevel,
     required this.activeNumber,
     required this.xpProgress,

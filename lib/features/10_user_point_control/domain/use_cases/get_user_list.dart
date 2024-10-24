@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:runner_app/core/errors/failure.dart';
-import 'package:runner_app/features/2_auth/data/models/user_model.dart';
-
+import '../../../3_home/data/models/user_data_model.dart';
 import '../../../../core/usecase/use_case.dart';
 import '../../../2_auth/data/models/UserDataDataModel.dart';
 import '../repositories/user_control_repo.dart';
