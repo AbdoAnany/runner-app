@@ -11,7 +11,7 @@ import '../manager/bloc/runner_data_bloc.dart';
 import '../manager/bloc/runner_data_event.dart';
 class HistoryList extends StatelessWidget {
   const HistoryList({super.key, this.historyData = const []});
-  final List<HistoryEntity> historyData;
+  final List<PointHistoryEntity> historyData;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -29,7 +29,7 @@ class HistoryList extends StatelessWidget {
 
 class HistoryListItem extends StatelessWidget {
    HistoryListItem({super.key, required this.history,});
-  final HistoryEntity history;
+  final PointHistoryEntity history;
  final LevelSystem levelSystem=LevelSystem(currentXP: 0,currentLevel: 1);
 
   @override

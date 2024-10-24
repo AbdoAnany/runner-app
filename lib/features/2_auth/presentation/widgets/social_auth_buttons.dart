@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:runner_app/dependency_injection.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../../../core/const/const.dart';
@@ -17,9 +18,9 @@ class SocialAuthButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildSocialButton( AppImage.googleImage,()=>BlocProvider.of<AuthBloc>(context).add(SignInWithGoogleEvent(),)),
-        _buildSocialButton(AppImage.facebookImage,()=>BlocProvider.of<AuthBloc>(context).add(SignInWithGoogleEvent(),)),
-        _buildSocialButton(AppImage.twitterImage,()=>BlocProvider.of<AuthBloc>(context).add(SignInWithGoogleEvent(),)),
+        _buildSocialButton( AppImage.googleImage,()=>locator<AuthBloc>().add(SignInWithGoogleEvent(),)),
+        _buildSocialButton(AppImage.facebookImage,()=>    context.read<AuthBloc>().add(SignInWithGoogleEvent(),)),
+        _buildSocialButton(AppImage.twitterImage,()=>locator<AuthBloc>().add(SignInWithGoogleEvent(),)),
       ],
     );
   }

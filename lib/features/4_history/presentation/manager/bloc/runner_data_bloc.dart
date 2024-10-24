@@ -48,11 +48,11 @@ class HistoryDataBloc extends Bloc<HistoryDataEvent, HistoryDataState> {
   }
 
   Future<void> _onAddHistoryData(
-      AddHistoryData event, Emitter<HistoryDataState> emit) async {
+      AddHistoryData event, Emitter<HistoryDataState> emit)
+  async {
     try {
       if (state is HistoryDataLoaded) {
-        final List<HistoryEntity> currentData =
-        List.from((state as HistoryDataLoaded).historyData);
+        final List<PointHistoryEntity> currentData = List.from((state as HistoryDataLoaded).historyData);
         currentData.insert(0, event.historyEntity);
         int xp = currentData.fold(0, (accumulator, element) => (accumulator + element.xp));
         LevelSystem levelSystem = LevelSystem(currentXP: xp, currentLevel: 1);
@@ -71,7 +71,7 @@ class HistoryDataBloc extends Bloc<HistoryDataEvent, HistoryDataState> {
       DeleteHistoryData event, Emitter<HistoryDataState> emit) async {
     try {
       if (state is HistoryDataLoaded) {
-        final List<HistoryEntity> currentData =
+        final List<PointHistoryEntity> currentData =
         List.from((state as HistoryDataLoaded).historyData);
         currentData.removeWhere((element) => element.id == event.historyEntity.id);
         int xp = currentData.fold(0, (accumulator, element) => (accumulator + element.xp));

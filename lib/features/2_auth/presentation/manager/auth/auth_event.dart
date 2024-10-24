@@ -55,6 +55,14 @@ class SignUpWithEmailEvent extends AuthEvent {
   @override
   List<Object> get props => [email, password,roles];
 }
+class CreateUserDataEvent  extends AuthEvent {
+ final UserDataDataModel userData;
+
+  CreateUserDataEvent(this.userData);
+
+  @override
+  List<Object> get props => [];
+}
 
 class SignOutEvent extends AuthEvent {
   final String userId;

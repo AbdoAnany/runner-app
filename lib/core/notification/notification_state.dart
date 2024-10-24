@@ -7,7 +7,7 @@ final class NotificationInitial extends NotificationState {}
 
 
 class NotificationReceived extends NotificationState {
-  final HistoryEntity? updatedEntry;
+  final PointHistoryEntity? updatedEntry;
 
   NotificationReceived(this.updatedEntry);
 }

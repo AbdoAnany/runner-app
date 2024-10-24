@@ -13,7 +13,7 @@ class AppStrings{
 
 
 
-  static const String addScore='Add Score';
+  static const String addPoint='Add Points';
 
 
 

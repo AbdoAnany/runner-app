@@ -12,7 +12,7 @@ class UserDataRepositoryImpl implements UserDataRepository {
     final data = await service.getUserDataData();
 
 
-    return UserDataDataModel.fromMap(data!);
+    return UserDataDataModel.fromJson(data!);
   }
 
   @override

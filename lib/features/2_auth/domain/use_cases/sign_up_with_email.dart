@@ -1,17 +1,16 @@
 import 'package:dartz/dartz.dart';
-import 'package:runner_app/features/2_auth/data/models/user_model.dart';
-
+import '../../../3_home/data/models/user_data_model.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../../core/usecase/use_case.dart';
 import '../repositories/auth_repository.dart';
 
-class SignUpWithEmail implements UseCase<UserModel, SignUpWithEmailParams> {
+class SignUpWithEmail implements UseCase<UserDataDataModel, SignUpWithEmailParams> {
   final AuthRepository repository;
 
   SignUpWithEmail(this.repository);
 
   @override
-  Future<Either<Failure, UserModel>> call(SignUpWithEmailParams params) async {
+  Future<Either<Failure, UserDataDataModel>> call(SignUpWithEmailParams params) async {
     return await repository.signUpWithEmail(params.email, params.password, params.roles);
   }
 }

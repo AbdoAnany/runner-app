@@ -1,5 +1,5 @@
-import 'package:runner_app/features/2_auth/data/models/user_model.dart';
-
+import 'package:runner_app/features/2_auth/data/models/UserDataDataModel.dart';
+import '../../../3_home/data/models/user_data_model.dart';
 import '../../domain/entities/history_entity.dart';
 import '../../domain/repositories/history_repository.dart';
 import '../models/history_data_model.dart';
@@ -11,23 +11,23 @@ class HistoryRepositoryImpl implements HistoryRepository {
   HistoryRepositoryImpl(this.service);
 
   @override
-  Future<List<HistoryEntity>> getHistoryData() async {
+  Future<List<PointHistoryEntity>> getHistoryData() async {
     final data = await service.getHistoryData();
 
 
-    return data.map((e) => HistoryDataModel.fromMap(e)).toList();
+    return data.map((e) => PointUserHistoryDataModel.fromMap(e)).toList();
   }
 
   @override
-  Future<void> setHistoryData(List<HistoryEntity> historyData) async {
+  Future<void> setHistoryData(List<PointHistoryEntity> historyData) async {
     final data =
-    historyData.map((e) => (e as HistoryDataModel).toMap()).toList();
+    historyData.map((e) => (e as PointUserHistoryDataModel).toMap()).toList();
     await service.setHistoryData(data);
   }
 
   @override
-  Future<bool> addHistoryEntry(HistoryEntity entry) async {
- final res =   await service.addHistoryEntry((entry as HistoryDataModel).toMap());
+  Future<bool> addHistoryEntry(PointHistoryEntity entry) async {
+ final res =   await service.addHistoryEntry((entry as PointUserHistoryDataModel).toMap());
 return res;
   }
 
@@ -43,7 +43,7 @@ return res;
   }
 
   @override
-  Future<List<UserModel>> getAllUsersDataList() async {
+  Future<List<UserDataDataModel>> getAllUsersDataList() async {
     // TODO: implement getAllUsersDataList
    return await service.getAllUsersDataList();
   }

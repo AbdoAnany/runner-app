@@ -2,29 +2,34 @@
 
 // data/models/user_data_model.dart
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../domain/entities/user_data_entity.dart';
 
 class UserDataDataModel extends UserDataEntity {
   UserDataDataModel({
     required super.userId,
-    required super.date,
+    required super.fcmToken,
+     super.date="",
      super.rank="D",
      super.activeNumber=0,
-    required super.name,
-    required super.email,
-    required super.roles,
+     super.name="",
+     super.email="",
+     super.roles='user',
      super.adminId="",
+     super.photoUrl="",
      super.phone="",
-    required super.currentLevel,
-    required super.currentXP,
+     super.currentLevel=1,
+     super.currentXP=1,
      super.userState="",
      super.xpForNextLevel=0,
-    required super.xpProgress,
+     super.xpProgress=1,
   });
 
-  factory UserDataDataModel.fromMap(Map<String, dynamic> map) {
+  factory UserDataDataModel.fromJson(Map<String, dynamic> map) {
     return UserDataDataModel(
       userId: map['userId'],
+      fcmToken: map['fcmToken'],
       name: map['name'],
       rank: map['rank']??"D",
       email: map['email'],
@@ -32,6 +37,28 @@ class UserDataDataModel extends UserDataEntity {
       date: map['date'],
       activeNumber: map['activeNumber'],
       adminId: map['adminId'],
+      photoUrl: map['photoUrl']??'',
+      phone: map['phone'],
+      currentLevel: map['currentLevel'],
+      currentXP: map['currentXP'],
+      userState: map['userState'],
+      xpForNextLevel: map['xpForNextLevel'],
+      xpProgress: map['xpProgress'],
+    );
+  }
+  factory UserDataDataModel.fromJson2( json) {
+   final map=json['userData'];
+    return UserDataDataModel(
+      userId: map['userId'],
+      fcmToken: map['fcmToken'],
+      name: map['name'],
+      rank: map['rank']??"D",
+      email: map['email'],
+      roles: map['roles'],
+      date: map['date'],
+      activeNumber: map['activeNumber'],
+      adminId: map['adminId'],
+      photoUrl: map['photoUrl']??'',
       phone: map['phone'],
       currentLevel: map['currentLevel'],
       currentXP: map['currentXP'],
@@ -44,6 +71,7 @@ class UserDataDataModel extends UserDataEntity {
   Map<String, dynamic> toMap() {
     return {
       'userId': userId,
+      'fcmToken': fcmToken,
       'date': date,
       'name': name,
       'rank': rank,
@@ -52,6 +80,7 @@ class UserDataDataModel extends UserDataEntity {
       'activeNumber': activeNumber,
       'adminId': adminId,
       'phone': phone??"",
+      'photoUrl': photoUrl??"",
       'currentLevel': currentLevel,
       'currentXP': currentXP,
       'userState': userState,
@@ -59,7 +88,17 @@ class UserDataDataModel extends UserDataEntity {
       'xpProgress': xpProgress,
     };
   }
+  factory UserDataDataModel.fromFirebaseUser(User user) {
+    return UserDataDataModel(
+      userId: user.uid,
+      email: user.email!,
+      fcmToken:"",
 
+
+      name: user.displayName??'',
+      photoUrl: user.photoURL, date: '', roles: '',
+    );
+  }
   UserDataDataModel copyWith({
     String? userId,
     String? date,
@@ -78,6 +117,7 @@ class UserDataDataModel extends UserDataEntity {
   }) {
     return UserDataDataModel(
       userId: userId ?? this.userId,
+      fcmToken: fcmToken ?? this.fcmToken,
       date: date ?? this.date,
       activeNumber: activeNumber ?? this.activeNumber,
       name: name ?? this.name,

@@ -7,14 +7,14 @@ abstract class HistoryDataState {}
 class HistoryDataLoading extends HistoryDataState {}
 
 class HistoryDataLoaded extends HistoryDataState {
-  final List<HistoryEntity> historyData;
+  final List<PointHistoryEntity> historyData;
  final LevelSystem levelSystem;
   HistoryDataLoaded(this.historyData,this.levelSystem);
 }
 
 
 class SaveDataLoaded extends HistoryDataState {
-   final HistoryEntity? historyData;
+   final PointHistoryEntity? historyData;
 
    SaveDataLoaded(this.historyData);
 }

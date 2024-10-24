@@ -81,19 +81,20 @@ class StatisticsWidget extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(AppStrings.addScore, style: AppStyle.textStyle21WhiteW700),
+                        Text(AppStrings.addPoint, style: AppStyle.textStyle21WhiteW700),
                         MyTextField(
                           controller: controller,
                           keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
                         ),
                         MyMaterialButton(
-                          title: AppStrings.addScore,
+                          title: AppStrings.addPoint,
                           onPressed: () {
                             Navigator.of(context1).pop();
                             context.read<HistoryDataBloc>().add(AddHistoryData(
-                              HistoryDataModel(
+                              PointUserHistoryDataModel(
                                 id: Random().nextInt(1000000).toString(),
                                 date: DateTime.now().toIso8601String(),
+                                userId: "",
 
                                 xp: int.tryParse(controller.text) ?? 0,
                               ),
