@@ -5,7 +5,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:runner_app/dependency_injection.dart';
 
 import '../../../../core/widgets/loading_widget.dart';
-import '../../../../my_app.dart';
 import '../../../2_auth/presentation/manager/auth/auth_bloc.dart';
 import '../widgets/header_profile.dart';
 import '../widgets/profile_body_list.dart';

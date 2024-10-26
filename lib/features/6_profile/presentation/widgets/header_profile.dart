@@ -4,12 +4,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:runner_app/features/2_auth/data/models/UserDataDataModel.dart';
 
 import '../../../../core/const/const.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
-import '../../../2_auth/presentation/manager/auth/auth_bloc.dart';
 import '../../../3_home/data/models/user_data_model.dart';
 
 class HeaderProfile extends StatefulWidget {

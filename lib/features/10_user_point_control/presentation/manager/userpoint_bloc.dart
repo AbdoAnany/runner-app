@@ -3,13 +3,10 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../core/usecase/use_case.dart';
-import '../../../2_auth/data/models/UserDataDataModel.dart';
-import '../../../2_auth/data/models/user_model.dart';
 import '../../../3_home/data/models/user_data_model.dart';
 import '../../../3_home/presentation/bloc/home_bloc.dart';
 import '../../../3_home/presentation/widgets/home_progress_level_steps_bar.dart';
 import '../../../4_history/data/models/history_data_model.dart';
-import '../../../4_history/domain/entities/history_entity.dart';
 import '../../domain/use_cases/get_user_list.dart';
 import '../../domain/use_cases/set_user_point_data.dart';
 

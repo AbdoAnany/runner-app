@@ -4,18 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/dependency_injection.dart';
-import 'package:runner_app/features/0_get_started/presentation/pages/get_started_screen.dart';
 import 'package:toastification/toastification.dart';
 
 import 'core/notification/notification_bloc.dart';
 import 'features/2_auth/presentation/manager/auth/auth_bloc.dart';
 import 'features/2_auth/presentation/pages/PhoneScreen.dart';
-import 'features/2_auth/presentation/pages/SignInPage.dart';
-import 'features/2_auth/presentation/pages/SignUpScreen.dart';
 import 'features/2_auth/presentation/pages/login_screen.dart';
 import 'features/2_auth/presentation/pages/otp_verification .dart';
-import 'features/2_auth/presentation/pages/sign_up_Screen.dart';
-import 'features/3_home/presentation/pages/home_screen.dart';
 import 'features/main_Screen.dart';
 
 class Get {

@@ -1,5 +1,4 @@
 import '../../../3_home/data/models/user_data_model.dart';
-import '../../../2_auth/data/models/UserDataDataModel.dart';
 import '../entities/history_entity.dart';
 
 abstract class HistoryRepository {

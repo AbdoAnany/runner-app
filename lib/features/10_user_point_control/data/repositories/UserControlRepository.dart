@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:runner_app/core/errors/failure.dart';
-import 'package:runner_app/features/4_history/domain/entities/history_entity.dart';
 
 import '../../../3_home/data/models/user_data_model.dart';
-import '../../../2_auth/data/models/UserDataDataModel.dart';
-import '../../../3_home/presentation/bloc/home_bloc.dart';
 import '../../../4_history/data/models/history_data_model.dart';
 import '../../domain/repositories/user_control_repo.dart';
 import '../data_sources/UserPointControlService.dart';
