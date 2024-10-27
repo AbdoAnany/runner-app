@@ -1,14 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dartz/dartz.dart';
 
-
-import '../../../../core/errors/Result.dart';
 import '../../../../core/errors/failure.dart';
 import '../../../3_home/data/models/user_data_model.dart';
-import '../../data/models/user_model.dart';
-
-
-
-import 'package:dartz/dartz.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, UserDataDataModel>> signInWithEmail(String email, String password);

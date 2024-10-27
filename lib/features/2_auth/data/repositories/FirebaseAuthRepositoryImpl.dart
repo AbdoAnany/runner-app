@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../../core/errors/failure.dart';
 import '../../../3_home/data/models/user_data_model.dart';
 import '../../domain/repositories/FirebaseAuthRemoteDataSource.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../models/user_model.dart';
 
 class FirebaseAuthRepositoryImpl implements AuthRepository {
   final FirebaseAuthRemoteDataSource remoteDataSource;

@@ -1,14 +1,11 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kg_charts/kg_charts.dart';
 import 'package:runner_app/features/3_home/presentation/bloc/home_bloc.dart';
 
 import '../../../../core/const/const.dart';
-import '../../../../core/service/NotificationService.dart';
 import '../../../../core/widgets/loading_widget.dart';
 import '../../../../dependency_injection.dart';
-import '../widgets/share_and_gift_.dart';
 
 
 class HomeScreenBlocProvider extends StatelessWidget {

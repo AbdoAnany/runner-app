@@ -1,5 +1,4 @@
 import '../../../3_home/data/models/user_data_model.dart';
-import '../../data/models/user_model.dart';
 
 abstract class FirebaseAuthRemoteDataSource {
   Future<UserDataDataModel> signInWithEmail(String email, String password);

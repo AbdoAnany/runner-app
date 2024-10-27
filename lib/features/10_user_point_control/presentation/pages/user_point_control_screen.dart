@@ -12,7 +12,6 @@ import '../../../../core/style/color.dart';
 import '../../../../core/widgets/loading_widget.dart';
 import '../../../../core/widgets/main_buttom.dart';
 import '../../../../dependency_injection.dart';
-import '../../../../my_app.dart';
 import '../../../4_history/data/models/history_data_model.dart';
 import '../manager/userpoint_bloc.dart';
 

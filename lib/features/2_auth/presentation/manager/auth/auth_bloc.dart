@@ -1,10 +1,9 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:equatable/equatable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:runner_app/features/2_auth/data/models/UserDataDataModel.dart';
-import '../../../../../core/usecase/use_case.dart';
 
+import '../../../../../core/usecase/use_case.dart';
 import '../../../../3_home/data/models/user_data_model.dart';
 import '../../../domain/use_cases/clear_user_date_cached.dart';
 import '../../../domain/use_cases/create_profile.dart';
@@ -16,6 +15,7 @@ import '../../../domain/use_cases/sign_in_with_email.dart';
 import '../../../domain/use_cases/sign_in_with_google.dart';
 import '../../../domain/use_cases/sign_out.dart';
 import '../../../domain/use_cases/sign_up_with_email.dart';
+
 part 'auth_event.dart';
 part 'auth_state.dart';
 

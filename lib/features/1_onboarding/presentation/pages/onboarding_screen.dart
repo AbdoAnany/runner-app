@@ -5,7 +5,6 @@ import 'package:runner_app/core/helper/extension.dart';
 
 import '../../../../core/const/const.dart';
 import '../../../../core/style/app_style.dart';
-import '../../../2_auth/presentation/pages/SignInPage.dart';
 import '../../../2_auth/presentation/pages/login_screen.dart';
 import '../widgets/card_onboarding.dart';
 class OnBoardingScreen extends StatelessWidget {

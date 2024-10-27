@@ -1,4 +1,3 @@
-import 'package:runner_app/features/2_auth/data/models/UserDataDataModel.dart';
 import '../../../3_home/data/models/user_data_model.dart';
 import '../../domain/entities/history_entity.dart';
 import '../../domain/repositories/history_repository.dart';
