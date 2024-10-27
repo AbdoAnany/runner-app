@@ -80,7 +80,7 @@ class StatisticsWidget extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(AppStrings.addPoint, style: AppStyle.textStyle21WhiteW700),
+                        Text(AppStrings.addPoint, style: AppStyle.fWhiteS21W700),
                         MyTextField(
                           controller: controller,
                           keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
@@ -128,7 +128,7 @@ class StatisticsWidget extends StatelessWidget {
         SizedBox(height: 4.h),
         Text(
           value,
-          style: AppStyle.textStyle24GWhiteW800BebasNeue,
+          style: AppStyle.fWhiteS24W800BebasNeue,
         ),
         Text(
           label,

@@ -46,12 +46,12 @@ class ShareAndGiftWidget extends StatelessWidget {
                 children: [
                   Text(
                     'Share & Get',
-                    style: AppStyle.textStyle18WhiteW700,
+                    style: AppStyle.fWhiteS18W700,
                   ),
                   SizedBox(height: 4.0.h),
                   Text(
                     'Get 2x point for every step, only valid for today',
-                    style:     AppStyle.textStyle14WhiteW400,
+                    style:     AppStyle.fWhiteS14W700,
                   ),
                   SizedBox(height: 6.0.h),
                   // Share button
@@ -67,7 +67,7 @@ class ShareAndGiftWidget extends StatelessWidget {
                     children: [
                       Icon(Icons.share_outlined, color: Colors.white,size: 11.w,),
 
-                      Text('  Share',   style:     AppStyle.textStyle10WhiteW400,),
+                      Text('  Share',   style:     AppStyle.fWhiteS14W400,),
                     ],
                   ),
                   )

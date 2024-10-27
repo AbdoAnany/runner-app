@@ -325,7 +325,7 @@ class _HomeProgressLevelStepsBarState extends State<HomeProgressLevelStepsBar> w
                         builder: (context, child) {
                           return Text(
                             NumberFormat("#,000").format(_xpForNextLevelAnimation.value),
-                            style: AppStyle.textStyle20GWhiteW800,
+                            style: AppStyle.fWhiteS20W800,
                           );
                         },
                       ),

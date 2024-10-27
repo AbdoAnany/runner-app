@@ -29,7 +29,7 @@ class GetStarted extends StatelessWidget {
                   children: [
                     Text(
                       AppStrings.scoreUs,
-                      style: AppStyle.textStyle30WhiteW700,
+                      style: AppStyle.fWhiteS30W700,
                     ),
                     SizedBox(
                       height: 4,

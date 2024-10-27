@@ -55,7 +55,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     ? Center(
                     child: Text(
                       'No history available.',
-                      style: AppStyle.textStyle16GWhiteW800,
+                      style: AppStyle.fWhiteS16W800,
                     ))
                     : HistoryList(historyData: state.historyData),
               ),
@@ -65,13 +65,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
           return Center(
               child: Text(
                 state.message,textAlign: TextAlign.center,
-                style: AppStyle.textStyle16GWhiteW800,
+                style: AppStyle.fWhiteS16W800,
               ));
         } else {
           return Center(
               child: Text(
                 'Error loading data.',textAlign: TextAlign.center,
-                style: AppStyle.textStyle16GWhiteW800,
+                style: AppStyle.fWhiteS16W800,
               ));
         }
       },

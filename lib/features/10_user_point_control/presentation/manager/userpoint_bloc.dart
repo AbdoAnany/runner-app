@@ -36,11 +36,13 @@ class UserPointBloc extends Bloc<UserPointEvent, UserPointState> {
   print("_addUserPoint  ..... ${res.result}");
 
   res.result.fold((l) => emit(AddUserPointDataError(l.message)), (r) => emit(AddUserPointDataSuccess(r)));
-   LevelSystem levelSystem = LevelSystem(currentXP: event.historyEntity.xp, currentLevel: 1);
+   LevelSystem levelSystem = LevelSystem(currentXP: event.historyEntity.xp, currentLevel: 1
+
+   );
    levelSystem.addXP(0); // Trigger level checking without additional XP
 
 
-   homeBloc.add(UpdateLevelData(levelSystem: levelSystem,token:event.fcmToken ));
+   homeBloc.add(UpdateLevelData(levelSystem: levelSystem,fcmToken:event.fcmToken ));
   // emit(AddUserPointDataLoaded(currentData, levelSystem));
     // try {
     //   if (state is AddUserPointDataError) {

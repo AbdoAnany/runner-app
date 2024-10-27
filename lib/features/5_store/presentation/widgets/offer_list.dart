@@ -40,9 +40,9 @@ class OfferList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('Today’s Special',style: AppStyle.textStyle18WhiteW700,),
+                            Text('Today’s Special',style: AppStyle.fWhiteS18W700,),
                             SizedBox(height: 4.h,),
-                            Text('Get 2x point for every steps, only valid for today',style: AppStyle.textStyle12WhiteW400,),
+                            Text('Get 2x point for every steps, only valid for today',style: AppStyle.fWhiteS12W400,),
                           ],
                         ),
                       ),

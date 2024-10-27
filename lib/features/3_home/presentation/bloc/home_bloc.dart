@@ -1,6 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/notification_service/notifcation_service.dart';
 import '../../../../core/service/NotificationService.dart';
 import '../../../../dependency_injection.dart';
 import '../../data/models/user_data_model.dart';
@@ -33,7 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     try {
 
-      final userDataServer = await getUserData();
+      final userDataServer = await getUserData(FirebaseAuth.instance.currentUser!.uid);
       userData=userDataServer;
      emit(HomeLoaded(userDataDataModel: userDataServer,));
     } catch (e) {
@@ -47,7 +50,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       print("-------------------- _onRefreshHomeData   ");
 
-      final userDataServer = await getUserData();
+      final userDataServer = await getUserData(event);
       userData=userDataServer;
       emit(HomeLoaded(userDataDataModel: userDataServer,));
 
@@ -73,22 +76,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(HomeLoading());
     try {
       // Fetch the current user data
-      print("_onUpdateLevelData ${event.levelSystem.currentLevel}");
-      final currentUserData = await getUserData();
+      // print("_onUpdateLevelData ${event.levelSystem.currentLevel}");
+      final currentUserData = await getUserData(FirebaseAuth.instance.currentUser!.uid);
 
-      // Update the level system data
-      final updatedUserData = currentUserData.copyWith(
-        currentLevel: event.levelSystem.currentLevel,
-        currentXP: event.levelSystem.currentXP,
-        xpForNextLevel: event.levelSystem.xpForNextLevel,
-        xpProgress: event.levelSystem.getXPProgress(),
-      );
+      currentUserData.xpProgress= event.levelSystem.getXPProgress().toInt();
+      currentUserData.currentLevel= event.levelSystem.currentLevel;
+      currentUserData.rank= 'A';
 
       // Update the user data in the database
-      await setUserData.updateUserData(updatedUserData);
+      await setUserData.updateUserData(currentUserData);
+      print("_onUpdateLevelData ${currentUserData.toMap()}");
 
       // Update the static userData variable
-      userData = updatedUserData;
+      userData = currentUserData;
       String title;
       String message;
       int levelChange = event.levelSystem.currentLevel - currentUserData.currentLevel;
@@ -113,13 +113,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       sendNotification(
           title: title,
           message: message,
-          token:event.token,
+          fcmToken:event.fcmToken,
           // topic: 'history',
-          data: updatedUserData.toMap()
+          data: currentUserData.toMap()
       );
 
       // Emit the updated state
-      emit(HomeLoaded(userDataDataModel: updatedUserData));
+      // emit(HomeLoaded(userDataDataModel: currentUserData));
+       emit(const HomeSuccess(message: 'Success'));
     } catch (e) {
       print('Error updating level data: $e');
       emit(HomeError(message: e.toString()));
@@ -127,16 +128,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
 
-  sendNotification({String? title,String? message,String? topic,String? token, required Map<String, dynamic> data}) async {
+  sendNotification({String? title,String? message,String? topic,String? fcmToken, required Map<String, dynamic> data}) async {
     // String? token = await FirebaseMessaging.instance.getToken();
     print("token >>>>>>>>>>>>>>>>>>>>>>>>");
-    print(token);
-    if (token != null) {
-      locator<NotificationService>().sendNotification(
+    print(fcmToken);
+    if (fcmToken != null) {
+      NotificationService().sendNotification(
         title: title ?? 'Dynamic Notification',
         topic: topic  ,
         message: message ?? 'This is a test of dynamic data!',
-        registrationTokens: token,
+        registrationTokens: fcmToken,
         data: data,
       );
     } else {

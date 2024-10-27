@@ -64,7 +64,7 @@ class HistoryService {
 
   Future<bool> addHistoryEntry(Map<String, dynamic> entry) async {
     try {
-      await _firestore.collection('users').doc(userId).update({
+      await _firestore.collection('users').doc(entry['userId']).update({
         'history': FieldValue.arrayUnion([entry])
       });
 

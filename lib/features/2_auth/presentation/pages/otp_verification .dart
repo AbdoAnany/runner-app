@@ -23,7 +23,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         title: 'Verification',
         subText: "SMS Verification code has been sent",
         children: [
-           Text("+1 18577 11111", style: AppStyle.textStyle12WhiteW400,),
+           Text("+1 18577 11111", style: AppStyle.fWhiteS12W400,),
           SizedBox(height: MediaQuery.of(context).size.height * 0.04),
           // OTP Form
           const OtpForm(),
@@ -217,7 +217,7 @@ class LogoWithTitle extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: AppStyle.textStyle21WhiteW700,
+                  style: AppStyle.fWhiteS21W700,
                 ),
 
                 // SizedBox(
@@ -236,7 +236,7 @@ class LogoWithTitle extends StatelessWidget {
                   child: Text(
                     subText,
                     textAlign: TextAlign.center,
-                    style: AppStyle.textStyle18WhiteW700,
+                    style: AppStyle.fWhiteS18W700,
 
                   ),
                 ),

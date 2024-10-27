@@ -128,11 +128,11 @@ class HistoryListItem extends StatelessWidget {
             const Spacer(),
             Text(
               AppFunction.getDecimal(history.xp),
-              style: AppStyle.textStyle28GWhiteW800BebasNeue,
+              style: AppStyle.fWhiteS28W400BebasNeue,
             ),
             Text(
               ' xp',
-              style: AppStyle.textStyle28GWhiteW800BebasNeue,
+              style: AppStyle.fWhiteS28W400BebasNeue,
             ),
           ],
         ),

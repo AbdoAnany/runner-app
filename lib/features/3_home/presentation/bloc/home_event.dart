@@ -17,6 +17,6 @@ class UpdateHomeData extends HomeEvent {
 }
 class UpdateLevelData extends HomeEvent {
   final LevelSystem levelSystem;
-  final String? token;
-  const UpdateLevelData({required this.levelSystem,this.token});
+  final String? fcmToken;
+  const UpdateLevelData({required this.levelSystem,this.fcmToken});
 }

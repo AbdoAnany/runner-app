@@ -89,7 +89,7 @@ class LogoWithTitle extends StatelessWidget {
               ),
               Text(
                 title,
-                style: AppStyle.textStyle21WhiteW700,
+                style: AppStyle.fWhiteS21W700,
               ),
 
               SizedBox(

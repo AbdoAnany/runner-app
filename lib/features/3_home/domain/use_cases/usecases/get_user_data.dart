@@ -8,7 +8,7 @@ class GetUserData {
 
   GetUserData(this.repository);
 
-  Future<UserDataDataModel> call() async {
-    return await repository.getUserDataData();
+  Future<UserDataDataModel> call(userId) async {
+    return await repository.getUserDataData(userId);
   }
 }

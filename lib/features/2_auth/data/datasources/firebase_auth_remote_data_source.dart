@@ -165,7 +165,8 @@ class FirebaseAuthRemoteDataSourceImpl implements FirebaseAuthRemoteDataSource {
         .collection('users')
         .doc(userId)
         .get();
-    return UserDataDataModel.fromJson(doc.data() as Map<String, dynamic>);
+    print('doc  ${doc.data()}');
+    return UserDataDataModel.fromJson2(doc.data() as Map<String, dynamic>);
 
   }
 

@@ -24,7 +24,7 @@ class ShareAppBar extends StatelessWidget implements PreferredSizeWidget {
                     color: AppColors.iconHomeColor)),
             title: Text(
               title,
-              style: AppStyle.textStyle16GWhiteW800,
+              style: AppStyle.fWhiteS16W800,
             ),
             actions: [
               const Badge(

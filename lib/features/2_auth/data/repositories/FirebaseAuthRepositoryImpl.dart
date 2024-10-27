@@ -194,6 +194,8 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, UserDataDataModel>> getUserData(String userId) async {
     try {
       final user = await remoteDataSource.getUserData(userId);
+      print('userId userId userId ${userId}');
+      print('user user user ${user}');
       if (user != null) {
         return Right(user);
       } else {

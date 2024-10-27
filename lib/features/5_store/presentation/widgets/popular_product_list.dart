@@ -27,7 +27,7 @@ class PopularProductList extends StatelessWidget {
             children: [
               Text(
                 'Popular',
-                style:AppStyle.textStyle18WhiteW700,
+                style:AppStyle.fWhiteS18W700,
               ),
               InkWell(
                 onTap: (){

@@ -29,7 +29,7 @@ class ProfileListItem extends StatelessWidget {
               color: AppColors.iconHomeColor,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 0.h),
-              child: Text(itemModel!.text, style: AppStyle.textStyle18WhiteW700),
+              child: Text(itemModel!.text, style: AppStyle.fWhiteS18W700),
             ),
             const Spacer(),
             trailing ?? Icon(

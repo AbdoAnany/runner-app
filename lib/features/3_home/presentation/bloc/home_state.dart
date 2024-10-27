@@ -34,4 +34,11 @@ class HomeError extends HomeState {
 
   @override
   List<Object> get props => [message];
+}class HomeSuccess extends HomeState {
+  final String message;
+
+  const HomeSuccess({required this.message});
+
+  @override
+  List<Object> get props => [message];
 }

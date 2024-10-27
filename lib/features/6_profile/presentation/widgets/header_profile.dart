@@ -9,89 +9,192 @@ import '../../../../core/const/const.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 import '../../../3_home/data/models/user_data_model.dart';
+import '../../../3_home/data/services/user_data_service.dart';
+
+// class HeaderProfile extends StatefulWidget {
+//      HeaderProfile({super.key,  this.userData});
+//    UserDataDataModel? userData;
+//
+//   @override
+//   State<HeaderProfile> createState() => _HeaderProfileState();
+// }
+//
+// class _HeaderProfileState extends State<HeaderProfile> {
+//
+//   @override
+//   void initState() {
+//     widget.userData ??= UserDataDataModel(userId: '', fcmToken: '');
+//     DateTime now = DateTime.now();
+//
+//
+//     super.initState();
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       margin: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 8.w),
+//       decoration: AppStyle.decorationHome,
+//       //      color: AppColors.primary,
+//       padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.w),
+//       width: double.infinity,
+//       child: Row(
+//         crossAxisAlignment: CrossAxisAlignment.center,
+//         mainAxisAlignment: MainAxisAlignment.start,
+//         children: [
+//           Container(
+//               width: 60.w,
+//               height: 60.h,
+//               decoration: BoxDecoration(
+//                   shape: BoxShape.circle,
+//                   border: Border.all(
+//                       color: AppColors.primary.withOpacity(.3), width: 3),
+//                   image: const DecorationImage(
+//                     fit: BoxFit.fill,
+//                     image: AssetImage(AppImage.person),
+//                   ))),
+//           SizedBox(width: 12.w),
+//           SizedBox(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 const SizedBox(
+//                   height: 20,
+//                 ),
+//                 Text(
+//                 widget.userData?.email??'' ,
+//                   style: AppStyle.fWhiteS16W800,
+//                 ),
+//
+//
+//                 Row(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   mainAxisAlignment: MainAxisAlignment.start,
+//                   children: [
+//                     Text(
+//                       widget.  userData?.rank??'' ,
+//                       style: AppStyle.textStyle12GrayW400,
+//                     ),
+//                     SizedBox(
+//                       width: 8.w,
+//                     ),
+//                     Text(
+//                       widget.  userData?.currentLevel.toString()??'' ,
+//                       style: AppStyle.textStyle12GrayW400,
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ),
+//           Spacer(),
+//           Text(
+//             widget.  userData?.roles.toUpperCase()??'' ,
+//             style: AppStyle.textStyle20GoldW800,
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class HeaderProfile extends StatefulWidget {
-  const HeaderProfile({super.key, required this.userData});
-  final UserDataDataModel userData;
+  HeaderProfile({Key? key, this.userId}) : super(key: key);
+
+  final String? userId;
 
   @override
-  State<HeaderProfile> createState() => _HeaderProfileState();
+  _HeaderProfileState createState() => _HeaderProfileState();
 }
 
 class _HeaderProfileState extends State<HeaderProfile> {
-  String _formattedDate = '';
-  String _formattedTime = '';
+  late UserDataService _userDataService;
+  UserDataDataModel? _userData;
+
   @override
   void initState() {
-    DateTime now = DateTime.now();
-
-    _formattedDate = DateFormat('dd MMM ').format(now);
-    _formattedTime = DateFormat('HH : mm').format(now);
     super.initState();
+    _userDataService = UserDataService();
+
+    // Listen to user data updates from the stream
+    _userDataService.userDataStream.listen((data) {
+      setState(() {
+        _userData = UserDataDataModel.fromJson(data);
+      });
+    });
+
+    // Fetch initial user data
+    _fetchUserData();
   }
+
+  void _fetchUserData() async {
+    final data = await _userDataService.getUserData(userId: widget.userId);
+    setState(() {
+      _userData = UserDataDataModel.fromJson(data ?? {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_userData == null) {
+      return CircularProgressIndicator(); // Show loading indicator if data is null
+    }
+
     return Container(
-      margin: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 8.w),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: AppStyle.decorationHome,
-      //      color: AppColors.primary,
-      padding: EdgeInsets.symmetric(vertical: 12.w, horizontal: 16.w),
-      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-              width: 60.w,
-              height: 60.h,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                      color: AppColors.primary.withOpacity(.3), width: 3),
-                  image: const DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage(AppImage.person),
-                  ))),
-          SizedBox(width: 12.w),
-          SizedBox(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                widget.  userData.name??'' ,
-                  style: AppStyle.textStyle16GWhiteW800,
-                ),
-
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.  userData.rank??'' ,
-                      style: AppStyle.textStyle12GrayW400,
-                    ),
-                    SizedBox(
-                      width: 8.w,
-                    ),
-                    Text(
-                      widget.  userData.currentLevel.toString()??'' ,
-                      style: AppStyle.textStyle12GrayW400,
-                    ),
-                  ],
-                ),
-              ],
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 3),
+              image: const DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage(AppImage.person),
+              ),
             ),
           ),
+          SizedBox(width: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _userData?.email ?? '',
+                style: AppStyle.fWhiteS16W800,
+              ),
+              Row(
+                children: [
+                  Text(
+                    _userData?.rank ?? '',
+                    style: AppStyle.textStyle12GrayW400,
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    _userData?.currentLevel.toString() ?? '',
+                    style: AppStyle.textStyle12GrayW400,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Spacer(),
           Text(
-            widget.  userData.roles??'' ,
+            _userData?.roles.toUpperCase() ?? '',
             style: AppStyle.textStyle20GoldW800,
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _userDataService.dispose(); // Dispose stream when widget is disposed
+    super.dispose();
   }
 }

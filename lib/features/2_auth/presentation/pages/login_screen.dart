@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Text(
                         AppStrings.login,
-                        style: AppStyle.textStyle21WhiteW700,
+                        style: AppStyle.fWhiteS21W700,
                       ),
                       SizedBox(height: 12.h),
                       EmailField(controller: _emailController),
@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             activeColor: AppColors.primary,
                             onChanged: (value) => setState(() => _rememberMe = value!),
                           ),
-                          Text(AppStrings.remember, style: AppStyle.textStyle14WhiteW400),
+                          Text(AppStrings.remember, style: AppStyle.fWhiteS14W700),
                           const Spacer(),
                           TextButton(
                             onPressed: () {},
@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Text(
                               AppStrings.newUser,
                               textAlign: TextAlign.center,
-                              style: AppStyle.textStyle14WhiteW400,
+                              style: AppStyle.fWhiteS14W700,
                             ),
                             InkWell(
                               onTap: () {

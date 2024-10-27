@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:runner_app/core/helper/extension.dart';
 import 'package:runner_app/dependency_injection.dart';
 
 import '../../../../core/widgets/loading_widget.dart';
@@ -12,7 +13,12 @@ import '../widgets/profile_body_list.dart';
 final List<ProfileListItemModel> profileItems = [
   ProfileListItemModel(icon: Iconsax.user, text: 'Personal Information'),
   ProfileListItemModel(icon: Iconsax.wallet, text: 'My Wallet'),
-  ProfileListItemModel(icon: Iconsax.notification, text: 'Notifications'),
+  ProfileListItemModel(icon: Iconsax.notification, text: 'Notifications',
+      onTap: () {
+        // Get.context.pushNamed('/notification');
+       Navigator.of(  Get.context).pushNamed('/notification', );
+        },
+  ),
   ProfileListItemModel(icon: Iconsax.language_circle, text: 'Language'),
 
   ProfileListItemModel(icon: Iconsax.support, text: 'Support'),
@@ -48,13 +54,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
 
+        print('ProfileScreen  BlocBuilder ${state}');
+
         if (state is AuthLoading) {
           return  LoadingWidget();
         } else if (state is Authenticated) {
           return Column(
             children: [
-               HeaderProfile(
-                userData:state.user
+               HeaderProfile(userId: state.user.userId,
+                // userData:state.user
 
               ),
               ProfileBodyList(profileItems: profileItems.sublist(0, 4),),

@@ -24,11 +24,11 @@ class HistoryDataBloc extends Bloc<HistoryDataEvent, HistoryDataState> {
     on<UpdateLevelDataFromHome>(_onUpdateLevelDataFromHome);
 
     // Listen to HomeBloc state changes
-    homeBloc.stream.listen((state) {
-      if (state is HomeLoaded) {
-        add(UpdateLevelDataFromHome(state.userDataDataModel));
-      }
-    });
+    // homeBloc.stream.listen((state) {
+    //   if (state is HomeLoaded) {
+    //     add(UpdateLevelDataFromHome(state.userDataDataModel));
+    //   }
+    // });
   }
 
   Future<void> _onLoadHistoryData(

@@ -79,7 +79,7 @@ class StepCounterChart extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(  userDataDataModel.currentXP.toString(),
-                            style: AppStyle.textStyle14WhiteW400),
+                            style: AppStyle.fWhiteS14W700),
                         Container(
                           color: AppColors.textGray,
                           height: 1,

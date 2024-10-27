@@ -44,7 +44,7 @@ class TotalPointAndSteps extends StatelessWidget {
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(
               userDataDataModel.currentXP.toString(),
-              style: AppStyle.textStyle48WhiteW400,
+              style: AppStyle.fWhiteS48W400BebasNeue,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +72,7 @@ class TotalPointAndSteps extends StatelessWidget {
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(
               userDataDataModel.activeNumber.toString(),
-              style: AppStyle.textStyle48WhiteW400,
+              style: AppStyle.fWhiteS48W400BebasNeue,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

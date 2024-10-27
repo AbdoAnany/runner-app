@@ -17,7 +17,7 @@ class OnBoardingScreen extends StatelessWidget {
           onTap: (){
             context.pushScreen( LoginScreen());
           },
-          child: Text('Skip',style: AppStyle.textStyle14WhiteW400,)),
+          child: Text('Skip',style: AppStyle.fWhiteS14W700,)),
         SizedBox(width: 12.w,)
       ],),
       body: SafeArea(
@@ -53,7 +53,7 @@ class OnBoardingScreen extends StatelessWidget {
                   children: [
                     Text('Already have an account? ',
                       textAlign: TextAlign.center,
-                      style: AppStyle.textStyle14WhiteW400,),
+                      style: AppStyle.fWhiteS14W700,),
                   InkWell(onTap: (){
                     context.pushScreen( const LoginScreen());
                   }, child:   Text('Sign In',

@@ -22,7 +22,7 @@ class MyMaterialButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           title,
-          style: AppStyle.textStyle18WhiteW700,
+          style: AppStyle.fWhiteS18W700,
         ));
   }
 }
