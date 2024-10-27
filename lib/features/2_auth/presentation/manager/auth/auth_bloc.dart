@@ -171,9 +171,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onGetCurrentUser(
       GetCurrentUserEvent event, Emitter<AuthState> emit) async {
     try {
+
+      print('Get 1111 current user: ${event.userId}');
       emit(AuthLoading());
 
       final result = await getCurrentUser(event.userId);
+      print('result result result: ${result}');
 
       result.fold(
         (failure) => emit(AuthError(failure.toString())),

@@ -53,7 +53,7 @@ final int index;
           children: [
             SizedBox(height: 20.h,),
             Text('Run',
-              style: AppStyle.textStyle21WhiteW700,),
+              style: AppStyle.fWhiteS21W700,),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
@@ -95,7 +95,7 @@ final int index;
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(),
-                        Text("Next",style:AppStyle.textStyle18WhiteW700,),
+                        Text("Next",style:AppStyle.fWhiteS18W700,),
                         Icon(Icons.arrow_forward,color: AppColors.white,)
                       ],
                     ),
