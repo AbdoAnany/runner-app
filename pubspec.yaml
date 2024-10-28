@@ -101,6 +101,7 @@ flutter:
     - assets/rank/Ribbons/
     - assets/level/
     - assets/icon/
+    - assets/badge/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

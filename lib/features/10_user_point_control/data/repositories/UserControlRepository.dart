@@ -8,7 +8,6 @@ import '../../domain/repositories/user_control_repo.dart';
 import '../data_sources/UserPointControlService.dart';
 
 class UserControlRepositoryImpl implements UserControlRepository {
-
   final UserPointControlService service;
   UserControlRepositoryImpl(this.service);
   @override
@@ -55,20 +54,15 @@ class UserControlRepositoryImpl implements UserControlRepository {
   @override
   Future<Result<bool>> setUserPointData(PointUserHistoryDataModel point) async {
 
+    try {
+      final res = await service.setUserPoints(point);
 
+      return Result(Right(res));
 
-      try {
-        final res =   await service.setUserPoints(point);
-
-
-
-        return Result(Right(res));
-
-        // return history;
-      } catch (e) {
-        print('Error getting history data: $e');
-        return Result(Left(ServerFailure(e.toString())));
-      }
-
+      // return history;
+    } catch (e) {
+      print('Error getting history data: $e');
+      return Result(Left(ServerFailure(e.toString())));
+    }
   }
 }

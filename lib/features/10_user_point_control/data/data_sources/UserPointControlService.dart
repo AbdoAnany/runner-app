@@ -12,10 +12,14 @@ class UserPointControlService {
 
   Future<List<Map<String, dynamic>>> getHistoryData() async {
     try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(myUserId).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(myUserId)
+          .get();
 
       // Retrieve the history list from the user's document
-      List<Map<String, dynamic>> history = List<Map<String, dynamic>>.from(userDoc.get('history') ?? []);
+      List<Map<String, dynamic>> history =
+          List<Map<String, dynamic>>.from(userDoc.get('history') ?? []);
       print("history ===============");
       print(history);
 
@@ -27,18 +31,19 @@ class UserPointControlService {
   }
 
   Future<List<UserDataDataModel>> getAllUsersDataList() async {
-
     // FirebaseFirestore firestore = FirebaseFirestore.instance;
     //
     // QuerySnapshot snapshot = await firestore.collection('users').get();
     // return snapshot.docs.map((doc) => User.fromDocument(doc)).toList();
 
     try {
-      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('users').get();
+      QuerySnapshot snapshot =
+          await FirebaseFirestore.instance.collection('users').get();
 
       // Retrieve the history list from the user's document
-     return snapshot.docs.map((doc) => UserDataDataModel.fromJson2(doc)).toList();
-
+      return snapshot.docs
+          .map((doc) => UserDataDataModel.fromJson2(doc))
+          .toList();
 
       // return history;
     } catch (e) {
@@ -47,19 +52,20 @@ class UserPointControlService {
     }
   }
 
-
   Future<bool> setUserPoints(PointUserHistoryDataModel historyData) async {
     try {
-      WriteBatch batch = _firestore.batch();
+      // WriteBatch batch = _firestore.batch();
+      //
+      // DocumentReference docRef = _firestore.collection('users').doc(historyData.userId);
+      //
+      //
+      // batch.set(docRef, {"history":historyData.toMap()}, SetOptions(merge: true));
 
-      DocumentReference docRef = _firestore.collection('users').doc(historyData.userId);
+      await _firestore.collection('users').doc(historyData.userId).update({
+        'history': FieldValue.arrayUnion([historyData.toMap()])
+      });
 
-
-      batch.set(docRef, {"history":historyData}, SetOptions(merge: true));
-
-
-
-      await batch.commit();
+      //  await batch.commit();
       print('History data set successfully');
       return true;
     } catch (e) {
@@ -83,20 +89,25 @@ class UserPointControlService {
     }
   }
 
-  Future<bool> updateHistoryEntry(String date, Map<String, dynamic> updates) async {
+  Future<bool> updateHistoryEntry(
+      String date, Map<String, dynamic> updates) async {
     try {
       var userDoc = await _firestore.collection('users').doc(myUserId).get();
-      List<Map<String, dynamic>> history = List<Map<String, dynamic>>.from(userDoc.get('history') ?? []);
+      List<Map<String, dynamic>> history =
+          List<Map<String, dynamic>>.from(userDoc.get('history') ?? []);
 
       // Find the entry to update
       int index = history.indexWhere((entry) => entry['date'] == date);
       if (index != -1) {
-        history[index] = {...history[index], ...updates}; // Merge updates into the found entry
+        history[index] = {
+          ...history[index],
+          ...updates
+        }; // Merge updates into the found entry
 
         await _firestore.collection('users').doc(myUserId).update({
           'history': history,
         });
-return true;
+        return true;
         print('History entry updated successfully');
       } else {
         print('History entry not found');
@@ -111,9 +122,10 @@ return true;
   Future<bool> deleteHistoryEntry(String date) async {
     try {
       var userDoc = await _firestore.collection('users').doc(myUserId).get();
-      List<Map<String, dynamic>> history = List<Map<String, dynamic>>.from(userDoc.get('history') ?? []);
-print(history.first);
-print(history.length);
+      List<Map<String, dynamic>> history =
+          List<Map<String, dynamic>>.from(userDoc.get('history') ?? []);
+      print(history.first);
+      print(history.length);
       // Remove the entry matching the given date
       history.removeWhere((entry) => entry['id'] == date);
       print(history.length);
@@ -128,6 +140,4 @@ print(history.length);
       return false;
     }
   }
-
-
 }

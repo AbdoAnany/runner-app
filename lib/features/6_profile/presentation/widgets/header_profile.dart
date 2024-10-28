@@ -99,7 +99,7 @@ import '../../../3_home/data/services/user_data_service.dart';
 // }
 
 class HeaderProfile extends StatefulWidget {
-  HeaderProfile({Key? key, this.userId}) : super(key: key);
+  const HeaderProfile({super.key, this.userId});
 
   final String? userId;
 
@@ -137,13 +137,13 @@ class _HeaderProfileState extends State<HeaderProfile> {
   @override
   Widget build(BuildContext context) {
     if (_userData == null) {
-      return CircularProgressIndicator(); // Show loading indicator if data is null
+      return const CircularProgressIndicator(); // Show loading indicator if data is null
     }
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: AppStyle.decorationHome,
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -159,7 +159,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
               ),
             ),
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

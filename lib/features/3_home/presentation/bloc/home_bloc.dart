@@ -129,7 +129,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
 
   sendNotification({String? title,String? message,String? topic,String? fcmToken, required Map<String, dynamic> data}) async {
-    // String? token = await FirebaseMessaging.instance.getToken();
+    String? token = await FirebaseMessaging.instance.getToken();
+    print("get token >>>>>>>>>>>>>>>>>> ${token}");
     print("token >>>>>>>>>>>>>>>>>>>>>>>>");
     print(fcmToken);
     if (fcmToken != null) {

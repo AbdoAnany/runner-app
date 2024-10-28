@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/const/const.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../core/share/badge_level_type.dart';
 import '../../../../core/share/text_field.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
@@ -71,8 +72,7 @@ class _UserPointControlScreenState extends State<UserPointControlScreen> {
                           width: double.infinity,
                           child: Center(
                             child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SizedBox(
                                   height: 8,
@@ -82,8 +82,8 @@ class _UserPointControlScreenState extends State<UserPointControlScreen> {
                                 MyTextField(
                                   controller: controller,
                                   keyboardType:
-                                  const TextInputType.numberWithOptions(
-                                      decimal: true, signed: false),
+                                      const TextInputType.numberWithOptions(
+                                          decimal: true, signed: false),
                                 ),
                                 MyMaterialButton(
                                   title: AppStrings.addPoint,
@@ -98,7 +98,7 @@ class _UserPointControlScreenState extends State<UserPointControlScreen> {
                                               date: DateTime.now()
                                                   .toIso8601String(),
                                               xp: int.tryParse(
-                                                  controller.text) ??
+                                                      controller.text) ??
                                                   0,
                                               userId: state.userList[i].userId
                                                   .toString(),
@@ -121,81 +121,84 @@ class _UserPointControlScreenState extends State<UserPointControlScreen> {
                     decoration: BoxDecoration(
                       color: AppColors.bgContainerColor,
                       borderRadius: BorderRadius.circular(20),
-                      border:
-                      Border.all(color: AppColors.border1ContainerColor),
+                      border: Border.all(
+                          color: AppColors.border1ContainerColor, width: 4),
                     ),
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(6),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Image.network(
-                          state.userList[i].photoUrl.toString(),
-                          errorBuilder: (c, s, a) => Image.asset(
-                            AppImage.person,
-                            height: 50,
-                            width: 50,
-                          ),
-                          height: 50,
-                          width: 50,
-                        ),
-                        const SizedBox(
-                          width: 8,
+                        const BadgeLevelFrame(
+                          image: AppImage.person,
+                          levelType: BadgeLevelTypeFrame.Advance,
                         ),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                state.userList[i].name.toString(),
-                                style: AppStyle.fWhiteS20W800,
+                                state.userList[i].name.isEmpty
+                                    ? "NO Name"
+                                    : "${state.userList[i].name}",
+                                style: AppStyle.fWhiteS16W800,
                               ),
                               Text(
                                 state.userList[i].email.toString(),
                                 style: AppStyle.fWhiteS12W400,
                               ),
 
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Rank  ${state.userList[i].rank}",
-                                    style: AppStyle
-                                        .fWhiteS24W800BebasNeue,
-                                  ),
-                                  Text(
-                                    state.userList[i].roles
-                                        .toString()
-                                        .toUpperCase(),
-                                    style: AppStyle.textStyle20GoldW800,
-                                  ),
-                                ],
+                              Text(
+                                "Rank  ${state.userList[i].rank}",
+                                style: AppStyle.fWhiteS24W800BebasNeue
+                                    .copyWith(letterSpacing: 1.2),
                               ),
+
                               Text(
                                 state.userList[i].userId
                                     .toString()
                                     .toUpperCase(),
                                 style: AppStyle.textStyle10GrayW400,
                               ),
-                              Text(state.userList[i].fcmToken.toString().toUpperCase(),style: AppStyle.textStyle10GrayW400,),
+                              //       Text(state.userList[i].fcmToken.toString().toUpperCase(),style: AppStyle.textStyle10GrayW400,),
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          width: 16,
-                        ),
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              state.userList[i].currentLevel.toString(),
-                              style: AppStyle.fWhiteS24W800BebasNeue,
+                              state.userList[i].roles.toString().toUpperCase(),
+                              style: AppStyle.textStyle16GoldW800,
                             ),
-                            Text(
-                              "Level",
-                              style: AppStyle.fWhiteS24W800BebasNeue,
+                            const SizedBox(
+                              height: 4,
                             ),
+                            Container(
+                              padding: EdgeInsets.all(12),
+                              // margin: EdgeInsets.only(left: 8),
+                              decoration: BoxDecoration(
+                                color: AppColors.bgColor,
+                                border: Border.all(
+                                    width: 2,
+                                    color: AppColors.border1ContainerColor),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    state.userList[i].currentLevel.toString(),
+                                    style: AppStyle.fWhiteS24W800BebasNeue
+                                        .copyWith(height: 1),
+                                  ),
+                                  Text(
+                                    "Level",
+                                    style: AppStyle.fWhiteS21W400BebasNeue
+                                        .copyWith(height: 1),
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
-                        ),
-                        const SizedBox(
-                          width: 16,
                         ),
                       ],
                     )),

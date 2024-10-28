@@ -46,5 +46,12 @@ class AppImage{
   static  String ribbonsNumGen({int num = 4})=>"assets/rank/Ribbons/Type_$num.png";
   static  String levelSelverNumGen({int num = 1})=>"assets/level/selver_$num.png";
   static  String levelGoldenNumGen({int num = 1})=>"assets/level/golden_max.png";
+
+  static const String standardFrame="assets/badge/Basic.png";
+  static const String advanceFrame="assets/badge/Advance.png";
+  static const String proFrame="assets/badge/Pro.png";
+  static const String premiumFrame="assets/badge/Premium.png";
+
+
 }
 // TODO: Implement lib/core/constants/app_images.dart
