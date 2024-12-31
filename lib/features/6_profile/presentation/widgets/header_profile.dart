@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/const/const.dart';
+import '../../../../core/share/badge_level_type.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 import '../../../3_home/data/models/user_data_model.dart';
@@ -124,7 +125,9 @@ class _HeaderProfileState extends State<HeaderProfile> {
     });
 
     // Fetch initial user data
-    _fetchUserData();
+   WidgetsBinding.instance.addPostFrameCallback((_) {
+     _fetchUserData();
+   });
   }
 
   void _fetchUserData() async {
@@ -140,7 +143,96 @@ class _HeaderProfileState extends State<HeaderProfile> {
       return const CircularProgressIndicator(); // Show loading indicator if data is null
     }
 
-    return Container(
+    return 
+      true?
+      Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: AppColors.bgContainerColor,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+                color: AppColors.border1ContainerColor, width: 1),
+          ),
+          padding: const EdgeInsets.all(6),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const BadgeLevelFrame(
+                image: AppImage.person,
+                levelType: BadgeLevelTypeFrame.Advance,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _userData!.name.isEmpty
+                          ? "NO Name"
+                          : "${_userData!.name}",
+                      style: AppStyle.fWhiteS16W800,
+                    ),
+                    Text(
+                      _userData!.email.toString(),
+                      style: AppStyle.fWhiteS12W400,
+                    ),
+
+                    Text(
+                      "Rank  ${_userData!.rank}",
+                      style: AppStyle.fWhiteS24W800BebasNeue
+                          .copyWith(letterSpacing: 1.2),
+                    ),
+
+                    Text(
+                      _userData!.userId
+                          .toString()
+                          .toUpperCase(),
+                      style: AppStyle.textStyle8GrayW400,
+                    ),
+                    //       Text(_userData!.fcmToken.toString().toUpperCase(),style: AppStyle.textStyle10GrayW400,),
+                  ],
+                ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    _userData!.roles.toString().toUpperCase(),
+                    style: AppStyle.textStyle16GoldW800,
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(12),
+                    // margin: EdgeInsets.only(left: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.bgColor,
+                      border: Border.all(
+                          width: 2,
+                          color: AppColors.border1ContainerColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          _userData!.currentLevel.toString(),
+                          style: AppStyle.fWhiteS24W800BebasNeue
+                              .copyWith(height: 1),
+                        ),
+                        Text(
+                          "Level",
+                          style: AppStyle.fWhiteS21W400BebasNeue
+                              .copyWith(height: 1),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          )):
+      
+      Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: AppStyle.decorationHome,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),

@@ -7,7 +7,8 @@ import 'package:runner_app/dependency_injection.dart';
 import 'package:runner_app/features/0_get_started/presentation/pages/get_started_screen.dart';
 import 'package:toastification/toastification.dart';
 
-import 'core/notification/notification_bloc.dart';
+// import 'core/notification/notification_bloc.dart';
+import 'core/style/app_style.dart';
 import 'features/2_auth/presentation/manager/auth/auth_bloc.dart';
 import 'features/2_auth/presentation/pages/PhoneScreen.dart';
 import 'features/2_auth/presentation/pages/SignInPage.dart';
@@ -57,7 +58,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(create: (context) => locator<AuthBloc>()),
-        BlocProvider<NotificationBloc>(create: (context) => locator<NotificationBloc>(),),
+        // BlocProvider<NotificationBloc>(create: (context) => locator<NotificationBloc>(),),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 768),
@@ -68,7 +69,7 @@ class _MyAppState extends State<MyApp> {
               navigatorKey: Get.navigatorKey,
               title: 'Runner App',
               debugShowCheckedModeBanner: false,
-              themeMode: ThemeMode.dark,
+              themeMode: AppThemeColors.isDarkMode ? ThemeMode.dark : ThemeMode.light,
               theme: ThemeData(
                 primarySwatch: Colors.deepPurple,
                 scaffoldBackgroundColor: AppColors.bgColor,

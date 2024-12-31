@@ -12,7 +12,7 @@ import '../../features/6_profile/presentation/pages/profile_screen.dart';
 import '../core/const/const.dart';
 import '../core/share/my_bottom_navigation_bar.dart';
 import '10_user_point_control/presentation/pages/user_point_control_screen.dart';
-
+import '8_clan/presentation/pages/ClanScreen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({
@@ -38,14 +38,15 @@ class _MainScreenState extends State<MainScreen> {
       "Home": const HomeScreenBlocProvider(),
     },
 
+    {"History": const HistoryScreenBlocProvider()},
     {
-      "History":  const HistoryScreenBlocProvider()
+      "Store": const UserPointControlBlocProvider(),
     },
     {
-      "Store":const UserPointControlBlocProvider(),
+      "ClanScreen":  ClanScreen(),
     },
     {
-      "Profile":  ProfileScreen(),
+      "Profile": ProfileScreen(),
     },
   ];
 
@@ -54,22 +55,24 @@ class _MainScreenState extends State<MainScreen> {
       _currentIndex = index;
     });
   }
+
   @override
   void initState() {
-    locator<AuthBloc>().add(GetCurrentUserEvent(userId: FirebaseAuth.instance.currentUser!.uid));
+    locator<AuthBloc>().add(
+        GetCurrentUserEvent(userId: FirebaseAuth.instance.currentUser!.uid));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
-
-    canPop: false,
+      canPop: false,
       child: Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,
-        appBar: ShareAppBar(onTap:()=> _onItemTapped(0),
-        title: _pages[_currentIndex].keys.first,
+        appBar: ShareAppBar(
+          onTap: () => _onItemTapped(0),
+          title: _pages[_currentIndex].keys.first,
           currentIndex: _currentIndex,
         ),
         body: Stack(
@@ -124,25 +127,18 @@ class _MainScreenState extends State<MainScreen> {
                     child: child,
                   );
                 },
-                child: SafeArea(
-
-                    child: _pages[_currentIndex].values.first)),
+                child: SafeArea(child: _pages[_currentIndex].values.first)),
             MyBottomNavigationBar(
-              onTap: (e)=> _onItemTapped(e),
-
+              onTap: (e) => _onItemTapped(e),
               currentIndex: _currentIndex,
             )
-
           ],
         ),
-      //  bottomNavigationBar:
+        //  bottomNavigationBar:
       ),
     );
   }
 }
-
-
-
 
 class TabScaffoldApp extends StatelessWidget {
   const TabScaffoldApp({super.key});
@@ -219,4 +215,3 @@ class _TabScaffoldExampleState extends State<TabScaffoldExample> {
     );
   }
 }
-

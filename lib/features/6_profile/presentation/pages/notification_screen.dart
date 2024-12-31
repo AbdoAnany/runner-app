@@ -5,7 +5,7 @@ import 'package:runner_app/core/notification_service/NotificationItem.dart';
 import 'package:runner_app/core/style/app_style.dart';
 import 'package:runner_app/core/style/color.dart';
 
-import '../../../../core/notification/notification_bloc.dart';
+// import '../../../../core/notification/notification_bloc.dart';
 import '../../../../core/notification_service/notifcation_service.dart';
 
 class NotificationScreen extends StatelessWidget {

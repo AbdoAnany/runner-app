@@ -66,9 +66,14 @@ class MyBottomNavigationBar extends StatelessWidget {
             onTap: ()=>onTap(2),
           ),
           GradientIcon(
-            icon: Icons.person_rounded,
+            icon: Iconsax.group,
             isSelected: currentIndex == 3,
             onTap: ()=>onTap(3),
+          ),
+          GradientIcon(
+            icon: Icons.person_rounded,
+            isSelected: currentIndex == 4,
+            onTap: ()=>onTap(4),
           ),
         ],
       ),

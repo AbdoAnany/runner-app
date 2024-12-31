@@ -7,7 +7,7 @@ import 'package:runner_app/features/10_user_point_control/data/repositories/User
 import 'package:runner_app/features/2_auth/domain/use_cases/clear_user_date_cached.dart';
 import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_bloc.dart';
 
-import 'core/notification/notification_bloc.dart';
+// import 'core/notification/notification_bloc.dart';
 import 'core/notification_service/notifcation_service.dart';
 import 'core/service/NotificationService.dart';
 import 'features/10_user_point_control/data/data_sources/UserPointControlService.dart';
@@ -143,7 +143,7 @@ Future<void> authServiceLocator() async {
 
 Future<void> notificationServiceLocator() async {
   // History services
-  locator.registerLazySingleton<NotificationBloc>(() => NotificationBloc());
+  // locator.registerLazySingleton<NotificationBloc>(() => NotificationBloc());
   // locator.registerLazySingleton<NotificationService>(
   //     () => NotificationService());
   await NotificationService().initialize();

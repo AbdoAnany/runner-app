@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kg_charts/kg_charts.dart';
+import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/features/3_home/presentation/bloc/home_bloc.dart';
 
 import '../../../../core/const/const.dart';
@@ -112,7 +113,83 @@ class EmployeePerformanceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+
+
       children: [
+        Card(
+          elevation: 0,
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          color: AppColors.bgContainerColor,
+
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // Employee Info
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(avatarUrl),
+                      ),
+                      SizedBox(width: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            employeeName,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Rank: $rank'.toUpperCase(),
+                            style: TextStyle(
+                              color: Colors.grey.shade400,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 16),
+
+                  // Progress Bar
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Performance',
+                        style: TextStyle(fontSize: 16,  color: Colors.white,),
+                      ),
+                      Text(
+                        '${(progress).toInt()}%',
+                        style: TextStyle(fontSize: 16  ,color: Colors.white,),
+                      ),
+                    ],
+                  ),
+                  LinearProgressIndicator(
+                    value: progress,
+                    backgroundColor: Colors.grey[200],
+                    color: _getProgressColor(progress),
+                  ),
+
+
+
+                ],
+              ),
+            ),
+          ),
+        ),
 
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -160,75 +237,7 @@ class EmployeePerformanceWidget extends StatelessWidget {
             outLineText: (data,max)=> "${data*100~/max}%",
           ),
         ),
-        Card(
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  // Employee Info
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundImage: NetworkImage(avatarUrl),
-                      ),
-                      SizedBox(width: 16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            employeeName,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            'Rank: $rank',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
 
-                  SizedBox(height: 16),
-
-                  // Progress Bar
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Performance',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Text(
-                        '${(progress ).toInt()}%',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  LinearProgressIndicator(
-                    value: progress,
-                    backgroundColor: Colors.grey[200],
-                    color: _getProgressColor(progress),
-                  ),
-
-
-
-                ],
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }

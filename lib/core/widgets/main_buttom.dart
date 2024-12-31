@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../style/app_style.dart';
@@ -12,17 +12,21 @@ class MyMaterialButton extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-        minWidth: width,
-        elevation: 0,
-        color: AppColors.primary,
-        height: 48.h,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-        onPressed: onPressed,
-        child: Text(
-          title,
-          style: AppStyle.fWhiteS18W700,
-        ));
+    return SizedBox(
+      width: width,
+      child: CupertinoButton(
+        borderRadius: BorderRadius.circular(12.r),
+
+          // minWidth: width,
+          // elevation: 0,
+          color: AppColors.primary,
+          // height: 48.h,
+          // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+          onPressed: onPressed,
+          child: Text(
+            title,
+            style: AppStyle.fWhiteS18W700,
+          )),
+    );
   }
 }
