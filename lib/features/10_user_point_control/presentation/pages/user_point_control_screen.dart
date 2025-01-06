@@ -237,20 +237,22 @@ class _UserPointControlScreenState extends State<UserPointControlScreen> {
 
   @override
   void initState() {
-    context.read<UserPointBloc>().add(GetUserListEvent());
+    context.read<UserPointBloc>().getUserList();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserPointBloc, UserPointState>(
+    return BlocBuilder<UserPointBloc, HomeState>(
       builder: (context, state) {
-        if (state is UserPointLoading) return LoadingWidget();
-        if (state is UserDateListLoaded) {
+
+        if (state.isInitial || state.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView.builder(
-              itemCount: state.userList.length,
+              itemCount: state.userList!.length,
               itemBuilder: (c, i) => InkWell(
                 onTap: () async {
                   await showDialog(
@@ -278,16 +280,16 @@ class _UserPointControlScreenState extends State<UserPointControlScreen> {
                                   title: AppStrings.addPoint,
                                   onPressed: () {
                                     Navigator.of(context1).pop();
-                                    context.read<UserPointBloc>().add(
-                                      AddUserPointEvent(
+                                    context.read<UserPointBloc>().
+                                      addUserPoint(
                                         PointUserHistoryDataModel(
                                           id: Random().nextInt(1000000).toString(),
                                           date: DateTime.now().toIso8601String(),
                                           xp: int.tryParse(controller.text) ?? 0,
-                                          userId: state.userList[i].userId.toString(),
+                                          userId: state.userList![i].userId.toString(),
                                         ),
-                                        state.userList[i].fcmToken.toString(),
-                                      ),
+                                         state.userList?[i].fcmToken.toString(),
+
                                     );
                                   },
                                   width: 326,
@@ -320,19 +322,19 @@ class _UserPointControlScreenState extends State<UserPointControlScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              state.userList[i].name.isEmpty ? "NO Name" : state.userList[i].name,
+                              state.userList![i].name.isEmpty ? "NO Name" : state.userList![i].name,
                               style: AppStyle.fWhiteS16W800,
                             ),
-                            Text(state.userList[i].email.toString(), style: AppStyle.fWhiteS12W400),
-                            Text("Rank ${state.userList[i].rank}", style: AppStyle.fWhiteS24W800BebasNeue.copyWith(letterSpacing: 1.2)),
-                            Text(state.userList[i].userId.toUpperCase(), style: AppStyle.textStyle10GrayW400),
+                            Text(state.userList![i].email.toString(), style: AppStyle.fWhiteS12W400),
+                            Text("Rank ${state.userList![i].rank}", style: AppStyle.fWhiteS24W800BebasNeue.copyWith(letterSpacing: 1.2)),
+                            Text(state.userList![i].userId.toUpperCase(), style: AppStyle.textStyle10GrayW400),
                           ],
                         ),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(state.userList[i].roles.toUpperCase(), style: AppStyle.textStyle16GoldW800),
+                          Text(state.userList![i].roles.toUpperCase(), style: AppStyle.textStyle16GoldW800),
                           Container(
                             padding: EdgeInsets.all(12),
                             decoration: BoxDecoration(
@@ -343,7 +345,7 @@ class _UserPointControlScreenState extends State<UserPointControlScreen> {
                             child: Column(
                               children: [
                                 Text(
-                                  state.userList[i].currentLevel.toString(),
+                                  state.userList![i].currentLevel.toString(),
                                   style: AppStyle.fWhiteS24W800BebasNeue.copyWith(height: 1),
                                 ),
                                 Text("Level", style: AppStyle.fWhiteS21W400BebasNeue.copyWith(height: 1)),
@@ -358,8 +360,8 @@ class _UserPointControlScreenState extends State<UserPointControlScreen> {
               ),
             ),
           );
-        }
-        return Container();
+
+
       },
     );
   }

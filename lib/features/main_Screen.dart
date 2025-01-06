@@ -32,21 +32,22 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
+  double d = 0;
+  num dd = 0.0;
 
   final List<Map<String, Widget>> _pages = [
     {
       "Home": const HomeScreenBlocProvider(),
     },
-
     {"History": const HistoryScreenBlocProvider()},
     {
       "Store": const UserPointControlBlocProvider(),
     },
     {
-      "ClanScreen":  ClanScreen(),
+      "ClanScreen": const ClanScreen(),
     },
     {
-      "Profile": ProfileScreen(),
+      "Profile": const ProfileScreen(),
     },
   ];
 

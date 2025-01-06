@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/style/app_style.dart';
 import '../../data/models/ClanMember.dart';
 import '../../data/models/ClanRequest.dart';
 import '../../data/models/ClanRole.dart';
@@ -9,17 +10,6 @@ import '../manager/ClanEvent.dart';
 import '../manager/ClanState.dart';
 import 'ClanDetailsScreen.dart';
 
-// models/clan_member.dart
-
-
-
-
-// bloc/clan_event.dart
-
-
-// bloc/clan_bloc.dart
-
-// screens/clan_screen.dart
 class ClanScreen extends StatelessWidget {
   const ClanScreen({super.key});
 
@@ -29,7 +19,7 @@ class ClanScreen extends StatelessWidget {
       create: (_) => ClanBloc()..add(LoadClan("123")),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Clan Management"),
+          title:  Text("Clan Management",style:  AppStyle.fWhiteS16W800,),
           actions: [
             IconButton(
               icon: const Icon(Icons.person_add),
@@ -69,7 +59,6 @@ class ClanScreen extends StatelessWidget {
       children: [
         _buildClanInfo(clan,context),
         const SizedBox(height: 16),
-        _buildMembersList(context, clan),
       ],
     );
   }
