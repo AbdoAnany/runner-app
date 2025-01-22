@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/widgets/main_buttom.dart';
 
-import '../../../../core/const/const.dart';
+import 'package:runner_app/core/constants/app_images.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 

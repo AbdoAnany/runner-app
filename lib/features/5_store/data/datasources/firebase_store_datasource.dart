@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../../core/const/const.dart';
+import 'package:runner_app/core/constants/app_images.dart';
 import '../local_datasources/local_datesource.dart';
 import '../models/brand_model.dart';
 import '../models/category_model.dart';

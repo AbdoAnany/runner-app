@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/const/const.dart';
 import '../../../../../core/usecase/use_case.dart';
 import '../../../../3_home/data/models/user_data_model.dart';
 import '../../../domain/use_cases/clear_user_date_cached.dart';
@@ -168,8 +169,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _onGetCurrentUser(
-      GetCurrentUserEvent event, Emitter<AuthState> emit) async {
+  Future<void> _onGetCurrentUser(GetCurrentUserEvent event, Emitter<AuthState> emit) async {
     try {
 
       print('Get 1111 current user: ${event.userId}');
@@ -178,12 +178,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final result = await getCurrentUser(event.userId);
       print('result result result: ${result}');
 
+
+
       result.fold(
         (failure) => emit(AuthError(failure.toString())),
         (userData) {
           if (userData == null) {
             emit(Unauthenticated());
           } else {
+            AppData.currentUserDate=userData;
             emit(Authenticated(userData));
           }
         },

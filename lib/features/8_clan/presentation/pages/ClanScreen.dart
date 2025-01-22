@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/style/app_style.dart';
+import '../../../../dependency_injection.dart';
 import '../../data/models/ClanMember.dart';
 import '../../data/models/ClanRequest.dart';
 import '../../data/models/ClanRole.dart';
@@ -15,8 +17,11 @@ class ClanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ClanBloc()..add(LoadClan("123")),
+    return BlocProvider<ClanBloc>(
+      create: (_) =>locator<ClanBloc>()..getClan(),
+        // ..add(LoadClan("123")),
+
+
       child: Scaffold(
         appBar: AppBar(
           title:  Text("Clan Management",style:  AppStyle.fWhiteS16W800,),
@@ -44,7 +49,7 @@ class ClanScreen extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             if (state is ClanLoaded) {
-              return _buildClanContent(context, state.clan);
+              return _buildClanContent(context, state.clans);
             }
             return const Center(child: Text("Something went wrong"));
           },
@@ -53,13 +58,15 @@ class ClanScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildClanContent(BuildContext context, Clan clan) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        _buildClanInfo(clan,context),
-        const SizedBox(height: 16),
-      ],
+  Widget _buildClanContent(BuildContext context, List<Clan> clans) {
+    return ListView.builder(
+      itemCount: clans.length,
+      padding: EdgeInsets.only(bottom: 60.h),
+      itemBuilder: (context, index) {
+        final clan = clans[index];
+        return _buildClanInfo(clan,context);
+      }
+
     );
   }
 
@@ -77,6 +84,7 @@ class ClanScreen extends StatelessWidget {
                 style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
+              Text(clan.id),
               Text(clan.description),
               const SizedBox(height: 8),
               Text("Members: ${clan.members.length}/${clan.maxMembers}"),
@@ -87,24 +95,24 @@ class ClanScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMembersList(BuildContext context, Clan clan) {
-    return Card(
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: clan.members.length,
-        itemBuilder: (context, index) {
-          final member = clan.members[index];
-          return ListTile(
-            leading: CircleAvatar(child: Text(member.name[0])),
-            title: Text(member.name),
-            subtitle: Text(member.role.toString().split('.').last),
-            trailing: _buildMemberActions(context, clan, member),
-          );
-        },
-      ),
-    );
-  }
+  // Widget _buildMembersList(BuildContext context, Clan clan) {
+  //   return Card(
+  //     child: ListView.builder(
+  //       shrinkWrap: true,
+  //       physics: const NeverScrollableScrollPhysics(),
+  //       itemCount: clan.members.length,
+  //       itemBuilder: (context, index) {
+  //         final member = clan.members[index];
+  //         return ListTile(
+  //           leading: CircleAvatar(child: Text(member.name[0])),
+  //           title: Text(member.name),
+  //           subtitle: Text(member.role.toString().split('.').last),
+  //           trailing: _buildMemberActions(context, clan, member),
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 
   Widget _buildMemberActions(BuildContext context, Clan clan, ClanMember member) {
     // Only show actions if current user is leader or co-leader
@@ -147,7 +155,7 @@ class ClanScreen extends StatelessWidget {
             labelText: "User ID",
           ),
           onSubmitted: (value) {
-            context.read<ClanBloc>().add(InviteMember(value));
+            // context.read<ClanBloc>().add(InviteMember(value));
             Navigator.pop(context);
           },
         ),
@@ -158,6 +166,8 @@ class ClanScreen extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
+            // context.read<ClanBloc>().createClan();
+            locator<ClanBloc>().createClan();
               // Handle invite
               Navigator.pop(context);
             },
@@ -180,9 +190,9 @@ class ClanScreen extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                context.read<ClanBloc>().add(
-                  PromoteMember(member.id, ClanRole.coLeader),
-                );
+                // context.read<ClanBloc>().add(
+                //   PromoteMember(member.id, ClanRole.coLeader),
+                // );
                 Navigator.pop(context);
               },
               child: const Text("Co-Leader"),
@@ -212,7 +222,7 @@ class ClanScreen extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              context.read<ClanBloc>().add(RemoveMember(member.id));
+              // context.read<ClanBloc>().add(RemoveMember(member.id));
               Navigator.pop(context);
             },
             child: const Text("Remove"),

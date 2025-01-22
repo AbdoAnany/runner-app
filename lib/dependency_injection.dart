@@ -40,6 +40,7 @@ import 'features/4_history/domain/repositories/history_repository.dart';
 import 'features/4_history/domain/use_cases/usecases/get_history_data.dart';
 import 'features/4_history/domain/use_cases/usecases/set_history_data.dart';
 import 'features/4_history/presentation/manager/bloc/runner_data_bloc.dart';
+import 'features/8_clan/presentation/manager/ClanBloc.dart';
 
 final locator = GetIt.instance;
 // final locator = GetIt.instance;
@@ -66,6 +67,7 @@ Future<void> init() async {
       setUserPointData: locator(),homeBloc: locator()
     ),
   );
+  locator.registerLazySingleton(() => ClanBloc(),);
 
   // Use cases Auth
   locator.registerLazySingleton(() => SignInWithEmail(locator()));

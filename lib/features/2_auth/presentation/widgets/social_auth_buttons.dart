@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/dependency_injection.dart';
 import 'package:toastification/toastification.dart';
 
-import '../../../../core/const/const.dart';
+import 'package:runner_app/core/constants/app_images.dart';
 import '../../../../core/style/color.dart';
 import '../../../../my_app.dart';
 import '../manager/auth/auth_bloc.dart';

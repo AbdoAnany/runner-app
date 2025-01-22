@@ -7,18 +7,19 @@ import 'package:iconsax/iconsax.dart';
 import '../style/color.dart';
 
 class MyBottomNavigationBar extends StatelessWidget {
-  MyBottomNavigationBar({super.key, this.currentIndex = 0, required this.onTap});
+  MyBottomNavigationBar({super.key, this.currentIndex = 0, this.pages = const[], required this.onTap});
 
   final int currentIndex;
-
+  final List<Map<String, dynamic>> pages;
   void Function( int ) onTap;
   @override
   Widget build(BuildContext context) {
     print(currentIndex);
     return   Positioned(
-      bottom: 0,left: 0,right: 0,            child: Container(
+      bottom: 0,left: 0,right: 0,
+      child: Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        // borderRadius: BorderRadius.circular(25),
         color:    AppColors.bgFiledColor,
         // gradient:  RadialGradient(colors: [
         //   AppColors.bgFiledColor,
@@ -40,42 +41,45 @@ class MyBottomNavigationBar extends StatelessWidget {
           ),
         ],
       ),
-      margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 40),
-      padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 32),
+      // margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 40),
+      padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GradientIcon(
-            icon: Iconsax.home_25,
-            isSelected: currentIndex == 0,
-            onTap: ()=>onTap(0),
-          ),
-          // GradientIcon(
-          //   icon: Iconsax.medal_star5,
-          //   isSelected: currentIndex == 0,
-          //   onTap: ()=>onTap(0),
-          // ),
-          GradientIcon(
-            icon: Iconsax.cup5,
-            isSelected: currentIndex == 1,
-            onTap: ()=>onTap(1),
-          ),
-          GradientIcon(
-            icon: Iconsax.shopping_bag5,
-            isSelected: currentIndex == 2,
-            onTap: ()=>onTap(2),
-          ),
-          GradientIcon(
-            icon: Iconsax.group,
-            isSelected: currentIndex == 3,
-            onTap: ()=>onTap(3),
-          ),
-          GradientIcon(
-            icon: Icons.person_rounded,
-            isSelected: currentIndex == 4,
-            onTap: ()=>onTap(4),
-          ),
-        ],
+        children:
+        pages.map((e) => GradientIcon(icon: e['icon'], isSelected: currentIndex == e['index'], onTap: ()=>onTap(e['index']),)).toList(),
+
+        // [
+        //   GradientIcon(
+        //     icon: Iconsax.home_25,
+        //     isSelected: currentIndex == 0,
+        //     onTap: ()=>onTap(0),
+        //   ),
+        //   // GradientIcon(
+        //   //   icon: Iconsax.medal_star5,
+        //   //   isSelected: currentIndex == 0,
+        //   //   onTap: ()=>onTap(0),
+        //   // ),
+        //   GradientIcon(
+        //     icon: Iconsax.cup5,
+        //     isSelected: currentIndex == 1,
+        //     onTap: ()=>onTap(1),
+        //   ),
+        //   GradientIcon(
+        //     icon: Iconsax.shopping_bag5,
+        //     isSelected: currentIndex == 2,
+        //     onTap: ()=>onTap(2),
+        //   ),
+        //   GradientIcon(
+        //     icon: Iconsax.group,
+        //     isSelected: currentIndex == 3,
+        //     onTap: ()=>onTap(3),
+        //   ),
+        //   GradientIcon(
+        //     icon: Icons.person_rounded,
+        //     isSelected: currentIndex == 4,
+        //     onTap: ()=>onTap(4),
+        //   ),
+        // ],
       ),
     ),);
   }
@@ -109,7 +113,7 @@ class GradientIcon extends StatelessWidget {
         child: Icon(
           icon,
           color: AppColors.iconHomeColor,
-          size: 32.w,
+          size: 38.w,
         ),
       ),
     );

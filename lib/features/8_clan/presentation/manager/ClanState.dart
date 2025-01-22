@@ -1,5 +1,4 @@
 import '../../data/models/ClanRequest.dart';
-import '../pages/ClanDetailsScreen.dart';
 
 abstract class ClanState {}
 
@@ -14,8 +13,8 @@ class MemberAdded extends ClanState {}
 
 class ClanLoading extends ClanState {}
 class ClanLoaded extends ClanState {
-  final Clan clan;
-  ClanLoaded(this.clan);
+  final List<Clan> clans;
+  ClanLoaded(this.clans);
 }
 class ClanError extends ClanState {
   final String message;
@@ -24,4 +23,9 @@ class ClanError extends ClanState {
 class ClanActionSuccess extends ClanState {
   final String message;
   ClanActionSuccess(this.message);
+}
+
+class ClanCreated extends ClanState {
+  final Clan clan;
+  ClanCreated(this.clan);
 }

@@ -96,13 +96,13 @@ class _CreateClanScreenState extends State<CreateClanScreen> {
 
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
-      context.read<ClanBloc>().add(
-            CreateClan(
-              name: _nameController.text,
-              description: _descriptionController.text,
-              maxMembers: int.parse(_maxMembersController.text),
-            ),
-          );
+      // context.read<ClanBloc>().add(
+      //       CreateClan(
+      //         name: _nameController.text,
+      //         description: _descriptionController.text,
+      //         maxMembers: int.parse(_maxMembersController.text),
+      //       ),
+      //     );
       Navigator.pop(context);
     }
   }
@@ -125,7 +125,7 @@ class ClanDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ClanBloc()..add(LoadClan(clanId)),
+      create: (_) =>    context.read<ClanBloc>(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Clan Details'),
@@ -159,15 +159,15 @@ class ClanDetailsScreen extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        if (clan.imageUrl != null)
-          Card(
-            child: Image.network(
-              clan.imageUrl!,
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
+        // if (clan.imageUrl != null)
+        //   Card(
+        //     child: Image.network(
+        //       clan.imageUrl!,
+        //       height: 200,
+        //       width: double.infinity,
+        //       fit: BoxFit.cover,
+        //     ),
+        //   ),
         Card(
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -186,7 +186,8 @@ class ClanDetailsScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  'Created: ${DateFormat.yMMMd().format(clan.createdAt)}',
+                  'Created:',
+                      // ' ${DateFormat.yMMMd().format(clan.createdAt)}',
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],

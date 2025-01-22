@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/const/const.dart';
+import 'package:runner_app/core/constants/app_images.dart';
 import '../../../../core/share/badge_level_type.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
@@ -126,7 +126,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
 
     // Fetch initial user data
    WidgetsBinding.instance.addPostFrameCallback((_) {
-     _fetchUserData();
+     // _fetchUserData();
    });
   }
 
@@ -143,7 +143,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
       return const CircularProgressIndicator(); // Show loading indicator if data is null
     }
 
-    return 
+    return
       true?
       Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -231,7 +231,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
               ),
             ],
           )):
-      
+
       Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: AppStyle.decorationHome,

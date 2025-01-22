@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:runner_app/features/3_home/presentation/widgets/step_counter_chart.dart';
 
-import '../../../../core/const/const.dart';
+import 'package:runner_app/core/constants/app_images.dart';
 import '../../../../core/style/app_style.dart';
 import '../../../../core/style/color.dart';
 

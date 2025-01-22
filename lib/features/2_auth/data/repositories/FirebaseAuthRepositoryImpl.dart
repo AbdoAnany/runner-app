@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:runner_app/core/constants/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/errors/failure.dart';
@@ -197,6 +198,7 @@ class FirebaseAuthRepositoryImpl implements AuthRepository {
       print('userId userId userId ${userId}');
       print('user user user ${user}');
       if (user != null) {
+
         return Right(user);
       } else {
         return const Left(AuthFailure('not found user'));

@@ -18,32 +18,57 @@ class ClanRequest {
 }
 
 // models/clan.dart
+
 class Clan {
-  final String id;
-  final String name;
-  final String description;
-  final List<ClanMember> members;
-  final int maxMembers;
-  final String leaderId;
-  final List<String> coLeaderIds;
-  final String? imageUrl;
-  final List<ClanRequest> joinRequests;
-  final DateTime createdAt;
+  String id='';
+  String name='';
+  String description='';
+  List<String> members=[];
+  int maxMembers=0;
+  String leaderId='';
+  List<String> coLeaderIds=[];
+  List<String> joinRequests=[];
+  String createdAt='';
 
-  Clan({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.members,
-    required this.maxMembers,
-    required this.leaderId,
-    required this.coLeaderIds,
-    this.imageUrl,
-    required this.joinRequests,
-    required this.createdAt,
-  });
+  Clan(
+      {this.id="",
+        this.name='No Name',
+        this.description='',
+        this.members=const [],
+        this.maxMembers=2,
+        this.leaderId='',
+        this.coLeaderIds=const [],
+        this.joinRequests=const [],
+        this.createdAt=''});
 
+  Clan.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    description = json['description'];
+    members = json['members'].cast<String>();
+    maxMembers = json['maxMembers'];
+    leaderId = json['leaderId'];
+    coLeaderIds = json['coLeaderIds'].cast<String>();
+    joinRequests = json['joinRequests'].cast<String>();
+    createdAt = json['createdAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['members'] = this.members;
+    data['maxMembers'] = this.maxMembers;
+    data['leaderId'] = this.leaderId;
+    data['coLeaderIds'] = this.coLeaderIds;
+    data['joinRequests'] = this.joinRequests;
+    data['createdAt'] = this.createdAt;
+    return data;
+  }
   bool isLeader(String userId) => leaderId == userId;
   bool isCoLeader(String userId) => coLeaderIds.contains(userId);
   bool canManageRequests(String userId) => isLeader(userId) || isCoLeader(userId);
 }
+
+

@@ -4,7 +4,7 @@ import 'package:kg_charts/kg_charts.dart';
 import 'package:runner_app/core/style/color.dart';
 import 'package:runner_app/features/3_home/presentation/bloc/home_bloc.dart';
 
-import '../../../../core/const/const.dart';
+import 'package:runner_app/core/constants/app_images.dart';
 import '../../../../core/widgets/loading_widget.dart';
 import '../../../../dependency_injection.dart';
 

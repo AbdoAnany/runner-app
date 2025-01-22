@@ -1,4 +1,4 @@
-import '../../../../core/const/const.dart';
+import 'package:runner_app/core/constants/app_images.dart';
 
 List <Map<String, dynamic>> categoryList = [
   {"name":"new","image":AppImage.newCard},

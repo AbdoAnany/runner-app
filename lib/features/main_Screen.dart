@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:runner_app/core/share/share_app_bar.dart';
 import 'package:runner_app/dependency_injection.dart';
 import 'package:runner_app/features/2_auth/presentation/manager/auth/auth_bloc.dart';
@@ -10,8 +11,11 @@ import '../../features/3_home/presentation/pages/home_screen.dart';
 import '../../features/4_history/presentation/pages/history_screen.dart';
 import '../../features/6_profile/presentation/pages/profile_screen.dart';
 import '../core/const/const.dart';
+import '../core/constants/app_images.dart';
 import '../core/share/my_bottom_navigation_bar.dart';
 import '10_user_point_control/presentation/pages/user_point_control_screen.dart';
+import '5_store/presentation/pages/store_screen.dart';
+import '7_level_gallary/presentation/pages/level_gallery.dart';
 import '8_clan/presentation/pages/ClanScreen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -35,19 +39,40 @@ class _MainScreenState extends State<MainScreen> {
   double d = 0;
   num dd = 0.0;
 
-  final List<Map<String, Widget>> _pages = [
+  final List<Map<String, dynamic>> _pages = [
     {
       "Home": const HomeScreenBlocProvider(),
+      "icon": Iconsax.home_25,
+      "index": 0
     },
-    {"History": const HistoryScreenBlocProvider()},
+    {"History": const HistoryScreenBlocProvider(),
+      "icon": Iconsax.medal_star5,
+      "index": 1
+    },
     {
       "Store": const UserPointControlBlocProvider(),
+      "icon": Iconsax.shopping_bag5,
+      "index": 2
     },
     {
       "ClanScreen": const ClanScreen(),
+      "icon": Icons.group_rounded,
+      "index": 3
     },
     {
       "Profile": const ProfileScreen(),
+      "icon": Icons.person_rounded,
+      "index": 4
+    },
+    {
+      "Profile": const StoreScreenBlocProvider(),
+      "icon": Iconsax.shopping_bag5,
+      "index": 5
+    },
+    {
+      "Profile": const LevelGallery(),
+      "icon": Iconsax.level,
+      "index": 6
     },
   ];
 
@@ -132,6 +157,7 @@ class _MainScreenState extends State<MainScreen> {
             MyBottomNavigationBar(
               onTap: (e) => _onItemTapped(e),
               currentIndex: _currentIndex,
+              pages: _pages,
             )
           ],
         ),

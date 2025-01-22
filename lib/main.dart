@@ -12,7 +12,7 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   // await di.init();
   await setupLocator();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 

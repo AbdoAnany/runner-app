@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/const/const.dart';
+import 'package:runner_app/core/constants/app_images.dart';
 
 class BadgeLevelGen extends StatelessWidget {
   final int index;

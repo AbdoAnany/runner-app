@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:runner_app/core/style/color.dart';
 
-import '../../../../core/const/const.dart';
+import 'package:runner_app/core/constants/app_images.dart';
 
 class LevelSeverGen extends StatelessWidget {
   final int index;
