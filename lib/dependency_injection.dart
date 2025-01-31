@@ -67,7 +67,7 @@ Future<void> init() async {
       setUserPointData: locator(),homeBloc: locator()
     ),
   );
-  locator.registerLazySingleton(() => ClanBloc(),);
+  locator.registerLazySingleton(() => ClanCubit(),);
 
   // Use cases Auth
   locator.registerLazySingleton(() => SignInWithEmail(locator()));

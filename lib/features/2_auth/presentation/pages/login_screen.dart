@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
             } else if (state is Authenticated) {
               print("sssssssssssssssssssssss  ${state.user.toMap()}");
               // Ensure navigation happens after state is properly updated
-              context.pushAndReplacementScreen(const MainScreen());
+              // context.pushAndReplacementScreen(const MainScreen());
             }
           },
           child: BlocBuilder<AuthBloc, AuthState>(

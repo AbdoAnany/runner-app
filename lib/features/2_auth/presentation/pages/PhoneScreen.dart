@@ -1,122 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:runner_app/core/style/color.dart';
-
 import 'package:runner_app/core/constants/app_images.dart';
-import '../../../../core/style/app_style.dart';
-import '../../../../core/widgets/main_buttom.dart';
+import 'package:runner_app/core/style/app_style.dart';
+import 'package:runner_app/core/widgets/main_buttom.dart';
 
-class PhoneScreen extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+import '../../../whats_app.dart';
+import '../widgets/LogoWithTitle.dart';
+import 'otp_verification .dart'; // استدعاء الخدمة
 
+class PhoneScreen extends StatefulWidget {
   PhoneScreen({super.key});
+
+  @override
+  _PhoneScreenState createState() => _PhoneScreenState();
+}
+
+class _PhoneScreenState extends State<PhoneScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _phoneController = TextEditingController();
+  final WhatsAppVerificationService _whatsAppService = WhatsAppVerificationService();
+
+  void _sendOtp() async {
+    if (_formKey.currentState!.validate()) {
+      String phoneNumber = _phoneController.text.trim();
+
+      await _whatsAppService.sendWhatsAppOtp(phoneNumber: phoneNumber);
+      Navigator.of(context).pushNamed('/verification', arguments: phoneNumber);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       body: LogoWithTitle(
         title: 'Phone',
-        subText: "Integer quis dictum tellus, a auctorlorem. Cras in biandit leo suspendiss.",
+        subText: "Enter your phone number to receive an OTP via WhatsApp.",
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32.0),
             child: Form(
               key: _formKey,
               child: TextFormField(
-                decoration:  AppStyle.inputDecoration(hintText: 'phone'),
+                controller: _phoneController,
+                decoration: AppStyle.inputDecoration(hintText: 'Phone'),
                 keyboardType: TextInputType.phone,
-                onSaved: (phone) {
-                  // Save it
-                },
+                validator: (value) => value!.isEmpty ? 'Enter a valid phone number' : null,
               ),
             ),
           ),
-
           MyMaterialButton(
             width: double.infinity,
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-              }
-              Navigator.of(context).pushNamed('/verification');
-            },
+            onPressed: _sendOtp,
             title: 'Next',
-          )
-          // ElevatedButton(
-          //   onPressed: () {
-          //
-          //   },
-          //   style: ElevatedButton.styleFrom(
-          //     elevation: 0,
-          //     backgroundColor: const Color(0xFF00BF6D),
-          //     foregroundColor: Colors.white,
-          //     minimumSize: const Size(double.infinity, 48),
-          //     shape: const StadiumBorder(),
-          //   ),
-          //   child: const Text("Next"),
-          // ),
+          ),
         ],
       ),
-    );
-  }
-}
-
-class LogoWithTitle extends StatelessWidget {
-  final String title, subText;
-  final List<Widget> children;
-
-  const LogoWithTitle(
-      {super.key,
-      required this.title,
-      this.subText = '',
-      required this.children});
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: LayoutBuilder(builder: (context, constraints) {
-        return SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            children: [
-              SizedBox(height: constraints.maxHeight * 0.1),
-              Padding(
-                padding: EdgeInsets.only(top: 0.h, bottom: 12.h),
-                child: Image.asset(
-                  AppImage.logoImage,
-                  height: 100.h,
-                  width: 100.w,
-                ),
-              ),
-              Text(
-                title,
-                style: AppStyle.fWhiteS21W700,
-              ),
-
-              SizedBox(
-                height: constraints.maxHeight * 0.1,
-                width: double.infinity,
-              ),
-
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(vertical: 16.0),
-              //   child: Text(
-              //     subText,
-              //     textAlign: TextAlign.center,
-              //     style: TextStyle(
-              //       height: 1.5,
-              //       color: Theme.of(context)
-              //           .textTheme
-              //           .bodyLarge!
-              //           .color!
-              //           .withOpacity(0.64),
-              //     ),
-              //   ),
-              // ),
-              ...children,
-            ],
-          ),
-        );
-      }),
     );
   }
 }

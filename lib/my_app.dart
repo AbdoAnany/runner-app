@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
               routes: {
-                '/home': (context) => const MainScreen(),
+                '/home': (context) =>  PhoneScreen(),
                 '/phone': (context) => PhoneScreen(),
                 '/verification': (context) => const VerificationScreen(),
                 '/notification': (context) => const NotificationScreen(),
@@ -92,7 +92,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
                   if (snapshot.hasData) {
                     print(">> >> "+snapshot.data!.uid);
-                    return const MainScreen();
+                    return  PhoneScreen();
                   } else {
                     return const LoginScreen();
                   }

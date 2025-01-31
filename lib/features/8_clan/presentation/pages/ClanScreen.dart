@@ -1,59 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/style/app_style.dart';
 import '../../../../dependency_injection.dart';
-import '../../data/models/ClanMember.dart';
 import '../../data/models/ClanRequest.dart';
-import '../../data/models/ClanRole.dart';
 import '../manager/ClanBloc.dart';
-import '../manager/ClanEvent.dart';
 import '../manager/ClanState.dart';
-import 'ClanDetailsScreen.dart';
+
+class ClanScreenBlocProvider extends StatelessWidget {
+  const ClanScreenBlocProvider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<ClanCubit>(
+      create: (_) => ClanCubit()..getClans(),
+      child: const ClanScreen(), // Ensure ClanScreen is a child of BlocProvider
+    );
+  }
+}
 
 class ClanScreen extends StatelessWidget {
   const ClanScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ClanBloc>(
-      create: (_) =>locator<ClanBloc>()..getClan(),
-        // ..add(LoadClan("123")),
-
-
-      child: Scaffold(
-        appBar: AppBar(
-          title:  Text("Clan Management",style:  AppStyle.fWhiteS16W800,),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.person_add),
-              onPressed: () => _showInviteDialog(context),
-            ),
-          ],
-        ),
-        body: BlocConsumer<ClanBloc, ClanState>(
-          listener: (context, state) {
-            if (state is ClanError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
-              );
-            } else if (state is ClanActionSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state is ClanLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state is ClanLoaded) {
-              return _buildClanContent(context, state.clans);
-            }
-            return const Center(child: Text("Something went wrong"));
-          },
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Clan Management", style: AppStyle.fWhiteS16W800),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => _showCreateClanDialog(context),
+          ),
+        ],
+      ),
+      body: BlocConsumer<ClanCubit, ClanState>(
+        listener: (context, state) {
+          if (state is ClanError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          } else if (state is ClanCreated) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Clan created successfully!")),
+            );
+          } else if (state is ClanDeleted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Clan deleted successfully!")),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is ClanLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state is ClanLoaded) {
+            return _buildClanContent(context, state.clans);
+          }
+          return const Center(child: Text("Something went wrong"));
+        },
       ),
     );
   }
@@ -64,16 +69,19 @@ class ClanScreen extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 60.h),
       itemBuilder: (context, index) {
         final clan = clans[index];
-        return _buildClanInfo(clan,context);
-      }
-
+        return _buildClanInfo(clan, context);
+      },
     );
   }
 
-  Widget _buildClanInfo(Clan clan,BuildContext context,) {
+  Widget _buildClanInfo(Clan clan, BuildContext context) {
     return InkWell(
-      onTap: () =>Navigator.push(context, MaterialPageRoute(builder: (context) => ClanDetailsScreen( clanId: clan.id))),
+      onTap: () {
+        // Navigate to clan details screen
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => ClanDetailsScreen(clanId: clan.id)));
+      },
       child: Card(
+        margin: const EdgeInsets.all(8),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -84,10 +92,20 @@ class ClanScreen extends StatelessWidget {
                 style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              Text(clan.id),
-              Text(clan.description),
+              Text("ID: ${clan.id}"),
+              Text("Description: ${clan.description}"),
               const SizedBox(height: 8),
               Text("Members: ${clan.members.length}/${clan.maxMembers}"),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () => _showDeleteClanDialog(context, clan.id),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -95,107 +113,30 @@ class ClanScreen extends StatelessWidget {
     );
   }
 
-  // Widget _buildMembersList(BuildContext context, Clan clan) {
-  //   return Card(
-  //     child: ListView.builder(
-  //       shrinkWrap: true,
-  //       physics: const NeverScrollableScrollPhysics(),
-  //       itemCount: clan.members.length,
-  //       itemBuilder: (context, index) {
-  //         final member = clan.members[index];
-  //         return ListTile(
-  //           leading: CircleAvatar(child: Text(member.name[0])),
-  //           title: Text(member.name),
-  //           subtitle: Text(member.role.toString().split('.').last),
-  //           trailing: _buildMemberActions(context, clan, member),
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
+  void _showCreateClanDialog(BuildContext context) {
+    final nameController = TextEditingController();
+    final descriptionController = TextEditingController();
+    final maxMembersController = TextEditingController();
 
-  Widget _buildMemberActions(BuildContext context, Clan clan, ClanMember member) {
-    // Only show actions if current user is leader or co-leader
-    final currentUserId = "user123"; // TODO: Get from auth
-    if (!clan.isLeader(currentUserId) && !clan.isCoLeader(currentUserId)) {
-      return const SizedBox.shrink();
-    }
-
-    return PopupMenuButton<String>(
-      onSelected: (value) {
-        switch (value) {
-          case 'promote':
-            _showPromoteDialog(context, member);
-            break;
-          case 'remove':
-            _showRemoveDialog(context, member);
-            break;
-        }
-      },
-      itemBuilder: (context) => [
-        const PopupMenuItem(
-          value: 'promote',
-          child: Text('Promote'),
-        ),
-        const PopupMenuItem(
-          value: 'remove',
-          child: Text('Remove'),
-        ),
-      ],
-    );
-  }
-
-  void _showInviteDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Invite Member"),
-        content: TextField(
-          decoration: const InputDecoration(
-            labelText: "User ID",
-          ),
-          onSubmitted: (value) {
-            // context.read<ClanBloc>().add(InviteMember(value));
-            Navigator.pop(context);
-          },
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () {
-            // context.read<ClanBloc>().createClan();
-            locator<ClanBloc>().createClan();
-              // Handle invite
-              Navigator.pop(context);
-            },
-            child: const Text("Invite"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showPromoteDialog(BuildContext context, ClanMember member) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Promote Member"),
+      builder: (context1) => AlertDialog(
+        title: const Text("Create Clan"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Promote ${member.name} to:"),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                // context.read<ClanBloc>().add(
-                //   PromoteMember(member.id, ClanRole.coLeader),
-                // );
-                Navigator.pop(context);
-              },
-              child: const Text("Co-Leader"),
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(labelText: "Clan Name"),
+            ),
+            TextField(
+              controller: descriptionController,
+              decoration: const InputDecoration(labelText: "Description"),
+            ),
+            TextField(
+              controller: maxMembersController,
+              decoration: const InputDecoration(labelText: "Max Members"),
+              keyboardType: TextInputType.number,
             ),
           ],
         ),
@@ -204,17 +145,38 @@ class ClanScreen extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             child: const Text("Cancel"),
           ),
+          TextButton(
+            onPressed: () {
+              final name = nameController.text.trim();
+              final description = descriptionController.text.trim();
+              final maxMembers = int.tryParse(maxMembersController.text.trim()) ?? 50;
+
+              if (name.isNotEmpty && description.isNotEmpty) {
+                context.read<ClanCubit>().createClan(
+                  name: name,
+                  description: description,
+                  maxMembers: maxMembers,
+                );
+                Navigator.pop(context);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Please fill all fields")),
+                );
+              }
+            },
+            child: const Text("Create"),
+          ),
         ],
       ),
     );
   }
 
-  void _showRemoveDialog(BuildContext context, ClanMember member) {
+  void _showDeleteClanDialog(BuildContext context, String clanId) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Remove Member"),
-        content: Text("Are you sure you want to remove ${member.name}?"),
+        title: const Text("Delete Clan"),
+        content: const Text("Are you sure you want to delete this clan?"),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -222,10 +184,10 @@ class ClanScreen extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              // context.read<ClanBloc>().add(RemoveMember(member.id));
+              context.read<ClanCubit>().deleteClan(clanId);
               Navigator.pop(context);
             },
-            child: const Text("Remove"),
+            child: const Text("Delete"),
           ),
         ],
       ),

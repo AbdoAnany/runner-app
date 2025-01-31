@@ -55,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
       "index": 2
     },
     {
-      "ClanScreen": const ClanScreen(),
+      "ClanScreen": const ClanScreenBlocProvider(),
       "icon": Icons.group_rounded,
       "index": 3
     },
